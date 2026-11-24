@@ -30,7 +30,7 @@
   .tab{font:inherit;font-weight:700;font-size:13.5px;padding:9px 8px;border-radius:10px;border:1.5px solid var(--line);background:#fff;color:var(--text);cursor:pointer;text-align:left}
   .tab small{display:block;font-weight:500;font-size:11px;color:var(--muted);margin-top:1px}
   .tab.on{border-color:var(--navy);background:var(--navy);color:#fff}.tab.on small{color:#a9bccb}
-  .tabs{grid-template-columns:1fr 1fr 1fr!important}
+  .tabs{grid-template-columns:1fr 1fr!important}
   .tab{padding:8px 7px!important;font-size:12.5px!important}
   .mapwrap.road #map{bottom:40%}
   .mapwrap.road.tall #map{bottom:62%}
@@ -189,6 +189,40 @@
   .vlab span{transform:translate(6px,-130%);background:rgba(0,0,0,.72);color:#fff;padding:1px 5px;border-radius:4px}
   .plab span{background:#00e5ff;color:#000;width:20px;height:20px;border-radius:50%;display:grid;place-items:center}
   @media (max-width:820px){.app{flex-direction:column}aside{width:100%;max-height:none;border-right:0;order:2}.mapwrap{height:60vh;flex:none;order:1}}
+
+  .cfbig{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:2px 0 8px}
+  .cfbig div{border-radius:9px;padding:7px 8px;color:#fff}.cfbig .c{background:#b2182b}.cfbig .f{background:#2166ac}.cfbig .n{background:#0F2A3F}
+  .cfbig small{display:block;font-size:10px;font-weight:700;letter-spacing:.04em;opacity:.85}.cfbig b{font-size:16px}.cfbig span{font-size:11px;margin-left:3px;opacity:.85}
+  .cftbl{width:100%;border-collapse:collapse;font-size:12.5px}.cftbl td{padding:3px 2px;border-bottom:1px solid var(--line)}
+  .cfbar{display:flex;align-items:center;gap:6px;font-size:11.5px;margin-top:8px}.cfbar i{flex:1;height:10px;border-radius:5px}
+
+  .brcard{border:1.5px solid #F2A516;background:#fffaf0}
+  #brief{position:fixed;inset:0;z-index:4500;background:rgba(9,22,33,.55);display:none;align-items:center;justify-content:center;padding:16px}
+  #brief.on{display:flex}
+  #brief .brbox{background:#fff;width:min(1250px,100%);height:min(92vh,900px);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  #brief .brhead{background:#0F2A3F;color:#fff;padding:11px 16px;display:flex;align-items:center;gap:12px}
+  #brief .brhead h3{margin:0;font:700 16px 'Space Grotesk',Inter,sans-serif}
+  #brief .brhead span{font-size:12px;color:#a9bccb}
+  #brief .brhead button{margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:5px 10px;cursor:pointer}
+  #brief .brmain{flex:1;display:flex;min-height:0}
+  #brief .brleft{width:340px;flex:none;padding:14px;border-right:1px solid var(--line);overflow:auto;display:flex;flex-direction:column;gap:8px;background:#f7f9fb}
+  #brief .brleft textarea{min-height:150px;font:inherit;font-size:13px;padding:9px;border:1px solid var(--line);border-radius:8px;resize:vertical}
+  #brief #brGo{flex:none;width:100%}
+  #brief .brleft h4{margin:8px 0 0;font-size:13px;color:#0F2A3F}
+  #brief .brex small{display:block;color:#5b6b78;margin-bottom:4px}
+  #brief .chip{font:inherit;font-size:11.5px;border:1px solid #c9d4dd;background:#fff;border-radius:14px;padding:3px 9px;margin:0 4px 4px 0;cursor:pointer}
+  #brief .chip:hover{border-color:#F2A516;background:#fff8e6}
+  #brief .brright{flex:1;display:flex;flex-direction:column;min-width:0}
+  #brief .brtabs{display:flex;gap:4px;padding:10px 14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  #brief .brtabs button{font:inherit;font-size:13px;font-weight:600;border:0;background:none;padding:8px 12px;border-bottom:3px solid transparent;cursor:pointer;color:#5b6b78}
+  #brief .brtabs button.on{color:#0F2A3F;border-bottom-color:#F2A516}
+  #brief #brOut{flex:1;overflow:auto;padding:14px 18px;font-size:13px;line-height:1.55}
+  #brief .brfig svg{width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+  #brief #brOut h4{margin:14px 0 4px;color:#0F2A3F}
+  #brief .brtpl{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line)}
+  #brief .brtpl .btn{flex:none;width:250px}
+  #brief .brtpl span{font-size:12.5px;color:#334452}
+  @media (max-width:820px){#brief .brmain{flex-direction:column;overflow:auto}#brief .brleft{width:auto;border-right:0;border-bottom:1px solid var(--line)}#brief .brtpl{flex-direction:column;align-items:stretch}#brief .brtpl .btn{width:auto}}
 </style>
 </head>
 <body>
@@ -203,12 +237,13 @@
   </svg>
   <div><h1 style="font-family:'Space Grotesk',Inter,sans-serif;letter-spacing:.5px">HASHIM <span style="font-weight:500;letter-spacing:3px;color:#c8d6e1">SURVEY</span></h1><span>Road study toolkit · alignment · levels · sections · setting-out · coordinate systems · imagery</span></div>
   <span class="tag">Free tool</span>
+  <button id="helpBtn" title="User guide (F1)" style="margin-left:10px;margin-right:0"><b>?</b><span style="color:#0F2A3F;font-size:13px">Help</span></button>
 </div>
 <div class="app">
   <aside>
     <div class="status" id="status">Start by loading a KML/KMZ from Google Earth, drawing a plot, or importing coordinates.</div>
 
-    <div class="tabs"><button class="tab on" data-m="road">🛣 Road study<small>alignment · levels · sections</small></button><button class="tab" data-m="vec">▦ Vector map<small>plots &amp; roads</small></button><button class="tab" data-m="geo">🌍 Geo data<small>CRS · imagery · terrain</small></button></div>
+    <div class="tabs"><button class="tab on" data-m="road">🛣 Road study<small>alignment · levels · sections</small></button><button class="tab" data-m="vec">▦ Vector map<small>plots &amp; roads</small></button><button class="tab" data-m="cf">⛰ Cut &amp; fill<small>OGL · final · stock</small></button><button class="tab" data-m="geo">🌍 Geo data<small>CRS · imagery · terrain</small></button></div>
     <div class="card">
       <div class="drop" id="drop"><strong>Choose KML / KMZ / CSV</strong> or drop here
         <small id="dropHint">KML/KMZ plot boundary or CSV survey levels → contours &amp; report</small>
@@ -313,6 +348,11 @@
     </div>
     </div>
     <div id="tabRoad" style="display:none">
+      <div class="card brcard">
+        <h2><b>💬</b> Describe your road</h2>
+        <div class="hint" style="margin-top:-4px">Write a few lines about the road – the assistant gives a typical cross-section, a feature layout, field &amp; design checklists and ready templates.</div>
+        <div class="btns" style="margin-top:6px"><button class="btn amber" id="brOpen">💬 Describe your road…</button></div>
+      </div>
       <div class="card frcard">
         <h2><b>🧭</b> Road from ground levels (field workflow)</h2>
         <div class="step"><span>A</span> Alignment – draw it, or type the PI coordinates (Point, Easting, Northing per line, in the project coordinate system)</div>
@@ -468,6 +508,63 @@
         <div class="row"><label for="kAlt">3D export heights</label><select id="kAlt"><option value="absolute">Absolute (real levels – 3D)</option><option value="clamp">Clamped to ground</option></select></div>
         <div class="row" style="gap:10px;flex-wrap:wrap"><label class="chk" style="display:none"><input type="checkbox" id="k3Snap"> Site &amp; contours</label><label class="chk"><input type="checkbox" id="k3Road" checked> Road design</label><label class="chk"><input type="checkbox" id="k3Plots" checked> Vector map</label></div>
         <div class="btns"><button class="btn alt" id="k3Go">⬇ 3D KML for Google Earth</button></div>
+      </div>
+    </div>
+    <div id="brief" role="dialog" aria-modal="true" aria-label="Describe your road">
+      <div class="brbox">
+        <div class="brhead"><h3>💬 Describe your road</h3><span>Road assistant · typical values – check against your design standard</span><button id="brClose" title="Close (Esc)">✕</button></div>
+        <div class="brmain">
+          <div class="brleft">
+            <textarea id="brText" placeholder="Example: Rural road 6 km long across sandy desert, 2 lanes, 80 km/h, trucks to the quarry, crosses 2 wadis, one junction with the highway at 0+000."></textarea>
+            <div class="brex"><small>Examples:</small><span id="brEx"></span></div>
+            <button class="btn amber" id="brGo">▶ Analyse (Ctrl+Enter)</button>
+            <h4>What I understood</h4>
+            <div id="brFound" class="hint">–</div>
+          </div>
+          <div class="brright">
+            <div id="brTabs" class="brtabs"><button data-t="sec" class="on">Cross-section</button><button data-t="lay">Feature layout</button><button data-t="chk">Checklists</button><button data-t="tpl">Templates</button><button data-t="pic">Pictures</button></div>
+            <div id="brOut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="tabCF" style="display:none">
+      <div class="card">
+        <h2><b>1</b> Plot limit</h2>
+        <div class="hint" style="margin-top:-4px">Volumes are computed only inside this boundary (camp area, borrow pit, stockpile yard…).</div>
+        <div class="btns" style="margin-top:0"><button class="btn alt" id="cfDraw">✎ Draw limit on map</button><button class="btn alt" id="cfHull">Use outline of OGL points</button></div>
+        <div class="row" id="cfPlotRow" style="display:none"><label for="cfPlot">Plot from Vector map</label><select id="cfPlot"></select></div>
+        <div class="fld" style="margin-top:6px">Or type the corners – Point, Easting, Northing per line<textarea id="cfLimTxt" placeholder="C1, 226268.52, 2572690.99&#10;C2, 226642.31, 2572361.92&#10;C3, 226966.84, 2572733.05&#10;C4, 226593.05, 2573062.11"></textarea></div>
+        <div class="btns"><button class="btn" id="cfLimGo">Use these corners</button></div>
+        <div class="hint" id="cfLimInfo">No limit yet.</div>
+      </div>
+      <div class="card">
+        <h2><b>2</b> OGL – original ground levels</h2>
+        <div class="row" style="margin-top:0"><label for="cfFmt">Point format</label><select id="cfFmt"><option value="auto">Auto-detect</option><option value="PENZ">Point, E, N, Z, (Desc)</option><option value="PNEZ">Point, N, E, Z, (Desc)</option><option value="ENZ">E, N, Z</option><option value="NEZ">N, E, Z</option><option value="PLLZ">Point, Lat, Lon, Z</option></select></div>
+        <div class="btns"><label class="btn alt" style="text-align:center">📥 Load OGL file…<input type="file" id="cfOglFile" accept=".csv,.txt,.xyz,.pts,.xlsx,.xlsm,.xls" hidden></label><button class="btn alt" id="cfOglClr" style="flex:none">Clear</button></div>
+        <details><summary>Paste OGL points</summary><textarea id="cfOglTxt" placeholder="1, 226300.000, 2572700.000, 138.250"></textarea><div class="btns"><button class="btn" id="cfOglGo">Use pasted points</button></div></details>
+        <div class="hint" id="cfOglInfo">No OGL points.</div>
+      </div>
+      <div class="card">
+        <h2><b>3</b> Final surface</h2>
+        <div class="row" style="margin-top:0"><label for="cfMode">Final level from</label><select id="cfMode"><option value="pts">Final survey points (stockpile / as-built)</option><option value="level">Flat formation level</option><option value="balance">Balance level (cut = fill)</option></select></div>
+        <div id="cfPtsBox">
+          <div class="btns"><label class="btn alt" style="text-align:center">📥 Load final file…<input type="file" id="cfFinFile" accept=".csv,.txt,.xyz,.pts,.xlsx,.xlsm,.xls" hidden></label><button class="btn alt" id="cfFinClr" style="flex:none">Clear</button></div>
+          <details><summary>Paste final points</summary><textarea id="cfFinTxt" placeholder="101, 226310.000, 2572705.000, 140.120"></textarea><div class="btns"><button class="btn" id="cfFinGo">Use pasted points</button></div></details>
+          <label class="chk" style="margin-top:6px"><input type="checkbox" id="cfKeep" checked> Outside the final survey, ground is unchanged (= OGL)</label>
+          <div class="hint" id="cfFinInfo">No final points.</div>
+        </div>
+        <div id="cfLvlBox" style="display:none"><div class="row"><label for="cfLevel">Formation level (m)</label><input id="cfLevel" type="number" step="0.001" placeholder="e.g. 134.274"></div></div>
+        <div class="grid2" style="margin-top:8px"><div class="fld">Cut → fill factor<input id="cfFactor" type="number" step="0.01" value="1.00"></div><div class="fld">Grid cell (m)<input id="cfCell" type="number" step="0.25" placeholder="auto"></div></div>
+        <div class="btns"><button class="btn amber" id="cfRun" disabled>▶ Compute cut &amp; fill</button></div>
+        <div class="hint">Balance level finds the formation level where cut × factor = fill. Factor 1.00 = no bulking/shrinkage.</div>
+      </div>
+      <div class="card"><h2><b>4</b> Results</h2><div id="cfRes" class="hint"></div><div id="cfLegend"></div></div>
+      <div class="card">
+        <h2><b>5</b> Report &amp; exports</h2>
+        <div class="grid2" style="margin-top:0"><button class="btn amber" id="cfPDF" disabled>⬇ Report (PDF, A3)</button><button class="btn amber" id="cfXLSX" disabled>⬇ Excel (formulas)</button></div>
+        <div class="grid2" style="margin-top:6px"><button class="btn alt" id="cfDXF" disabled>DXF (AutoCAD)</button><button class="btn alt" id="cfCSV" disabled>Points CSV</button></div>
+        <div class="hint">The PDF has the colour depth map with the zero line, volumes, corner coordinates and a table of every point. The Excel volumes are live formulas – with a formation level you can change the level in Excel and the volumes update.</div>
       </div>
     </div>
     <div class="card">
@@ -1213,6 +1310,12 @@ async function readKFile(f) {
   return f.text();
 }
 async function loadFiles(files) {
+  if (S.mode === 'cf') {
+    const pf = files.filter(f => /\.(csv|txt|xyz|pts|xlsx|xlsm|xls)$/i.test(f.name)), kf = files.filter(f => /\.(kml|kmz)$/i.test(f.name));
+    for (const f of pf) await cfLoad(CF.ogl.length && !CF.fin.length && $('cfMode').value === 'pts' ? 'fin' : 'ogl', f);
+    for (const f of kf) { const r = parseKML(await readKFile(f), f.name.replace(/\.(kml|kmz)$/i, '')); if (r.polys.length) { cfSetLimit(r.polys[0].ll, r.polys[0].name); break; } const z = r.points.filter(p => p.z != null && p.z !== 0); if (z.length >= 3) { z.forEach(p => { [p.E, p.N] = toU(p.lat, p.lon); }); CF.ogl = z; cfInfo(); drawAll(); cfFit(); status(`${z.length} OGL points from KML.`, 'ok'); } else status('No polygon (plot limit) found in this KML.', 'warn'); }
+    return;
+  }
   const csv = [], kml = [];
   const xls = files.filter(f => /\.(xlsx|xlsm|xls)$/i.test(f.name)); files = files.filter(f => !/\.(xlsx|xlsm|xls)$/i.test(f.name));
   if (xls.length) { if (S.mode !== 'road') setMode('road'); await impFile(xls[0]); }
@@ -1495,6 +1598,7 @@ function drawAll() {
   Object.values(LG).forEach(g => { if (g !== LG.draw) g.clearLayers(); });
   if (S.mode === 'vec') { drawVec(); return; }
   if (S.mode === 'road') { drawRoad(); return; }
+  if (S.mode === 'cf') { cfDrawMap(); return; }
   if (S.mode === 'geo') { drawVec(); if (S.boundary) L.polygon(S.boundary, { color: COL.bound, weight: 3, fillOpacity: 0.05 }).addTo(LG.bound); if (RD.ll) L.polyline(RD.ali ? roadLine(0).map(p => toLL(p[0], p[1])) : RD.ll, { color: COL.prof, weight: 3 }).addTo(LG.road); return; }
   // snap mode: other plots only as clickable outlines
   S.vec.plots.forEach(p => { if (p.ll !== S.srcLL) L.polygon(p.ll, { color: '#ffffff', weight: 1.5, dashArray: '4 4', fillOpacity: 0.04 }).addTo(LG.other).on('click', () => { if (!drawMode) setBoundary(p.ll, p.name); }); });
@@ -1531,6 +1635,7 @@ const DRAW_MSG = {
   plot: 'Digitize a plot: click its corners (snaps to nearby corners). Double-click or Finish. Backspace = undo point.',
   road: 'Digitize a road centreline: click along the road. Double-click or Finish. Backspace = undo point.',
   point: 'Click on the map to drop a placemark (keep digitizing = several). Esc to stop.',
+  cflimit: 'Click the corners of the plot limit. Double-click or Finish when done. Backspace = undo point.',
   centre: 'Click the road centreline points (PIs) from start to end. Curves are fitted at the bends. Double-click or Finish.'
 };
 function startDraw(mode) {
@@ -1542,6 +1647,7 @@ function endDraw() { drawMode = null; LG.draw.clearLayers(); map.doubleClickZoom
 function finishDraw() {
   const pts = drawPts.filter((p, i) => i === 0 || p[0] !== drawPts[i - 1][0] || p[1] !== drawPts[i - 1][1]);
   const mode = drawMode; endDraw();
+  if (mode === 'cflimit') { if (pts.length < 3) return status('Draw at least 3 corners.', 'warn'); return cfSetLimit(pts, 'Drawn limit'); }
   if (mode === 'boundary' || mode === 'plot') {
     if (pts.length < 3) return status('Draw at least 3 corners.', 'warn');
     if (mode === 'boundary') return setBoundary(pts, 'Drawn boundary');
@@ -1574,7 +1680,7 @@ function snapPt(ll) {
 }
 function redrawTemp() {
   LG.draw.clearLayers(); if (!drawPts.length) return;
-  const poly = (drawMode === 'boundary' || drawMode === 'plot'), c = drawMode === 'road' ? '#ff5252' : drawMode === 'centre' ? '#00e5ff' : drawMode === 'profile' ? COL.prof : COL.bound;
+  const poly = (drawMode === 'boundary' || drawMode === 'plot' || drawMode === 'cflimit'), c = drawMode === 'road' ? '#ff5252' : drawMode === 'centre' ? '#00e5ff' : drawMode === 'profile' ? COL.prof : COL.bound;
   (poly && drawPts.length > 2 ? L.polygon(drawPts, { color: c, weight: 2, dashArray: '5 4', fillOpacity: 0.1 }) : L.polyline(drawPts, { color: c, weight: 2, dashArray: '5 4' })).addTo(LG.draw);
   drawPts.forEach(p => L.circleMarker(p, { radius: 4, color: '#000', weight: 1, fillColor: '#fff', fillOpacity: 1 }).addTo(LG.draw));
 }
@@ -4124,6 +4230,654 @@ $('lvGo').onclick = () => {
 };
 
 // ---------------- service tabs ----------------
+// ================= CUT & FILL / SOIL STOCK (OGL vs final surface inside a plot limit) =================
+const CF = { limLL: null, limName: '', ogl: [], fin: [], res: null };
+const RDBU = [[5, 48, 97], [33, 102, 172], [67, 147, 195], [146, 197, 222], [209, 229, 240], [247, 247, 247], [253, 219, 199], [244, 165, 130], [214, 96, 77], [178, 24, 43], [103, 0, 31]];
+function cfColor(t) {   // t in [-1,1]: −1 = deepest fill (blue), +1 = deepest cut (red)
+  t = Math.max(-1, Math.min(1, t)); const x = (t + 1) / 2 * (RDBU.length - 1), i = Math.min(RDBU.length - 2, Math.floor(x)), f = x - i, a = RDBU[i], b = RDBU[i + 1];
+  return [0, 1, 2].map(c => Math.round(a[c] + (b[c] - a[c]) * f));
+}
+const cfHex = c => '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
+const cfSign = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(2);
+const cfBase = () => (($('mProject').value || CF.limName || 'cut_fill').trim().replace(/[^\w\-]+/g, '_') || 'cut_fill');
+
+async function cfReadText(f) {
+  if (/\.(xlsx|xlsm|xls)$/i.test(f.name)) { const sh = await readXLSX(await f.arrayBuffer()); return (sh[0] ? sh[0].rows : []).map(r => (r || []).join(',')).join('\n'); }
+  return f.text();
+}
+function cfParsePts(txt) {
+  const { pts, fmt: f } = parseTable(txt, $('cfFmt').value);
+  const zp = pts.filter(p => p.z != null && isFinite(p.z));
+  if (zp.length && !CF.limLL && !CF.ogl.length) ensureZone(zp[0].lat, zp[0].lon);
+  zp.forEach(p => { [p.E, p.N] = toU(p.lat, p.lon); });
+  return { pts: zp, fmt: f };
+}
+function cfParseCorners(txt) {
+  const out = [];
+  txt.split(/\r?\n/).forEach(line => {
+    const f = line.trim().split(/\s*[,;\t]\s*|\s+/).filter(Boolean); const nums = f.map(s => s.replace(/,/g, '')).filter(s => isFinite(+s) && s !== '').map(Number);
+    if (nums.length < 2) return;
+    let k = 0; if (nums.length >= 3 && Number.isInteger(nums[0]) && Math.abs(nums[0]) < 10000 && Math.abs(nums[1]) > 1000) k = 1;
+    const name = isFinite(+f[0]) && k === 0 ? `C${out.length + 1}` : f[0];
+    out.push({ name, x: nums[k], y: nums[k + 1] });
+  });
+  return out;
+}
+function cfSetLimit(ll, name, cornerNames) {
+  ll = cleanRing(ll); if (ll.length < 3) return status('The plot limit needs at least 3 corners.', 'err');
+  if (!CF.ogl.length) ensureZone(ll[0][0], ll[0][1]);
+  CF.limLL = ll; CF.limName = name || 'Plot limit'; CF.cornerNames = cornerNames || ll.map((p, i) => `C${i + 1}`); CF.res = null;
+  if (!$('mProject').value) $('mProject').value = CF.limName;
+  cfInfo(); drawAll(); cfFit();
+  status(`${CF.limName}: ${ll.length} corners, area ${fmt(G.area(ll.map(p => toU(p[0], p[1]))))} m². ${CF.ogl.length ? 'Choose the final surface and press ▶ Compute.' : 'Now load the OGL points.'}`, 'ok');
+}
+function cfLimitU() { return CF.limLL ? CF.limLL.map(p => toU(p[0], p[1])) : (CF.ogl.length >= 3 ? G.hull(CF.ogl.map(p => [p.E, p.N])) : null); }
+function cfFit() { const a = (CF.limLL || []).concat(CF.ogl.map(p => [p.lat, p.lon]), CF.fin.map(p => [p.lat, p.lon])); if (a.length && map.fitBounds) map.fitBounds(L.latLngBounds(a), { padding: [40, 40], maxZoom: 19 }); }
+function cfInfo() {
+  const lu = cfLimitU();
+  $('cfLimInfo').innerHTML = CF.limLL ? `<b>${esc(CF.limName)}</b> – ${CF.limLL.length} corners · area <b>${fmt(G.area(lu))} m²</b>` : CF.ogl.length >= 3 ? 'No limit drawn – the outline of the OGL points will be used.' : 'No limit yet.';
+  const st = a => { const z = a.map(p => p.z); return `<b>${a.length}</b> points · levels ${fmt(Math.min(...z), 3)} → ${fmt(Math.max(...z), 3)} m`; };
+  $('cfOglInfo').innerHTML = CF.ogl.length ? st(CF.ogl) : 'No OGL points.';
+  $('cfFinInfo').innerHTML = CF.fin.length ? st(CF.fin) : 'No final points.';
+  const m = $('cfMode').value; $('cfPtsBox').style.display = m === 'pts' ? '' : 'none'; $('cfLvlBox').style.display = m === 'level' ? '' : 'none';
+  $('cfRun').disabled = !(CF.ogl.length >= 3 && (m !== 'pts' || CF.fin.length >= 3) && (m !== 'level' || $('cfLevel').value !== ''));
+  ['cfPDF', 'cfXLSX', 'cfDXF', 'cfCSV'].forEach(id => $(id).disabled = !CF.res);
+  const sel = $('cfPlot'); sel.innerHTML = '<option value="">Choose a plot…</option>' + S.vec.plots.map((p, i) => `<option value="${i}">${esc(p.name)}</option>`).join('');
+  $('cfPlotRow').style.display = S.vec.plots.length ? 'flex' : 'none';
+}
+function cfRaster(pts, g) { const P = [], seen = new Set(); pts.forEach(p => { const k = p.E.toFixed(3) + ',' + p.N.toFixed(3); if (!seen.has(k)) { seen.add(k); P.push([p.E, p.N, p.z]); } }); const t = { ...g, z: new Float32Array(g.nx * g.ny).fill(NaN) }; return G.rasterizeTIN(t, P, G.delaunay(P.map(p => [p[0], p[1]]))); }
+function cfWeights(g, lim) {   // fraction of each node's cell inside the limit (4×4 sub-sampling on the edges)
+  const W = new Float32Array(g.nx * g.ny), c = g.cell, h = c / 2, segD = (x, y) => { let d = Infinity; for (let i = 0; i < lim.length; i++) { const a = lim[i], b = lim[(i + 1) % lim.length], dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx * dx + dy * dy || 1; let t = ((x - a[0]) * dx + (y - a[1]) * dy) / L2; t = Math.max(0, Math.min(1, t)); d = Math.min(d, Math.hypot(x - a[0] - t * dx, y - a[1] - t * dy)); } return d; };
+  for (let j = 0; j < g.ny; j++) for (let i = 0; i < g.nx; i++) {
+    const X = g.x0 + i * c, Y = g.y0 + j * c, k = j * g.nx + i;
+    if (segD(X, Y) > c * 0.75) { W[k] = G.inPoly(X, Y, lim) ? 1 : 0; continue; }
+    let n = 0; for (let a = 0; a < 4; a++) for (let b = 0; b < 4; b++) if (G.inPoly(X - h + (a + 0.5) * c / 4, Y - h + (b + 0.5) * c / 4, lim)) n++;
+    W[k] = n / 16;
+  }
+  return W;
+}
+function cfCompute() {
+  if (CF.ogl.length < 3) return status('Load at least 3 OGL points.', 'warn');
+  const mode = $('cfMode').value, factor = +$('cfFactor').value || 1;
+  if (mode === 'pts' && CF.fin.length < 3) return status('Load the final survey points (or choose a formation / balance level).', 'warn');
+  if (mode === 'level' && !isFinite(parseFloat($('cfLevel').value))) return status('Type the formation level.', 'warn');
+  busy(true, 'Computing cut & fill…');
+  setTimeout(() => {
+    try {
+      const lim = cfLimitU(), A = G.area(lim), xs = lim.map(p => p[0]), ys = lim.map(p => p[1]);
+      let cell = parseFloat($('cfCell').value);
+      if (!(cell > 0)) { const raw = Math.sqrt(A / 40000); cell = raw <= 0.25 ? 0.25 : raw <= 0.5 ? 0.5 : raw <= 1 ? 1 : raw <= 2 ? 2 : raw <= 2.5 ? 2.5 : raw <= 5 ? 5 : Math.ceil(raw / 5) * 5; }
+      const bb = { x0: Math.min(...xs) - cell, y0: Math.min(...ys) - cell, x1: Math.max(...xs) + cell, y1: Math.max(...ys) + cell };
+      const g = G.makeGrid(bb, cell);
+      if (g.nx * g.ny > 3e6) throw new Error('Grid too fine for this area – use a bigger grid cell.');
+      const W = cfWeights(g, lim), O = cfRaster(CF.ogl, g).z, Fg = mode === 'pts' ? cfRaster(CF.fin, g) : null, keep = $('cfKeep').checked;
+      const n = g.nx * g.ny, ca = cell * cell;
+      let uncov = 0, oMin = Infinity, oMax = -Infinity;
+      for (let k = 0; k < n; k++) if (W[k] > 0) { if (O[k] !== O[k]) uncov += W[k] * ca; else { if (O[k] < oMin) oMin = O[k]; if (O[k] > oMax) oMax = O[k]; } }
+      if (!(oMax >= oMin)) throw new Error('The OGL points do not cover the plot limit.');
+      let level = null;
+      const volAt = Lv => { let c = 0, f = 0; for (let k = 0; k < n; k++) { if (!(W[k] > 0) || O[k] !== O[k]) continue; const d = O[k] - Lv; if (d > 0) c += d * W[k] * ca; else f -= d * W[k] * ca; } return [c, f]; };
+      if (mode === 'level') level = parseFloat($('cfLevel').value);
+      if (mode === 'balance') { let lo = oMin, hi = oMax; for (let it = 0; it < 80; it++) { const m = (lo + hi) / 2, [c, f] = volAt(m); if (c * factor > f) lo = m; else hi = m; } level = Math.round((lo + hi) / 2 * 1000) / 1000; }
+      const Fz = new Float32Array(n).fill(NaN), D = new Float32Array(n).fill(NaN);
+      let cut = 0, fill = 0, cutA = 0, fillA = 0, maxCut = 0, maxFill = 0, finUncov = 0, area = 0;
+      for (let k = 0; k < n; k++) {
+        if (!(W[k] > 0) || O[k] !== O[k]) continue;
+        let fz = level != null ? level : Fg.z[k];
+        if (fz !== fz) { if (keep) fz = O[k]; else { finUncov += W[k] * ca; continue; } if (Fg) finUncov += W[k] * ca; }
+        const d = O[k] - fz, a = W[k] * ca; Fz[k] = fz; D[k] = d; area += a;
+        if (d > 0) { cut += d * a; cutA += a; if (d > maxCut) maxCut = d; } else if (d < 0) { fill -= d * a; fillA += a; if (-d > maxFill) maxFill = -d; }
+      }
+      // points table: OGL points with the final level at their position (and final points with OGL below them)
+      const fAt = (E, N) => level != null ? level : (() => { const v = G.sample(Fg, E, N); return v === v ? v : (keep ? null : NaN); })();
+      const oAt = (E, N) => G.sample({ ...g, z: O }, E, N);
+      const rows = CF.ogl.filter(p => G.inPoly(p.E, p.N, lim)).map(p => { let f = fAt(p.E, p.N); if (f === null) f = p.z; return { src: 'OGL', id: p.id, E: p.E, N: p.N, ogl: p.z, fin: f, d: f === f ? p.z - f : NaN }; });
+      if (mode === 'pts') CF.fin.filter(p => G.inPoly(p.E, p.N, lim)).forEach(p => { const o = oAt(p.E, p.N); rows.push({ src: 'Final', id: p.id, E: p.E, N: p.N, ogl: o, fin: p.z, d: o === o ? o - p.z : NaN }); });
+      const Dg = { ...g, z: new Float32Array(D) }, rng = Math.max(maxCut, maxFill, 0.01), ival = G.niceStep(rng / 8);
+      const conts = G.contours(Dg, ival).filter(c => c.pts.length > 2);
+      CF.res = { mode, factor, level, lim, A, area, cell, g, W, O, Fz, D, cut, fill, cutA, fillA, maxCut, maxFill, uncov, finUncov, oMin, oMax, rows, conts, ival, rng, keep, nCells: W.reduce((s, w) => s + (w > 0 ? 1 : 0), 0) };
+      cfRender(); drawAll();
+      const warn = uncov > 0.005 * A ? ` ⚠ ${fmt(uncov, 0)} m² of the limit has no OGL points (outside their outline) and is not counted.` : '';
+      status(`Cut ${fmt(cut, 1)} m³ · ${mode === 'pts' ? 'Fill / stock' : 'Fill'} ${fmt(fill, 1)} m³ · ${mode === 'pts' ? 'Net added ' + fmt(fill - cut, 1) : 'Net (cut − fill) ' + cfSign(cut - fill)} m³.${warn}`, warn ? 'warn' : 'ok');
+    } catch (e) { status('Cut & fill failed: ' + e.message, 'err'); console.error(e); }
+    busy(false); cfInfo();
+  }, 30);
+}
+function cfModeText(R) { return R.mode === 'pts' ? 'Final survey points (TIN)' : R.mode === 'level' ? `Flat formation level ${R.level.toFixed(3)} m` : `Balance level ${R.level.toFixed(3)} m (cut${R.factor !== 1 ? ' × ' + R.factor : ''} = fill)`; }
+function cfSummary(R) {
+  const net = R.cut * R.factor - R.fill;
+  return [['Plot limit area', `${fmt(R.A, 2)} m²`], ['Area computed', `${fmt(R.area, 2)} m²`], ['Final surface', cfModeText(R)],
+    ['CUT volume (OGL above final)', `${fmt(R.cut, 2)} m³`], ['FILL volume (final above OGL)', `${fmt(R.fill, 2)} m³`],
+    ['Cut area / fill area', `${fmt(R.cutA, 1)} / ${fmt(R.fillA, 1)} m²`], ['Max. cut / max. fill depth', `${R.maxCut.toFixed(3)} / ${R.maxFill.toFixed(3)} m`],
+    ['Cut → fill factor', R.factor.toFixed(2)], R.mode === 'pts' ? ['Net stock / added (fill − cut)', `${fmt(R.fill - R.cut, 2)} m³`] : [net >= 0 ? 'Surplus (cut × factor − fill)' : 'Shortage (fill − cut × factor)', `${fmt(Math.abs(net), 2)} m³`],
+    ['OGL levels in limit', `${R.oMin.toFixed(3)} → ${R.oMax.toFixed(3)} m`], ['Grid cell', `${R.cell} m (${fmt(R.nCells, 0)} cells)`]];
+}
+function cfRender() {
+  const R = CF.res; if (!R) { $('cfRes').innerHTML = 'Load the limit, OGL and final surface, then press ▶ Compute.'; $('cfLegend').innerHTML = ''; return; }
+  const net = R.cut * R.factor - R.fill;
+  $('cfRes').innerHTML = `<div class="cfbig"><div class="c"><small>CUT</small><b>${fmt(R.cut, 1)}</b><span>m³</span></div><div class="f"><small>${R.mode === 'pts' ? 'FILL / STOCK' : 'FILL'}</small><b>${fmt(R.fill, 1)}</b><span>m³</span></div><div class="n"><small>${R.mode === 'pts' ? 'NET (FILL − CUT)' : net >= 0 ? 'SURPLUS' : 'SHORTAGE'}</small><b>${R.mode === 'pts' ? fmt(R.fill - R.cut, 1) : fmt(Math.abs(net), 1)}</b><span>m³</span></div></div>
+    <table class="cftbl">${cfSummary(R).filter(r => !/^(CUT|FILL) volume/.test(r[0])).map(r => `<tr><td>${r[0]}</td><td style="text-align:right">${r[1]}</td></tr>`).join('')}</table>
+    ${R.uncov > 0.005 * R.A ? `<div class="hint" style="color:#b3261e">⚠ ${fmt(R.uncov, 0)} m² of the limit is outside the OGL points and not counted.</div>` : ''}
+    ${R.mode === 'pts' && R.finUncov > 0.005 * R.A ? `<div class="hint">${fmt(R.finUncov, 0)} m² is outside the final survey – ${R.keep ? 'kept at OGL (no change)' : 'not counted'}.</div>` : ''}`;
+  $('cfLegend').innerHTML = `<div class="cfbar"><span>fill ${R.rng.toFixed(2)}</span><i style="background:linear-gradient(90deg,${RDBU.map(cfHex).join(',')})"></i><span>cut ${R.rng.toFixed(2)} m</span></div><div class="hint">Black line = zero line (no cut, no fill) · contours every ${R.ival} m.</div>`;
+}
+function cfDrawMap() {
+  const R = CF.res;
+  if (R && L.imageOverlay) {
+    const g = R.g, cv = document.createElement('canvas'); cv.width = g.nx; cv.height = g.ny; const ctx = cv.getContext('2d'), im = ctx.createImageData(g.nx, g.ny);
+    for (let j = 0; j < g.ny; j++) for (let i = 0; i < g.nx; i++) { const k = j * g.nx + i; if (!(R.W[k] > 0) || R.D[k] !== R.D[k]) continue; const c = cfColor(R.D[k] / R.rng), o = ((g.ny - 1 - j) * g.nx + i) * 4; im.data[o] = c[0]; im.data[o + 1] = c[1]; im.data[o + 2] = c[2]; im.data[o + 3] = Math.round(255 * Math.min(1, R.W[k] * 1.2)); }
+    ctx.putImageData(im, 0, 0);
+    const c1 = toLL(g.x0 - g.cell / 2, g.y0 - g.cell / 2), c2 = toLL(g.x0 + (g.nx - 0.5) * g.cell, g.y0 + (g.ny - 0.5) * g.cell);
+    L.imageOverlay(cv.toDataURL(), [[c1[0], c1[1]], [c2[0], c2[1]]], { opacity: 0.85, interactive: false }).addTo(LG.other);
+    R.conts.forEach(c => L.polyline(c.pts.map(p => toLL(p[0], p[1])), { color: c.elev === 0 ? '#000' : '#37474f', weight: c.elev === 0 ? 3 : 0.8, opacity: c.elev === 0 ? 1 : 0.6, interactive: false }).addTo(LG.cont));
+  }
+  const lim = CF.limLL || (CF.ogl.length >= 3 ? cfLimitU().map(p => toLL(p[0], p[1])) : null);
+  if (lim) {
+    L.polygon(lim, { color: R ? '#111' : COL.bound, weight: 2.5, fill: !R, fillOpacity: 0.06 }).addTo(LG.bound);
+    if (CF.limLL) CF.limLL.forEach((p, i) => { const [x, y] = TX(...toU(p[0], p[1])); L.marker(p, { interactive: false, icon: L.divIcon({ className: 'vlab', html: `<span>${esc(CF.cornerNames[i] || 'C' + (i + 1))}</span>`, iconSize: null }) }).addTo(LG.bound); });
+  }
+  const dot = (p, col, lab) => L.circleMarker([p.lat, p.lon], { radius: 2.5, color: '#fff', weight: 0.8, fillColor: col, fillOpacity: 1 }).bindTooltip(lab).addTo(LG.pts);
+  const fAt = R ? (p => { const r = R.rows.find(q => q.src === 'OGL' && q.id === p.id && q.E === p.E); return r && r.d === r.d ? ` · ${r.d >= 0 ? 'cut' : 'fill'} ${Math.abs(r.d).toFixed(3)} m` : ''; }) : () => '';
+  CF.ogl.forEach(p => dot(p, '#212121', `OGL ${esc(p.id)}: ${fmt(p.z, 3)} m${fAt(p)}`));
+  if ($('cfMode').value === 'pts') CF.fin.forEach(p => dot(p, '#00acc1', `Final ${esc(p.id)}: ${fmt(p.z, 3)} m`));
+}
+
+// ---------- picture of the depth map (for PDF) ----------
+function cfImage(Wpx, Hpx) {
+  const R = CF.res, g = R.g, lim = R.lim, xs = lim.map(p => p[0]), ys = lim.map(p => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), pad = 0.12 * Math.max(x1 - x0, y1 - y0);
+  const sc = Math.min((Wpx - 40) / (x1 - x0 + 2 * pad), (Hpx - 40) / (y1 - y0 + 2 * pad)), ox = Wpx / 2 - (x0 + x1) / 2 * sc, oy = Hpx / 2 + (y0 + y1) / 2 * sc;
+  const P = (E, N) => [ox + E * sc, oy - N * sc];
+  const cv = document.createElement('canvas'); cv.width = Wpx; cv.height = Hpx; const c = cv.getContext('2d');
+  c.fillStyle = '#fff'; c.fillRect(0, 0, Wpx, Hpx);
+  // grid lines (project coordinates)
+  c.save(); c.beginPath(); lim.forEach((q, i) => { const [x, y] = P(q[0], q[1]); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.closePath(); c.clip();
+  const s = g.cell * sc + 0.9;
+  for (let j = 0; j < g.ny; j++) for (let i = 0; i < g.nx; i++) { const k = j * g.nx + i; if (!(R.W[k] > 0) || R.D[k] !== R.D[k]) continue; const [x, y] = P(g.x0 + i * g.cell, g.y0 + j * g.cell); c.fillStyle = cfHex(cfColor(R.D[k] / R.rng)); c.fillRect(x - s / 2, y - s / 2, s, s); }
+  R.conts.forEach(k => { if (k.elev === 0) return; c.beginPath(); k.pts.forEach((q, i) => { const [x, y] = P(q[0], q[1]); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.strokeStyle = 'rgba(40,50,60,.55)'; c.lineWidth = 0.8; c.setLineDash([3, 3]); c.stroke(); });
+  c.setLineDash([]);
+  R.conts.filter(k => k.elev === 0).forEach(k => { c.beginPath(); k.pts.forEach((q, i) => { const [x, y] = P(q[0], q[1]); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.strokeStyle = '#000'; c.lineWidth = 3; c.stroke(); });
+  c.restore();
+  // limit
+  c.beginPath(); lim.forEach((q, i) => { const [x, y] = P(q[0], q[1]); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.closePath(); c.strokeStyle = '#000'; c.lineWidth = 2.5; c.stroke();
+  // points & labels (thinned so labels don't overlap)
+  const placed = [], fs = Math.max(13, Math.round(Wpx / 140));
+  c.font = `${fs}px Arial`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  R.rows.forEach(r => { const [x, y] = P(r.E, r.N); c.fillStyle = r.src === 'Final' ? '#00838f' : '#222'; c.beginPath(); c.arc(x, y, 2.2, 0, 7); c.fill(); });
+  R.rows.filter(r => r.d === r.d).sort((a, b) => Math.abs(b.d) - Math.abs(a.d)).forEach(r => {
+    const [x, y] = P(r.E, r.N); if (placed.some(q => Math.abs(q[0] - x) < fs * 4.2 && Math.abs(q[1] - y) < fs * 1.8)) return; placed.push([x, y]);
+    const t = cfSign(r.d), w = c.measureText(t).width + 8; c.fillStyle = 'rgba(255,255,255,.85)'; c.fillRect(x - w / 2, y - fs * 1.45, w, fs * 1.2); c.fillStyle = '#111'; c.fillText(t, x, y - fs * 0.85);
+  });
+  // corners with coordinates
+  c.font = `bold ${fs}px Arial`; c.textAlign = 'left';
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  lim.forEach((q, i) => {
+    const [x, y] = P(q[0], q[1]), dx = q[0] - cx, dy = q[1] - cy, L0 = Math.hypot(dx, dy) || 1, lx = x + dx / L0 * fs * 1.6, ly = y - dy / L0 * fs * 1.6;
+    const [E, N] = TX(q[0], q[1]), nm = CF.limLL ? (CF.cornerNames[i] || `C${i + 1}`) : `C${i + 1}`, al = dx >= 0 ? 'left' : 'right';
+    c.textAlign = al; c.fillStyle = '#0F2A3F'; c.font = `bold ${fs}px Arial`; c.fillText(nm, lx, ly - fs * 1.1); c.font = `${fs * 0.9}px Arial`; c.fillText(`E ${E.toFixed(2)}`, lx, ly); c.fillText(`N ${N.toFixed(2)}`, lx, ly + fs * 1.05);
+  });
+  // north arrow + scale bar
+  c.fillStyle = '#0F2A3F'; c.beginPath(); c.moveTo(Wpx - 40, 30); c.lineTo(Wpx - 50, 60); c.lineTo(Wpx - 40, 53); c.lineTo(Wpx - 30, 60); c.closePath(); c.fill(); c.font = `bold ${fs}px Arial`; c.textAlign = 'center'; c.fillText('N', Wpx - 40, 20);
+  const target = (Wpx * 0.2) / sc, sb = G.niceStep(target), sbp = sb * sc; c.fillRect(24, Hpx - 30, sbp, 6); c.textAlign = 'left'; c.font = `${fs}px Arial`; c.fillText(`${sb} m`, 24, Hpx - 42);
+  return { cv, W: Wpx, H: Hpx };
+}
+
+async function cfPDF() {
+  const R = CF.res; if (!R) return; if (!window.jspdf) return status('PDF library did not load – check the internet connection.', 'err');
+  busy(true, 'Building cut & fill report…');
+  try {
+    const meta = getMeta(), img = cfImage(2400, 1900), url = img.cv.toDataURL('image/jpeg', 0.9);
+    const doc = newPDF({ unit: 'mm', format: 'a3', orientation: 'landscape' }), Wp = 420, Hp = 297, M = 12, navy = [15, 42, 63], amber = [242, 165, 22], ink = [29, 42, 53];
+    let page = 0;
+    const frame = (title, sub) => {
+      if (page++) doc.addPage('a3', 'landscape');
+      doc.setDrawColor(...navy); doc.setLineWidth(0.6); doc.rect(M - 4, M - 4, Wp - 2 * M + 8, Hp - 2 * M + 8);
+      const ty = Hp - M - 14; doc.setFillColor(...navy); doc.rect(M - 4, ty, Wp - 2 * M + 8, 18, 'F'); doc.setFillColor(...amber); doc.rect(M - 4, ty - 0.8, Wp - 2 * M + 8, 0.8, 'F');
+      let tx = M; if (logoData) { try { const pr = doc.getImageProperties(logoData), h = 11, w = Math.min(30, h * pr.width / pr.height); doc.addImage(logoData, M, ty + 3.5, w, h); tx = M + w + 4; } catch (e) { } }
+      doc.setTextColor(255); doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.text(meta.company || 'Land Surveying Services', tx, ty + 7.5);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(200, 214, 224); doc.text(meta.contact || '', tx, ty + 12.5);
+      const cells = [['PROJECT', meta.project || CF.limName], ['CLIENT', meta.client], ['SHEET', title], ['DATE', meta.date], ['GRID', crsShort()], ['SURVEYOR', meta.surveyor]];
+      let cx = 150; cells.forEach(([k, v], i) => { const w = i === 2 ? 70 : 40; doc.setFontSize(6); doc.setTextColor(169, 188, 203); doc.text(k, cx, ty + 5.5); doc.setFontSize(8.5); doc.setTextColor(255); doc.setFont('helvetica', i === 2 ? 'bold' : 'normal'); doc.text(doc.splitTextToSize(String(v || '–'), w - 3)[0], cx, ty + 11); doc.setFont('helvetica', 'normal'); cx += w + 4; });
+      doc.setTextColor(...navy); doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.text(title, M, M + 4);
+      if (sub) { doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(102, 115, 127); doc.text(sub, M, M + 10); }
+      doc.setTextColor(...ink); return M + 16;
+    };
+    const kv = (x, y, w, title, rows) => {
+      const rh = 6; doc.setFillColor(...navy); doc.rect(x, y, w, rh, 'F'); doc.setTextColor(255); doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.text(title, x + 2, y + 4.2); y += rh;
+      doc.setFont('helvetica', 'normal'); doc.setTextColor(...ink);
+      rows.forEach((r, i) => { if (i % 2) { doc.setFillColor(244, 246, 248); doc.rect(x, y, w, rh, 'F'); } doc.setFontSize(8); doc.text(doc.splitTextToSize(r[0], w * 0.55)[0], x + 2, y + 4.2); doc.text(doc.splitTextToSize(String(r[1]), w * 0.48)[0], x + w - 2, y + 4.2, { align: 'right' }); y += rh; });
+      return y + 5;
+    };
+    let y = frame('CUT & FILL – DEPTH MAP & VOLUMES', `${CF.limName || 'Plot limit'} · ${cfModeText(R)} · + = CUT (red), − = FILL (blue), black line = zero line`);
+    const mapW = 262, mapH = Hp - M - 18 - y - 4, r = img.W / img.H; let iw = mapW, ih = iw / r; if (ih > mapH) { ih = mapH; iw = ih * r; }
+    doc.addImage(url, 'JPEG', M, y, iw, ih); doc.setDrawColor(180); doc.setLineWidth(0.2); doc.rect(M, y, iw, ih);
+    // colour bar
+    const bx = M + iw + 3, by = y + 6, bh = ih - 20, steps = 40;
+    for (let i = 0; i < steps; i++) { const t = 1 - 2 * i / (steps - 1), col = cfColor(t); doc.setFillColor(...col); doc.rect(bx, by + i * bh / steps, 5, bh / steps + 0.2, 'F'); }
+    doc.setDrawColor(60); doc.rect(bx, by, 5, bh); doc.setFontSize(7); doc.setTextColor(...ink);
+    [1, 0.5, 0, -0.5, -1].forEach(t => doc.text(cfSign(t * R.rng), bx + 6.5, by + (1 - t) / 2 * bh + 1));
+    doc.setFontSize(6.5); doc.text('CUT', bx, by - 2); doc.text('FILL', bx, by + bh + 4);
+    const sx = M + mapW + 18, sw = Wp - M - sx; const net = R.cut * R.factor - R.fill;
+    // big numbers
+    const box = (x, lbl, v, col) => { doc.setFillColor(...col); doc.rect(x, y, sw / 3 - 2, 17, 'F'); doc.setTextColor(255); doc.setFontSize(7); doc.text(lbl, x + 2, y + 4.5); doc.setFont('helvetica', 'bold'); doc.setFontSize(12); doc.text(fmt(v, 1), x + 2, y + 11.5); doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.text('m³', x + 2, y + 15.5); };
+    box(sx, 'CUT', R.cut, [178, 24, 43]); box(sx + sw / 3, R.mode === 'pts' ? 'FILL / STOCK' : 'FILL', R.fill, [33, 102, 172]); box(sx + 2 * sw / 3, R.mode === 'pts' ? 'NET (FILL - CUT)' : net >= 0 ? 'SURPLUS' : 'SHORTAGE', R.mode === 'pts' ? R.fill - R.cut : Math.abs(net), navy);
+    let yy = kv(sx, y + 22, sw, 'Volumes & levels', cfSummary(R));
+    const lu = CF.limLL ? CF.limLL.map(p => toU(p[0], p[1])) : R.lim;
+    yy = kv(sx, yy, sw, `Plot limit corners (${crsShort()})`, lu.slice(0, 14).map((q, i) => { const [E, N] = TX(q[0], q[1]); return [CF.limLL ? (CF.cornerNames[i] || `C${i + 1}`) : `C${i + 1}`, `E ${E.toFixed(3)}  N ${N.toFixed(3)}`]; }));
+    doc.setFontSize(7); doc.setTextColor(102, 115, 127);
+    doc.text(doc.splitTextToSize(`Method: OGL and final surfaces are triangulated (TIN, Delaunay) and compared on a ${R.cell} m grid clipped to the plot limit (edge cells by area). Depth = OGL − final: + cut, − fill. Coordinates: ${crsLabel()}.`, sw), sx, Math.min(yy, Hp - M - 40));
+    // points tables
+    const rows = R.rows.slice().sort((a, b) => a.src.localeCompare(b.src) || String(a.id).localeCompare(String(b.id), undefined, { numeric: true }));
+    const cols = [['Source', 18], ['Point', 22], ['Easting', 30], ['Northing', 30], ['OGL (m)', 22], ['Final (m)', 22], ['Cut + / Fill − (m)', 28]], tw = cols.reduce((s, c) => s + c[1], 0);
+    const perCol = Math.floor((Hp - M - 18 - (M + 16) - 12) / 5), colsPerPage = 2;
+    for (let i = 0; i < rows.length; i += perCol * colsPerPage) {
+      const y0 = frame('CUT & FILL – POINT LEVELS', `${rows.length} points inside the plot limit · coordinates ${crsShort()}`);
+      for (let b = 0; b < colsPerPage; b++) {
+        const chunk = rows.slice(i + b * perCol, i + (b + 1) * perCol); if (!chunk.length) break;
+        let x = M + b * (tw + 14), yy2 = y0; doc.setFillColor(...navy); doc.rect(x, yy2, tw, 6, 'F'); doc.setTextColor(255); doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5);
+        let cx = x; cols.forEach(([t, w]) => { doc.text(t, cx + 1.5, yy2 + 4.2); cx += w; }); yy2 += 6; doc.setFont('helvetica', 'normal');
+        chunk.forEach((r, ri) => { if (ri % 2) { doc.setFillColor(244, 246, 248); doc.rect(x, yy2, tw, 5, 'F'); } const [E, N] = TX(r.E, r.N); const v = [r.src, String(r.id), E.toFixed(3), N.toFixed(3), r.ogl === r.ogl ? r.ogl.toFixed(3) : '–', r.fin === r.fin ? r.fin.toFixed(3) : '–', r.d === r.d ? cfSign(r.d) : '–'];
+          let cx2 = x; v.forEach((t, ci) => { doc.setTextColor(...(ci === 6 && r.d === r.d ? (r.d > 0 ? [178, 24, 43] : r.d < 0 ? [33, 102, 172] : ink) : ink)); doc.text(t, ci >= 2 ? cx2 + cols[ci][1] - 1.5 : cx2 + 1.5, yy2 + 3.6, ci >= 2 ? { align: 'right' } : undefined); cx2 += cols[ci][1]; }); yy2 += 5; });
+      }
+    }
+    doc.save(cfBase() + '_cut_fill.pdf'); status('Cut & fill report downloaded.', 'ok');
+  } catch (e) { status('PDF failed: ' + e.message, 'err'); console.error(e); }
+  busy(false);
+}
+
+async function cfXLSX(noCache) {
+  const R = CF.res; if (!R) return; if (!window.JSZip) return status('The zip library did not load – check the internet connection.', 'err');
+  const H = t => ({ v: t, s: 1 }), V = (v, s) => ({ v: noCache ? undefined : v, s }), F = (f, v, s = 3) => ({ f, v: noCache ? undefined : v, s }), meta = getMeta();
+  const g = R.g, ca = R.cell * R.cell, flat = R.mode !== 'pts';
+  // grid sheet
+  const gridRows = [[H('Cell'), H(`Easting (${crsShort()})`), H('Northing'), H('Area (m²)'), H('OGL (m)'), H('Final (m)'), H('Depth OGL − final (m)'), H('Cut (m³)'), H('Fill (m³)')]];
+  let n = 0, cutS = 0, fillS = 0;
+  for (let k = 0; k < g.nx * g.ny; k++) {
+    if (!(R.W[k] > 0) || R.D[k] !== R.D[k]) continue; n++;
+    const i = k % g.nx, j = Math.floor(k / g.nx), [E, N] = TX(g.x0 + i * R.cell, g.y0 + j * R.cell), r = n + 1, a = +(R.W[k] * ca).toFixed(4), o = +R.O[k].toFixed(4), f = +R.Fz[k].toFixed(4), d = o - f, cv = d > 0 ? d * a : 0, fv = d < 0 ? -d * a : 0; cutS += cv; fillS += fv;
+    gridRows.push([n, { v: +E.toFixed(3), s: 2 }, { v: +N.toFixed(3), s: 2 }, { v: a, s: 3 }, { v: o, s: 2 }, flat ? F('Summary!$C$9', f, 2) : { v: f, s: 2 }, F(`E${r}-F${r}`, d, 2), F(`IF(G${r}>0,G${r}*D${r},0)`, cv), F(`IF(G${r}<0,-G${r}*D${r},0)`, fv)]);
+  }
+  const last = n + 1, tooBig = n > 120000;
+  const net = cutS * R.factor - fillS;
+  const sum = [[{ v: 'CUT & FILL – VOLUME CALCULATION', s: 7 }], [], [{ v: 'Project', s: 6 }, meta.project || CF.limName], [{ v: 'Client', s: 6 }, meta.client], [{ v: 'Surveyor', s: 6 }, meta.surveyor], [{ v: 'Date', s: 6 }, meta.date], [{ v: 'Coordinates', s: 6 }, crsLabel()], [],
+    [{ v: 'Final surface', s: 6 }, cfModeText(R), flat ? { v: R.level, s: 5 } : { v: '(from final survey points – see Grid)', s: 0 }, flat ? 'm  ← change the level here, volumes recalculate' : ''],
+    [{ v: 'Cut → fill factor', s: 6 }, '', { v: R.factor, s: 5 }],
+    [{ v: 'Grid cell (m)', s: 6 }, '', { v: R.cell, s: 3 }], [],
+    [H('Item'), H(''), H('Value'), H('Unit')],
+    ['Plot limit area', '', { v: +R.A.toFixed(3), s: 3 }, 'm²'],
+    ['Area computed', '', tooBig ? { v: R.area, s: 3 } : F(`SUM(Grid!D2:D${last})`, R.area), 'm²'],
+    ['CUT volume (OGL above final)', '', tooBig ? { v: R.cut, s: 4 } : F(`SUM(Grid!H2:H${last})`, cutS, 4), 'm³'],
+    ['FILL volume (final above OGL)', '', tooBig ? { v: R.fill, s: 4 } : F(`SUM(Grid!I2:I${last})`, fillS, 4), 'm³'],
+    ['Cut × factor', '', F('C16*C10', cutS * R.factor), 'm³'],
+    ['Surplus (+) / shortage (−)', '', F('C18-C17', net, 4), 'm³'],
+    ['Max. cut depth', '', tooBig ? { v: R.maxCut, s: 2 } : F(`MAX(0,MAX(Grid!G2:G${last}))`, R.maxCut, 2), 'm'],
+    ['Max. fill depth', '', tooBig ? { v: R.maxFill, s: 2 } : F(`MAX(0,-MIN(Grid!G2:G${last}))`, R.maxFill, 2), 'm'],
+    [],
+    ['Method: OGL and final surfaces are triangulated (TIN) and compared on the grid in sheet "Grid", clipped to the plot limit (edge cells by their area inside). Depth = OGL − final: positive = cut, negative = fill.']];
+  const pts = [[H('Source'), H('Point'), H(`Easting (${crsShort()})`), H('Northing'), H('OGL (m)'), H('Final (m)'), H('Cut + / Fill − (m)')]];
+  R.rows.forEach((r, i) => { const [E, N] = TX(r.E, r.N), rr = i + 2, fin = flat && r.src === 'OGL' ? F('Summary!$C$9', r.fin, 2) : { v: r.fin === r.fin ? +r.fin.toFixed(3) : '', s: 2 }; pts.push([r.src, String(r.id), { v: +E.toFixed(3), s: 2 }, { v: +N.toFixed(3), s: 2 }, { v: r.ogl === r.ogl ? +r.ogl.toFixed(3) : '', s: 2 }, fin, r.d === r.d ? F(`E${rr}-F${rr}`, r.d, 2) : '']); });
+  const lu = CF.limLL ? CF.limLL.map(p => toU(p[0], p[1])) : R.lim;
+  const lim = [[H('Corner'), H(`Easting (${crsShort()})`), H('Northing')]].concat(lu.map((q, i) => { const [E, N] = TX(q[0], q[1]); return [CF.limLL ? (CF.cornerNames[i] || `C${i + 1}`) : `C${i + 1}`, { v: +E.toFixed(3), s: 2 }, { v: +N.toFixed(3), s: 2 }]; }));
+  const sheets = [{ name: 'Summary', rows: sum, cols: [30, 4, 18, 44], merges: ['A23:D23'] }, { name: 'Points', rows: pts, cols: [9, 12, 16, 16, 11, 11, 16], freeze: 1, hdrRow: 1 }, { name: 'Limit', rows: lim, cols: [10, 16, 16], freeze: 1 }];
+  if (!tooBig) sheets.splice(1, 0, { name: 'Grid', rows: gridRows, cols: [8, 15, 15, 10, 10, 10, 14, 12, 12], freeze: 1, hdrRow: 1 });
+  const blob = await XL.build(sheets);
+  if (noCache === 'blob') return blob;
+  download(blob, cfBase() + '_cut_fill.xlsx'); status(`Excel downloaded – ${tooBig ? 'grid too large for formulas, values only' : `${fmt(n, 0)} grid cells with live formulas`}.`, 'ok');
+}
+function cfDXF() {
+  const R = CF.res; if (!R) return;
+  const h = Math.max(0.3, Math.sqrt(R.A) / 160), d = dxfWriter([['CF_LIMIT', 7], ['CF_ZERO', 7], ['CF_CUT', 1], ['CF_FILL', 5], ['CF_POINTS', 8], ['CF_DEPTH', 2], ['CF_TEXT', 7]], true);
+  d.pline('CF_LIMIT', R.lim, true);
+  R.conts.forEach(c => d.pline(c.elev === 0 ? 'CF_ZERO' : c.elev > 0 ? 'CF_CUT' : 'CF_FILL', c.pts, false));
+  R.rows.forEach(r => { d.circle('CF_POINTS', [r.E, r.N], h * 0.15); if (r.d === r.d) d.text('CF_DEPTH', r.E + h * 0.3, r.N + h * 0.2, h, cfSign(r.d).replace('−', '-')); d.text('CF_TEXT', r.E + h * 0.3, r.N - h * 1.1, h * 0.7, `${r.id} ${r.ogl === r.ogl ? r.ogl.toFixed(3) : ''}`); });
+  const lu = CF.limLL ? CF.limLL.map(p => toU(p[0], p[1])) : R.lim; lu.forEach((q, i) => d.text('CF_TEXT', q[0] + h, q[1] + h, h * 1.4, CF.limLL ? (CF.cornerNames[i] || `C${i + 1}`) : `C${i + 1}`));
+  const cx = R.lim.reduce((s, q) => s + q[0], 0) / R.lim.length, cy = Math.min(...R.lim.map(q => q[1])) - h * 4;
+  d.text('CF_TEXT', cx, cy, h * 1.3, `CUT ${R.cut.toFixed(2)} m3   FILL ${R.fill.toFixed(2)} m3   ${cfModeText(R).replace('×', 'x')}`, 0, 1);
+  d.save(cfBase() + '_cut_fill.dxf'); status('DXF downloaded: limit, zero line, cut/fill depth contours, points and depth labels.', 'ok');
+}
+function cfCSV() {
+  const R = CF.res; if (!R) return;
+  const L0 = [`Source,Point,Easting,Northing,OGL,Final,CutFill_m`]; R.rows.forEach(r => { const [E, N] = TX(r.E, r.N); L0.push([r.src, `"${String(r.id).replace(/"/g, '')}"`, E.toFixed(3), N.toFixed(3), r.ogl === r.ogl ? r.ogl.toFixed(3) : '', r.fin === r.fin ? r.fin.toFixed(3) : '', r.d === r.d ? r.d.toFixed(3) : ''].join(',')); });
+  download(new Blob(['﻿' + L0.join('\r\n')], { type: 'text/csv' }), cfBase() + '_cut_fill_points.csv');
+}
+// ---------- UI wiring ----------
+async function cfLoad(kind, f) {
+  try {
+    const { pts, fmt: fm } = cfParsePts(await cfReadText(f));
+    if (pts.length < 3) return status('No points with levels found – the file needs Point, Easting, Northing, Level columns.', 'err');
+    CF[kind] = pts; CF.res = null; cfInfo(); cfRender(); drawAll(); cfFit();
+    status(`${pts.length} ${kind === 'ogl' ? 'OGL' : 'final'} points loaded (${fm}).`, 'ok');
+  } catch (e) { status('Could not read file: ' + e.message, 'err'); }
+}
+$('cfOglFile').onchange = e => { if (e.target.files[0]) cfLoad('ogl', e.target.files[0]); e.target.value = ''; };
+$('cfFinFile').onchange = e => { if (e.target.files[0]) cfLoad('fin', e.target.files[0]); e.target.value = ''; };
+$('cfOglGo').onclick = () => cfLoad('ogl', { name: 'p.txt', text: async () => $('cfOglTxt').value });
+$('cfFinGo').onclick = () => cfLoad('fin', { name: 'p.txt', text: async () => $('cfFinTxt').value });
+$('cfOglClr').onclick = () => { CF.ogl = []; CF.res = null; cfInfo(); cfRender(); drawAll(); };
+$('cfFinClr').onclick = () => { CF.fin = []; CF.res = null; cfInfo(); cfRender(); drawAll(); };
+$('cfDraw').onclick = () => startDraw('cflimit');
+$('cfHull').onclick = () => { CF.limLL = null; CF.limName = 'Extent of OGL points'; CF.res = null; cfInfo(); drawAll(); };
+$('cfLimGo').onclick = () => {
+  const c = cfParseCorners($('cfLimTxt').value); if (c.length < 3) return status('Type at least 3 corners: Point, Easting, Northing.', 'err');
+  const ll = c.map(q => Math.abs(q.x) <= 90 && Math.abs(q.y) <= 180 ? [q.x, q.y] : fromProj(q.x, q.y));
+  cfSetLimit(ll, 'Plot limit', c.map(q => q.name));
+};
+$('cfPlot').onchange = () => { const p = S.vec.plots[+$('cfPlot').value]; if (p) cfSetLimit(p.ll, p.name); };
+$('cfMode').onchange = () => { CF.res = null; cfInfo(); cfRender(); drawAll(); };
+$('cfLevel').oninput = () => cfInfo();
+$('cfRun').onclick = cfCompute; $('cfPDF').onclick = cfPDF; $('cfXLSX').onclick = () => cfXLSX(); $('cfDXF').onclick = cfDXF; $('cfCSV').onclick = cfCSV;
+cfInfo(); cfRender();
+
+// ================= ROAD BRIEF – describe your road → typical section, feature layout, checklists, templates =================
+const BR = { p: null, tab: 'sec' };
+const BR_EX = [
+  ['Rural desert road', 'Rural road 6 km long across sandy desert between the farms and the main highway. 2 lanes, 80 km/h, trucks to the quarry. Crosses 2 wadis, one at 2+300. One junction with the highway at 0+000.'],
+  ['Urban street', 'Residential street inside the town, 2 lanes of 3.5 m with parking on both sides, 2 m footpaths, kerbs, street lighting, 40 km/h, 800 m long with 3 junctions. Water and power cables along the road.'],
+  ['Dual carriageway', 'Dual carriageway, 4 lanes, 100 km/h, 4 m median, 2.5 m shoulders, rolling terrain, 12 km, 2 roundabouts and 3 box culverts.'],
+  ['Farm track', 'Unpaved farm access track 1.5 km long, 6 m wide, flat sand, light traffic.']
+];
+const W2N = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, single: 1, a: 1, an: 1 };
+const brNum = s => s == null ? null : (W2N[s] != null ? W2N[s] : +s);
+function briefParse(raw) {
+  const t = ' ' + raw.toLowerCase().replace(/[–—]/g, '-').replace(/\s+/g, ' ') + ' ', found = [], notes = [];
+  const m = (re) => { const r = t.match(re); return r; };
+  const num = '(\\d+(?:\\.\\d+)?)', W = '(\\d+|one|two|three|four|five|six|seven|eight|a|an|single)';
+  const urbanRx = /urban|town|city|residential|villa|street|inside|community|district|market|school|mosque|neighbo|block|sector/, ruralRx = /rural|desert|farm|highway|open land|between|wadi|mountain|track|quarry|camp|oasis|link road|access road/;
+  const urbanScore = (t.match(new RegExp(urbanRx.source, 'g')) || []).length, ruralScore = (t.match(new RegExp(ruralRx.source, 'g')) || []).length;
+  const p = { type: urbanScore > ruralScore ? 'urban' : 'rural' };
+  found.push(['Road type', p.type === 'urban' ? 'Urban (inside town)' : 'Rural (open land)', urbanScore + ruralScore > 0]);
+  p.track = /track|unpaved|graded road|gravel road|earth road|sand road/.test(t);
+  p.dual = /dual|divided|median|(4|four|6|six|8|eight)[- ]?lanes?/.test(t);
+  let r = m(new RegExp(W + '[- ]?lanes?')); p.lanes = r ? brNum(r[1]) : (p.dual ? 4 : 2); if (p.track) p.lanes = r ? p.lanes : 2;
+  found.push(['Lanes', String(p.lanes), !!r]);
+  p.heavy = /truck|heavy|industrial|quarry|crusher|lorr|trailer|bus/.test(t);
+  r = m(new RegExp(num + ' ?k(?:m|ph)? ?(?:/ ?h|ph|mph)')) || m(new RegExp('speed (?:of |limit )?' + num)) || m(new RegExp(num + ' ?kmh'));
+  const main = /highway|main road|arterial|collector|link road|express/.test(t);
+  p.speed = r ? +r[1] : p.track ? 40 : p.type === 'urban' ? (main ? 60 : 40) : (main || p.dual ? 100 : 80);
+  found.push(['Design speed', p.speed + ' km/h', !!r]);
+  r = m(new RegExp('lanes? (?:width |of |wide )*' + num + ' ?m')) || m(new RegExp(num + ' ?m (?:wide )?lanes?'));
+  p.laneW = r ? +r[1] : p.track ? 3.0 : p.type === 'urban' ? (main || p.heavy ? 3.65 : 3.5) : 3.65;
+  found.push(['Lane width', p.laneW + ' m', !!r]);
+  r = m(new RegExp(num + ' ?m (?:wide )?(?:carriageway|road|track|pavement|asphalt)')) || m(new RegExp('(?:carriageway|road|track) (?:width )?(?:of )?' + num + ' ?m')) || m(new RegExp('width (?:of )?' + num + ' ?m'));
+  p.cw = r ? +r[1] : null;
+  if (p.cw && !p.dual) p.laneW = Math.round(p.cw / p.lanes * 100) / 100;
+  if (!p.cw) p.cw = Math.round((p.dual ? p.lanes / 2 : p.lanes) * p.laneW * 100) / 100;
+  found.push([p.dual ? 'Carriageway (each side)' : 'Carriageway', p.cw + ' m', !!r]);
+  r = m(new RegExp('median (?:width |of )*' + num + ' ?m')) || m(new RegExp(num + ' ?m (?:wide )?median'));
+  p.median = p.dual ? (r ? +r[1] : p.type === 'urban' ? 2.0 : 4.0) : 0; if (p.dual) found.push(['Median', p.median + ' m', !!r]);
+  r = m(new RegExp('shoulders? (?:width |of )*' + num + ' ?m')) || m(new RegExp(num + ' ?m (?:wide )?(?:paved )?shoulders?'));
+  p.shoulder = p.type === 'urban' ? 0 : r ? +r[1] : p.track ? 0.5 : p.speed >= 80 ? 2.5 : 1.5; if (p.type !== 'urban') found.push(['Shoulders', p.shoulder + ' m', !!r]);
+  r = m(new RegExp('(?:foot ?paths?|sidewalks?|walkways?) (?:width |of )*' + num + ' ?m')) || m(new RegExp(num + ' ?m (?:wide )?(?:foot ?paths?|sidewalks?|walkways?)'));
+  p.fp = /no (?:foot ?path|sidewalk)/.test(t) ? 0 : r ? +r[1] : p.type === 'urban' ? 2.0 : 0; if (p.type === 'urban' || r) found.push(['Footpaths', p.fp ? p.fp + ' m' : 'none', !!r]);
+  p.kerb = p.type === 'urban' && !/no kerb|no curb/.test(t) ? 0.15 : 0;
+  p.parking = /parking/.test(t) && !/no parking/.test(t) ? 2.5 : 0; if (p.parking) found.push(['Parking lanes', '2.5 m each side', true]);
+  p.terrain = /mountain|hilly|steep/.test(t) ? 'mountainous' : /rolling|undulat|dunes?/.test(t) ? 'rolling' : 'flat'; found.push(['Terrain', p.terrain, /mountain|hilly|steep|rolling|undulat|dune|flat|level/.test(t)]);
+  p.soil = /rock|stone|gatch|hard/.test(t) ? 'rock' : /sand|dune|desert/.test(t) ? 'sand' : 'normal'; found.push(['Ground', p.soil === 'normal' ? 'not stated' : p.soil, p.soil !== 'normal']);
+  p.gmax = p.type === 'urban' ? 6 : { flat: p.speed >= 100 ? 3 : 4, rolling: 5, mountainous: 7 }[p.terrain];
+  p.fillS = p.soil === 'sand' ? 4 : p.speed >= 80 ? 3 : 2; p.cutS = p.soil === 'rock' ? 0.5 : p.soil === 'sand' ? 3 : 1.5;
+  p.minFill = p.type === 'urban' ? 0.15 : p.soil === 'sand' ? 0.6 : 0.5;
+  p.camber = p.track ? 4 : 2.5; p.shS = 4; p.fpS = 2;
+  p.R = (SPEED[p.speed] || SPEED[[30, 40, 50, 60, 80, 100, 120].reduce((a, b) => Math.abs(b - p.speed) < Math.abs(a - p.speed) ? b : a)]).R;
+  r = m(new RegExp(num + ' ?(?:km(?! ?/ ?h)(?!ph)(?!h)|kilomet)')); const r2 = m(new RegExp(num + ' ?m(?:etres|eters)? long')) || m(new RegExp('length (?:of )?' + num + ' ?m'));
+  p.length = r ? +r[1] * 1000 : r2 ? +r2[1] : (RD.ali ? Math.round(RD.ali.L) : null); found.push(['Length', p.length ? fmt(p.length, 0) + ' m' : 'not stated', !!(r || r2)]);
+  // features with chainages
+  const chs = kind => { const out = [], re = new RegExp('(' + kind + ')[^.;]*?(\\d+)\\+(\\d{3}(?:\\.\\d+)?)', 'g'); let q; while ((q = re.exec(t))) out.push(+q[2] * 1000 + +q[3]); return out; };
+  const cnt = kind => { const q = t.match(new RegExp(W + ' (?:\\w+ ){0,2}(?:' + kind + ')')); return q ? brNum(q[1]) : (new RegExp(kind).test(t) ? 1 : 0); };
+  p.wadis = Math.max(cnt('wadis?|valleys?|flood|drainage crossings?'), chs('wadi').length);
+  p.culverts = Math.max(cnt('box culverts?|pipe culverts?|culverts?'), chs('culvert').length);
+  p.bridges = Math.max(cnt('bridges?'), chs('bridge').length);
+  p.junctions = Math.max(cnt('junctions?|intersections?|t-junctions?|crossroads'), chs('junction|intersection').length);
+  p.roundabouts = Math.max(cnt('roundabouts?'), chs('roundabout').length);
+  p.chJ = chs('junction|intersection'); p.chR = chs('roundabout'); p.chW = chs('wadi|culvert|bridge');
+  if (p.wadis || p.culverts) found.push(['Wadi / culverts', `${p.wadis} wadi, ${p.culverts} culvert(s)`, true]);
+  if (p.junctions || p.roundabouts) found.push(['Junctions', `${p.junctions} junction(s), ${p.roundabouts} roundabout(s)`, true]);
+  const lRx = /street ?light|lighting|lamp|illuminat|light ?poles?|lit road/; p.lighting = lRx.test(t) ? !/no (?:street ?)?light/.test(t) : p.type === 'urban'; found.push(['Street lighting', p.lighting ? 'yes' : 'no', lRx.test(t)]);
+  p.utilities = ['water', 'sewer', 'power', 'electric', 'telecom', 'gas', 'irrigation', 'storm'].filter(u => t.includes(u)).map(u => u === 'electric' ? 'power' : u);
+  if (p.utilities.length) found.push(['Utilities', p.utilities.join(', '), true]);
+  p.layers = p.track ? [['Compacted granular wearing course', 200], ['Compacted subgrade', 300]] : p.heavy || p.speed >= 100 ? [['Asphalt wearing course', 50], ['Asphalt binder course', 70], ['Crushed aggregate base', 250], ['Granular sub-base', 250]] : [['Asphalt wearing course', 50], ['Crushed aggregate base', 200], ['Granular sub-base', 200]];
+  if (p.heavy) found.push(['Traffic', 'heavy vehicles', true]);
+  notes.push('Values not stated in the description are typical starting values – check them against the client’s road design standard before use.');
+  if (p.speed >= 80 && p.fillS < 3) notes.push('At 80 km/h and above, side slopes of 1:3 or flatter (or guardrail) are usual for safety.');
+  if (p.soil === 'sand') notes.push('In sand, keep the road at least 0.5–0.6 m above ground and flatten slopes to limit sand drift.');
+  p.found = found; p.notes = notes; return p;
+}
+// ---- cross-section geometry (metres; x right of CL, y up from CL level) ----
+function briefGeom(p) {
+  const segs = [], dims = [], lab = [], h = p.type === 'urban' ? 0 : 1.0; let x = 0, y = 0;
+  const add = (w, dy, kind, name) => { const s = { x0: x, y0: y, x1: x + w, y1: y + dy, kind, name }; segs.push(s); if (name) dims.push([x, x + w, name, w]); x += w; y += dy; return s; };
+  if (p.dual) { add(p.median / 2, 0, 'median', 'Median'); y = 0; }
+  const half = p.dual ? p.cw : p.cw / 2, nl = p.dual ? p.lanes / 2 : p.lanes / 2;
+  for (let i = 0; i < Math.max(1, Math.round(nl)); i++) add(half / Math.max(1, Math.round(nl)), -half / Math.max(1, Math.round(nl)) * p.camber / 100, 'lane', p.track ? 'Track' : 'Lane');
+  if (p.type === 'urban') {
+    if (p.parking) add(p.parking, -p.parking * p.camber / 100, 'parking', 'Parking');
+    if (p.kerb) { segs.push({ x0: x, y0: y, x1: x, y1: y + p.kerb, kind: 'kerb' }); y += p.kerb; add(0.15, 0, 'kerbtop', ''); dims.push([x - 0.15, x, 'Kerb', 0.15]); }
+    if (p.fp) add(p.fp, p.fp * p.fpS / 100, 'fp', 'Footpath');
+    add(1.5, 0, 'verge', '');
+  } else {
+    if (p.shoulder) add(p.shoulder, -p.shoulder * p.shS / 100, 'shoulder', 'Shoulder');
+    const drop = y + h; add(drop * p.fillS, -drop, 'slope', ''); lab.push(['1:' + p.fillS, x - drop * p.fillS / 2, y + drop / 2 + 0.25]);
+    add(3, 0, 'ground', '');
+  }
+  return { segs, dims, lab, h, W: x };
+}
+function briefSVG(p, wpx = 900) {
+  const g = briefGeom(p), ex = 3, padX = 30, sc = (wpx - 2 * padX) / (2 * g.W), tot0 = p.layers.reduce((s, l) => s + l[1], 0) / 1000, ybot = g.h + tot0 + 0.45, hpx = Math.round(90 + ybot * sc * ex + 46 + 16 * p.layers.length + 20);
+  const X = x => wpx / 2 + x * sc, Y = y => 90 - y * sc * ex;
+  const mir = s => [s, { ...s, x0: -s.x0, x1: -s.x1 }];
+  let o = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${wpx} ${hpx}" width="${wpx}" height="${hpx}" font-family="Arial" font-size="12"><rect width="100%" height="100%" fill="#fff"/>`;
+  // ground
+  const gy = -g.h;
+  o += `<rect x="0" y="${Y(gy)}" width="${wpx}" height="${hpx - Y(gy)}" fill="${p.type === 'urban' ? '#e9e4da' : '#f3e3bf'}"/>`;
+  // pavement layers under carriageway (+shoulder)
+  const tot = p.layers.reduce((s, l) => s + l[1], 0) / 1000;
+  const top = g.segs.filter(s => ['lane', 'parking', 'median', 'shoulder'].includes(s.kind));
+  const pave = top.filter(s => s.kind !== 'median');
+  let dd = 0; const lcol = ['#3b3b3b', '#5b5b5b', '#b9a27a', '#d8c79c', '#e6dcc0'];
+  p.layers.forEach((L0, li) => { const t0 = dd, t1 = dd + L0[1] / 1000; dd = t1; const poly = s => [[s.x0, s.y0 - t0], [s.x1, s.y1 - t0], [s.x1, s.y1 - t1], [s.x0, s.y0 - t1]];
+    pave.flatMap(mir).forEach(s => { o += `<polygon points="${poly(s).map(q => X(q[0]) + ',' + Y(q[1])).join(' ')}" fill="${p.track ? (li ? '#d8c79c' : '#c8b48a') : lcol[li]}" stroke="none"/>`; }); });
+  // side fill / footpath body
+  g.segs.flatMap(mir).forEach(s => {
+    if (s.kind === 'slope') o += `<polygon points="${X(s.x0)},${Y(s.y0 - tot)} ${X(s.x0)},${Y(s.y0)} ${X(s.x1)},${Y(s.y1)}" fill="#d9c08b"/><line x1="${X(s.x0)}" y1="${Y(s.y0)}" x2="${X(s.x1)}" y2="${Y(s.y1)}" stroke="#7a5a1e" stroke-width="2"/>`;
+    if (s.kind === 'fp' || s.kind === 'verge') o += `<polygon points="${X(s.x0)},${Y(s.y0)} ${X(s.x1)},${Y(s.y1)} ${X(s.x1)},${Y(s.y1 - 0.25)} ${X(s.x0)},${Y(s.y0 - 0.25)}" fill="${s.kind === 'fp' ? '#c9c9c9' : '#cfe3b5'}" stroke="#777"/>`;
+    if (s.kind === 'kerbtop') o += `<rect x="${Math.min(X(s.x0), X(s.x1))}" y="${Y(s.y0)}" width="${Math.abs(X(s.x1) - X(s.x0))}" height="${(p.kerb + 0.3) * sc * ex}" fill="#9e9e9e" stroke="#555"/>`;
+    if (s.kind === 'median' && p.type === 'urban') o += `<polygon points="${X(s.x0)},${Y(0.15)} ${X(s.x1)},${Y(0.15)} ${X(s.x1)},${Y(-0.2)} ${X(s.x0)},${Y(-0.2)}" fill="#cfe3b5" stroke="#777"/>`;
+    if (['lane', 'parking', 'shoulder', 'median'].includes(s.kind)) o += `<line x1="${X(s.x0)}" y1="${Y(s.y0)}" x2="${X(s.x1)}" y2="${Y(s.y1)}" stroke="${s.kind === 'median' ? '#8d7a4a' : '#111'}" stroke-width="2.5"/>`;
+  });
+  // lane markings
+  g.segs.filter(s => s.kind === 'lane').forEach((s, i, a) => { if (i < a.length - 1 || (!p.dual && i === -1)) [s.x1, -s.x1].forEach(xx => o += `<rect x="${X(xx) - 2}" y="${Y(s.y1) - 4}" width="4" height="4" fill="#fff"/>`); });
+  // CL
+  o += `<line x1="${X(0)}" y1="22" x2="${X(0)}" y2="${Y(gy) + 20}" stroke="#d32f2f" stroke-dasharray="8 4 2 4"/><text x="${X(0) + 4}" y="20" fill="#d32f2f" font-weight="bold">CL</text>`;
+  // dimensions chain
+  const dimY = 48; g.dims.flatMap(d => [d, [-d[1], -d[0], d[2], d[3]]]).forEach(d => { const a = X(d[0]), b = X(d[1]); o += `<line x1="${a}" y1="${dimY}" x2="${b}" y2="${dimY}" stroke="#0F2A3F"/><line x1="${a}" y1="${dimY - 5}" x2="${a}" y2="${dimY + 5}" stroke="#0F2A3F"/><line x1="${b}" y1="${dimY - 5}" x2="${b}" y2="${dimY + 5}" stroke="#0F2A3F"/>`; if (Math.abs(b - a) > 26) o += `<text x="${(a + b) / 2}" y="${dimY - 6}" text-anchor="middle" fill="#0F2A3F" font-size="11">${d[3]}</text><text x="${(a + b) / 2}" y="${dimY + 15}" text-anchor="middle" fill="#55636e" font-size="10">${d[2]}</text>`; });
+  // labels
+  const lane0 = g.segs.find(s => s.kind === 'lane');
+  if (lane0) o += `<text x="${X((lane0.x0 + lane0.x1) / 2)}" y="${Y(lane0.y0) - 12}" text-anchor="middle" font-size="11" fill="#333">← ${p.camber}%</text>`;
+  g.lab.forEach(l => [1, -1].forEach(sg => o += `<text x="${X(sg * l[1])}" y="${Y(l[2])}" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5a1e">${l[0]}</text>`));
+  if (g.h) o += `<text x="${X(g.W) - 4}" y="${Y(gy) - 6}" text-anchor="end" font-size="10" fill="#7a5a1e">existing ground (example fill ${g.h} m)</text>`;
+  // layer legend
+  let ly = Y(-ybot) + 30; o += `<text x="${padX}" y="${ly}" font-weight="bold" fill="#0F2A3F">Pavement (typical – confirm by pavement design)</text>`;
+  p.layers.forEach((L0, i) => { ly += 16; o += `<rect x="${padX}" y="${ly - 10}" width="14" height="10" fill="${p.track ? (i ? '#d8c79c' : '#c8b48a') : lcol[i]}"/><text x="${padX + 20}" y="${ly}" font-size="11">${L0[1]} mm ${L0[0]}</text>`; });
+  o += `<text x="${wpx - padX}" y="${hpx - 10}" text-anchor="end" font-size="10" fill="#55636e">Total width ${(2 * g.W).toFixed(2)} m shown · vertical scale ×${ex}</text></svg>`;
+  return o;
+}
+// ---- feature layout (schematic strip plan) ----
+function briefFeatures(p) {
+  const Lr = p.length || 1000, F = [], put = (ch, item, side, note, kind) => F.push({ ch: Math.max(0, Math.min(Lr, ch)), item, side, note, kind });
+  put(0, 'Start of road', 'CL', 'Tie in to existing road / boundary – survey 50 m beyond', 'start'); put(Lr, 'End of road', 'CL', 'Tie in – survey 50 m beyond', 'end');
+  const spread = (n, given) => given.length >= n ? given : given.concat(Array.from({ length: n - given.length }, (_, i) => Lr * (i + 1) / (n - given.length + 1)));
+  spread(p.junctions, p.chJ).forEach((c, i) => { put(c, 'Junction', 'L/R', p.chJ[i] != null ? 'location given' : 'proposed – confirm location', 'junction'); put(c - 100, 'Warning sign (junction ahead)', 'R', '~100 m before', 'sign'); put(c + 100, 'Warning sign (junction ahead)', 'L', '~100 m before (other direction)', 'sign'); });
+  spread(p.roundabouts, p.chR).forEach(c => { put(c, 'Roundabout', 'CL', 'island diameter per standard', 'round'); put(c - 150, 'Roundabout ahead sign', 'R', '', 'sign'); });
+  const nW = Math.max(p.wadis, p.culverts, p.bridges); spread(nW, p.chW).forEach((c, i) => { put(c, p.bridges > i ? 'Bridge' : p.speed >= 80 || p.heavy ? 'Box culvert' : 'Pipe culvert', 'CL', p.chW[i] != null ? 'location given – check low point on site' : 'proposed at wadi/low point – locate from levels', 'culvert'); if (p.type !== 'urban' && p.speed >= 80) put(c, 'Guardrail both sides', 'L/R', '~30 m each side of the structure', 'guard'); });
+  if (p.lighting) { const sp = p.type === 'urban' ? 35 : 50; for (let c = sp / 2; c < Lr; c += sp) put(c, 'Street light', p.dual ? 'Median' : (Math.round(c / sp) % 2 ? 'L' : 'R'), `spacing ~${sp} m (typical)`, 'light'); }
+  if (p.type !== 'urban' && Lr >= 1000) for (let c = 1000; c < Lr; c += 1000) put(c, 'Km post', 'R', fmtCh(c), 'km');
+  put(Math.min(150, Lr * 0.1), `Speed limit sign ${p.speed} km/h`, 'R', 'after start', 'sign');
+  p.utilities.forEach((u, i) => put(Lr * (0.2 + 0.15 * i), `${u[0].toUpperCase() + u.slice(1)} line (existing / proposed)`, 'along', 'locate & level exposed points; keep in verge/corridor', 'util'));
+  return F.sort((a, b) => a.ch - b.ch);
+}
+function briefLayoutSVG(p, F, wpx = 900) {
+  const Lr = p.length || 1000, pad = 40, X = ch => pad + ch / Lr * (wpx - 2 * pad), H = 210, cy = 105, rw = 22;
+  let o = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${wpx} ${H}" width="${wpx}" height="${H}" font-family="Arial" font-size="11"><rect width="100%" height="100%" fill="#fff"/>`;
+  o += `<rect x="${X(0)}" y="${cy - rw}" width="${X(Lr) - X(0)}" height="${2 * rw}" fill="${p.track ? '#d8c79c' : '#4a4a4a'}"/>`;
+  if (p.dual) o += `<rect x="${X(0)}" y="${cy - 3}" width="${X(Lr) - X(0)}" height="6" fill="#9ccc65"/>`; else o += `<line x1="${X(0)}" y1="${cy}" x2="${X(Lr)}" y2="${cy}" stroke="#fff" stroke-dasharray="10 8" stroke-width="2"/>`;
+  const st = G.niceStep(Lr / 8); for (let c = 0; c <= Lr + 1e-6; c += st) o += `<line x1="${X(c)}" y1="${cy + rw}" x2="${X(c)}" y2="${cy + rw + 8}" stroke="#333"/><text x="${X(c)}" y="${cy + rw + 20}" text-anchor="middle" font-size="10">${fmtCh(c).replace(/\.00$/, '')}</text>`;
+  const sym = { start: '#2e7d32', end: '#c62828', junction: '#6a1b9a', round: '#6a1b9a', culvert: '#1565c0', guard: '#757575', light: '#f9a825', km: '#455a64', sign: '#ef6c00', util: '#00838f' };
+  F.forEach(f => {
+    const x = X(f.ch), up = f.side === 'L' || f.side === 'Median', col = sym[f.kind] || '#333';
+    if (f.kind === 'junction') o += `<rect x="${x - 7}" y="${cy - rw - 40}" width="14" height="40" fill="#4a4a4a"/><text x="${x}" y="${cy - rw - 46}" text-anchor="middle" fill="${col}" font-weight="bold">J</text>`;
+    else if (f.kind === 'round') o += `<circle cx="${x}" cy="${cy}" r="${rw + 6}" fill="none" stroke="#4a4a4a" stroke-width="8"/><circle cx="${x}" cy="${cy}" r="${rw - 8}" fill="#9ccc65"/>`;
+    else if (f.kind === 'culvert') o += `<rect x="${x - 5}" y="${cy - rw - 14}" width="10" height="${2 * rw + 28}" fill="none" stroke="${col}" stroke-width="3"/><text x="${x}" y="${cy + rw + 34}" text-anchor="middle" fill="${col}" font-weight="bold">C</text>`;
+    else if (f.kind === 'light') o += `<circle cx="${x}" cy="${f.side === 'Median' ? cy : up ? cy - rw - 6 : cy + rw + 6}" r="3" fill="${col}"/>`;
+    else if (f.kind === 'start' || f.kind === 'end') o += `<line x1="${x}" y1="${cy - rw - 16}" x2="${x}" y2="${cy + rw + 8}" stroke="${col}" stroke-width="3"/><text x="${x}" y="${cy - rw - 20}" text-anchor="middle" fill="${col}" font-weight="bold">${f.kind === 'start' ? 'START' : 'END'}</text>`;
+    else if (f.kind === 'sign') o += `<polygon points="${x},${up ? cy - rw - 18 : cy + rw + 4} ${x - 5},${up ? cy - rw - 9 : cy + rw + 13} ${x + 5},${up ? cy - rw - 9 : cy + rw + 13}" fill="${col}"/>`;
+    else if (f.kind === 'guard') o += `<line x1="${x - 12}" y1="${cy - rw - 3}" x2="${x + 12}" y2="${cy - rw - 3}" stroke="${col}" stroke-width="3"/><line x1="${x - 12}" y1="${cy + rw + 3}" x2="${x + 12}" y2="${cy + rw + 3}" stroke="${col}" stroke-width="3"/>`;
+    else if (f.kind === 'km') o += `<rect x="${x - 2}" y="${cy + rw + 2}" width="4" height="9" fill="${col}"/>`;
+    else if (f.kind === 'util') o += `<line x1="${X(0)}" y1="${cy - rw - 26 - 6 * p.utilities.indexOf(f.item.split(' ')[0].toLowerCase())}" x2="${X(Lr)}" y2="${cy - rw - 26 - 6 * p.utilities.indexOf(f.item.split(' ')[0].toLowerCase())}" stroke="${col}" stroke-dasharray="4 3"/>`;
+  });
+  const leg = [['J', 'junction', sym.junction], ['C', 'culvert / bridge', sym.culvert], ['▲', 'sign', sym.sign], ['●', 'street light', sym.light]].concat(p.utilities.length ? [['- -', 'utility', sym.util]] : []);
+  let lx = pad; leg.forEach(l => { o += `<text x="${lx}" y="${H - 8}" fill="${l[2]}" font-weight="bold">${l[0]}</text><text x="${lx + 18}" y="${H - 8}" fill="#333">${l[1]}</text>`; lx += 130; });
+  return o + `<text x="${wpx - pad}" y="18" text-anchor="end" font-size="10" fill="#55636e">Schematic – not to scale across the road · length ${fmt(Lr, 0)} m</text></svg>`;
+}
+function briefChecklists(p) {
+  const g = briefGeom(p), edge = p.dual ? p.median / 2 + p.cw : p.cw / 2, outer = Math.ceil(g.W - 3 + (p.type === 'urban' ? 0 : 2));
+  const survey = [
+    `Control: at least 2 benchmarks per km tied to the national/municipal network; check-shoot a known point every set-up.`,
+    `Cross sections every ${p.type === 'urban' ? 10 : 20} m and at every change of ground: CL, edges (±${edge.toFixed(2)} m) and up to ±${outer} m to cover the whole work area.`,
+    p.wadis || p.culverts ? `Wadi / culvert sites: bed levels 50 m upstream and downstream, bank tops, high-water marks, existing pipes (invert, size).` : null,
+    p.junctions || p.roundabouts ? `Junction tie-ins: existing road edges, kerbs and levels 50 m along each connecting road.` : null,
+    p.type === 'urban' ? `Plot boundaries, fences, gates, building entrances and finished floor levels along both sides.` : `Fences, farms, tracks and anything inside the road corridor.`,
+    p.utilities.length ? `Utilities (${p.utilities.join(', ')}): manholes, valves, poles, markers – position, cover and invert levels.` : `Look for utility markers, manholes, poles and cables along the corridor.`,
+    `Trees, poles, signs, structures and other obstructions within ±${outer} m.`,
+    `Photos at every 100 m, every structure and every junction (with chainage written in the field book).`
+  ].filter(Boolean);
+  const design = [
+    `Horizontal curves: radius ≥ ${p.R} m for ${p.speed} km/h (typical minimum).`,
+    `Vertical curves: crest K ≥ ${(SPEED[p.speed] || SPEED[60]).Kc}, sag K ≥ ${(SPEED[p.speed] || SPEED[60]).Ks}; max. grade ${p.gmax}% (${p.terrain} terrain).`,
+    `Camber ${p.camber}% ${p.type === 'urban' ? '' : `· shoulders ${p.shS}%`} · minimum longitudinal grade 0.3–0.5% where there are kerbs (drainage).`,
+    p.type === 'urban' ? `Kerb height ${p.kerb} m · footpath crossfall ${p.fpS}% towards the road · ramps at crossings.` : `Side slopes fill 1:${p.fillS}, cut 1:${p.cutS}; road ≥ ${p.minFill} m above ground.`,
+    p.wadis || p.culverts ? `Culverts sized by hydrology; road level above design flood; scour protection at inlets/outlets.` : null,
+    p.junctions || p.roundabouts ? `Junctions: sight triangles clear, turning radii for the design vehicle${p.heavy ? ' (trucks / trailers)' : ''}.` : null,
+    p.lighting ? `Lighting design per authority standard (poles ${p.type === 'urban' ? '~35' : '~50'} m typical).` : null,
+    `Check the whole design against the client’s standard (e.g. Abu Dhabi / municipality road manual) – values here are typical starting points.`
+  ].filter(Boolean);
+  return { survey, design, edge, outer };
+}
+function briefPhotoLinks(p) {
+  const base = q => 'https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(q), list = [];
+  const kind = p.track ? 'unpaved desert track' : p.dual ? 'dual carriageway with median' : p.type === 'urban' ? `residential street${p.parking ? ' with parking' : ''}${p.fp ? ' and footpath' : ''}` : `two lane rural road${p.shoulder ? ' with shoulders' : ''}`;
+  list.push([`Similar road: ${kind}`, base(`${kind} UAE`)]);
+  list.push(['Typical cross-section drawings', base(`${kind} typical cross section drawing`)]);
+  if (p.wadis || p.culverts) list.push(['Box culvert under road', base('box culvert under desert road wadi')]);
+  if (p.roundabouts) list.push(['Roundabout layout', base('single lane roundabout layout plan')]);
+  if (p.junctions) list.push(['T-junction layout', base('T junction road layout plan')]);
+  if (p.lighting) list.push(['Street lighting on roads', base(`${p.type === 'urban' ? 'residential street' : 'rural road'} street lighting poles`)]);
+  if (p.type === 'urban' && p.kerb) list.push(['Kerb & footpath details', base('kerb and footpath detail drawing')]);
+  return list;
+}
+function briefIllustration(p, wpx = 900, hpx = 380) {   // simple perspective sketch drawn from the section
+  const g = briefGeom(p), vx = wpx / 2, vy = hpx * 0.38, bw = wpx * 0.95, sc = bw / (2 * g.W), Yb = hpx;
+  const P = (x, f) => [vx + (x * sc) * f, vy + (Yb - vy) * f];   // f = 1 near, →0 at horizon
+  const strip = (x0, x1, col) => { const a = P(x0, 1), b = P(x1, 1), c = P(x1, 0.02), d = P(x0, 0.02); return `<polygon points="${[a, b, c, d].map(q => q.join(',')).join(' ')}" fill="${col}"/>`; };
+  let o = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${wpx} ${hpx}" width="${wpx}" height="${hpx}"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fc3ea"/><stop offset="1" stop-color="#e8f3fb"/></linearGradient></defs><rect width="${wpx}" height="${vy}" fill="url(#sk)"/>`;
+  o += `<rect y="${vy}" width="${wpx}" height="${hpx - vy}" fill="${p.type === 'urban' ? '#d9d4c7' : '#ecd6a4'}"/>`;
+  if (p.type === 'urban') for (let i = 0; i < 7; i++) { const s = 0.18 + i * 0.12, h = 40 + (i * 37 % 60); [-1, 1].forEach(sg => { const [x, y] = P(sg * (g.W + 2), s); o += `<rect x="${sg > 0 ? x : x - 60 * s * 3}" y="${y - h * s * 3}" width="${60 * s * 3}" height="${h * s * 3}" fill="${['#e8dcc4', '#d7c9ad', '#efe6d2'][i % 3]}" stroke="#b9a988"/>`; }); }
+  else o += `<path d="M0 ${vy} Q ${wpx * 0.2} ${vy - 18} ${wpx * 0.4} ${vy} T ${wpx} ${vy}" fill="#e3c98f"/>`;
+  g.segs.flatMap(s => [s, { ...s, x0: -s.x1, x1: -s.x0 }]).forEach(s => {
+    const col = { lane: p.track ? '#cdb487' : '#4b4b4b', parking: '#5a5a5a', shoulder: p.track ? '#d9c39a' : '#6b6b6b', median: p.type === 'urban' ? '#8bc34a' : '#c9b27f', fp: '#c7c3bb', kerbtop: '#bdbdbd', slope: '#dcc28b', verge: '#a5c78a', ground: 'none' }[s.kind];
+    if (col && col !== 'none' && s.x1 !== s.x0) o += strip(Math.min(s.x0, s.x1), Math.max(s.x0, s.x1), col);
+  });
+  if (!p.track) { const lanes = g.segs.filter(s => s.kind === 'lane'); const marks = p.dual ? [] : [0]; lanes.slice(0, -1).forEach(s => marks.push(s.x1, -s.x1)); marks.forEach(xm => { for (let f = 0.05; f < 1; f *= 1.45) { const a = P(xm, f), b = P(xm, Math.min(1, f * 1.2)); o += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#fff" stroke-width="${Math.max(1, 5 * f)}"/>`; } });
+    const ed = (p.dual ? p.median / 2 + p.cw : p.cw / 2) - 0.2; [ed, -ed].forEach(xm => { const a = P(xm, 1), b = P(xm, 0.02); o += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#fff" stroke-width="3"/>`; }); }
+  if (p.lighting) for (let f = 0.12; f < 1; f *= 1.5) [-1, 1].forEach(sg => { if (p.dual && sg > 0) return; const xm = p.dual ? 0 : sg * (g.W - (p.type === 'urban' ? 1.6 : 2.5)), [x, y] = P(xm, f), h = 9 * sc * f; o += `<line x1="${x}" y1="${y}" x2="${x}" y2="${y - h}" stroke="#555" stroke-width="${Math.max(1, 3 * f)}"/><line x1="${x}" y1="${y - h}" x2="${x - sg * h * 0.25}" y2="${y - h}" stroke="#555" stroke-width="${Math.max(1, 3 * f)}"/><circle cx="${x - sg * h * 0.25}" cy="${y - h + 2}" r="${Math.max(1.5, 4 * f)}" fill="#ffe082"/>`; });
+  if (p.wadis || p.culverts) { const [x, y] = P(-(g.W - 1), 0.45), w = 70 * 0.45 * 2; o += `<rect x="${x - w}" y="${y - 10}" width="${w}" height="20" fill="#9e9e9e" stroke="#616161"/><rect x="${x - w + 8}" y="${y - 4}" width="${w / 3}" height="12" fill="#37474f"/>`; }
+  return o + `<text x="10" y="${hpx - 10}" font-family="Arial" font-size="11" fill="#333" opacity=".8">Illustration of the described road (not to scale)</text></svg>`;
+}
+// ---- render / apply / export ----
+function briefRender() {
+  const p = BR.p, box = $('brOut'); if (!p) { box.innerHTML = '<div class="hint" style="padding:30px;text-align:center">Describe the road on the left and press <b>Analyse</b>.</div>'; return; }
+  $('brFound').innerHTML = `<table class="cftbl">${p.found.map(f => `<tr><td>${f[0]}</td><td style="text-align:right">${esc(f[1])} ${f[2] ? '<span title="from your description" style="color:#2e7d32">✓</span>' : '<span title="typical value – not in your description" style="color:#b26a00">≈</span>'}</td></tr>`).join('')}</table><div class="hint">✓ read from your text · ≈ typical value assumed</div>`;
+  const F = briefFeatures(p), C = briefChecklists(p);
+  document.querySelectorAll('#brTabs button').forEach(b => b.classList.toggle('on', b.dataset.t === BR.tab));
+  if (BR.tab === 'sec') box.innerHTML = `<div class="brfig">${briefSVG(p)}</div><div class="btns"><button class="btn alt" id="brSecDXF">⬇ Cross-section DXF</button><button class="btn alt" id="brSecSVG">⬇ SVG</button></div>`;
+  if (BR.tab === 'lay') box.innerHTML = `<div class="brfig">${briefLayoutSVG(p, F)}</div><table class="cftbl"><tr><td><b>Chainage</b></td><td><b>Item</b></td><td><b>Side</b></td><td><b>Note</b></td></tr>${F.filter(f => f.kind !== 'light').map(f => `<tr><td>${fmtCh(f.ch)}</td><td>${esc(f.item)}</td><td>${f.side}</td><td>${esc(f.note)}</td></tr>`).join('')}${p.lighting ? `<tr><td colspan="4">+ ${F.filter(f => f.kind === 'light').length} street lights</td></tr>` : ''}</table>
+    <div class="btns"><button class="btn alt" id="brFeatReg" ${RD.ali ? '' : 'disabled title="Run the road study first"'}>＋ Add junctions &amp; culverts to the features register</button></div>`;
+  if (BR.tab === 'chk') box.innerHTML = `<h4>Field survey checklist</h4><ol>${C.survey.map(s => `<li>${esc(s)}</li>`).join('')}</ol><h4>Design checklist</h4><ol>${C.design.map(s => `<li>${esc(s)}</li>`).join('')}</ol><h4>Notes</h4><ul>${p.notes.map(s => `<li>${esc(s)}</li>`).join('')}</ul>`;
+  if (BR.tab === 'tpl') box.innerHTML = `<p>Use the description to set up the program and your field templates:</p>
+    <div class="brtpl"><button class="btn amber" id="brApply">✓ Apply to Design criteria</button><span>Road type, speed, radius, widths, camber, shoulders / kerbs / footpaths, slopes, max. grade and height above ground.</span></div>
+    <div class="brtpl"><button class="btn" id="brOff">✓ Apply offsets to stake-out</button><span>L2 / L1 / CL / R1 / R2 = ±${C.outer} m, ±${C.edge.toFixed(2)} m (edges) and station interval ${p.type === 'urban' ? 10 : 20} m.</span></div>
+    <div class="brtpl"><button class="btn alt" id="brBook">⬇ Level book template (Excel)</button><span>Every station ${p.length ? `0+000 → ${fmtCh(p.length)}` : '(1 km)'} with the 5 offsets – just type the levels in the field, then import it.</span></div>
+    <div class="brtpl"><button class="btn alt" id="brPDF">⬇ Road brief (PDF)</button><span>Description, parameters, typical cross-section, feature layout and checklists – to send to the engineer or client.</span></div>`;
+  if (BR.tab === 'pic') box.innerHTML = `<div class="brfig">${briefIllustration(p)}</div><h4>See real examples on the web</h4><ul>${briefPhotoLinks(p).map(l => `<li><a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a></li>`).join('')}</ul><div class="hint">Photos open in a new tab from a web image search – they belong to their owners, so use them for reference only.</div><div class="btns"><button class="btn alt" id="brPicSVG">⬇ Illustration (SVG)</button></div>`;
+  const on = (id, fn) => { const e = $(id); if (e) e.onclick = fn; };
+  on('brSecDXF', briefSecDXF); on('brSecSVG', () => download(new Blob([briefSVG(p)], { type: 'image/svg+xml' }), 'typical_cross_section.svg'));
+  on('brPicSVG', () => download(new Blob([briefIllustration(p)], { type: 'image/svg+xml' }), 'road_illustration.svg'));
+  on('brApply', briefApply); on('brOff', briefOffsets); on('brBook', briefBook); on('brPDF', briefPDF);
+  on('brFeatReg', () => { let n = 0; F.filter(f => ['junction', 'round', 'culvert'].includes(f.kind) && f.ch <= RD.ali.L).forEach(f => { RD.feat.manual.push({ id: 'm' + Date.now() + n, type: f.kind === 'culvert' ? (f.item === 'Bridge' ? 'Bridge' : f.item) : 'Intersection', ch: +f.ch.toFixed(2), name: f.item, size: '', invert: '', skew: '', note: 'from road brief – ' + f.note }); n++; }); saveLocal(); buildFeatures(); renderFeatures(); drawAll(); status(`${n} item(s) added to the features register for engineering review.`, 'ok'); });
+}
+function briefAnalyse() { const txt = $('brText').value.trim(); if (!txt) return status('Describe the road first.', 'warn'); BR.p = briefParse(txt); BR.text = txt; try { localStorage.setItem('hs_brief', txt); } catch (e) { } briefRender(); }
+function briefApply() {
+  const p = BR.p; $('rType').value = p.type; $('rType').dispatchEvent(new Event('change'));
+  const sv = [30, 40, 50, 60, 80, 100, 120].reduce((a, b) => Math.abs(b - p.speed) < Math.abs(a - p.speed) ? b : a); $('rSpeed').value = String(sv);
+  const set = (id, v) => { if ($(id) && v != null) $(id).value = v; };
+  set('rRad', p.R); set('rCW', p.dual ? +(2 * p.cw + p.median).toFixed(2) : p.cw); set('rCamber', p.camber); set('rSh', p.shoulder); set('rShS', p.shS); set('rFillS', p.fillS); set('rCutS', p.cutS);
+  set('rFp', p.fp + (p.parking || 0)); set('rKerb', p.kerb); set('rFpS', p.fpS); set('rGmax', p.gmax); set('rMinFill', p.minFill); set('rStep', p.type === 'urban' ? 10 : 20);
+  const g = briefGeom(p); set('rHalfW', Math.ceil(g.W + 5));
+  typeUI(); if (RD.res) runRoad(false);
+  status(`Design criteria set from your description${p.dual ? ' (dual carriageway modelled as one paved width incl. median)' : ''}${p.parking ? ' (parking added to the footpath width)' : ''}.`, 'ok');
+}
+function briefOffsets() { const C = briefChecklists(BR.p); $('soL2').value = C.outer; $('soR2').value = C.outer; $('soL1').value = +C.edge.toFixed(2); $('soR1').value = +C.edge.toFixed(2); $('soStep').value = BR.p.type === 'urban' ? 10 : 20; status(`Stake-out offsets set: ±${C.outer} m and ±${C.edge.toFixed(2)} m, every ${$('soStep').value} m.`, 'ok'); }
+async function briefBook() {
+  if (!window.JSZip) return status('The zip library did not load – check the internet connection.', 'err');
+  const p = BR.p, C = briefChecklists(p), Lr = p.length || 1000, step = p.type === 'urban' ? 10 : 20, H = t => ({ v: t, s: 1 });
+  const rows = [[H('Point'), H('Chainage'), H('Offset L/R'), H('Level (m)'), H('Design level'), H('Remarks')]]; let n = 1;
+  const offs = [['L' + C.outer, ''], ['L' + C.edge.toFixed(2), 'edge'], ['CL', ''], ['R' + C.edge.toFixed(2), 'edge'], ['R' + C.outer, '']];
+  for (let ch = 0; ch <= Lr + 1e-6; ch += step) offs.forEach(o => rows.push([n++, fmtCh(ch), o[0], { v: '', s: 5 }, '', o[1]]));
+  const info = [[{ v: 'ROAD BRIEF – LEVEL BOOK TEMPLATE', s: 7 }], [], ['Description', BR.text]].concat(p.found.map(f => [f[0], f[1]])).concat([[], ['How to use', 'Type the measured level of each point in the yellow column (Levels sheet), then in Hashim Survey: Road study → 📥 Import levels from Excel / CSV.']]);
+  download(await XL.build([{ name: 'Levels', rows, cols: [8, 12, 12, 12, 12, 24], freeze: 1, hdrRow: 1 }, { name: 'Brief', rows: info, cols: [24, 90] }]), 'level_book_template.xlsx');
+  status(`Level book template downloaded: ${n - 1} points (${offs.length} offsets every ${step} m).`, 'ok');
+}
+function briefSecDXF() {
+  const p = BR.p, g = briefGeom(p), d = dxfWriter([['XS_SURFACE', 7], ['XS_PAVEMENT', 8], ['XS_GROUND', 30], ['XS_CL', 1], ['XS_DIMS', 5], ['XS_TEXT', 7]], false);
+  const side = sg => g.segs.filter(s => s.kind !== 'ground').map(s => [[sg * s.x0, s.y0], [sg * s.x1, s.y1]]);
+  [1, -1].forEach(sg => { side(sg).forEach(([a, b]) => d.line('XS_SURFACE', a, b)); });
+  let dd = 0; p.layers.forEach(L0 => { dd += L0[1] / 1000; g.segs.filter(s => ['lane', 'parking', 'shoulder'].includes(s.kind)).forEach(s => [1, -1].forEach(sg => d.line('XS_PAVEMENT', [sg * s.x0, s.y0 - dd], [sg * s.x1, s.y1 - dd]))); });
+  d.line('XS_GROUND', [-g.W, -g.h], [g.W, -g.h]); d.line('XS_CL', [0, 1.5], [0, -g.h - 0.5]); d.text('XS_TEXT', 0.1, 1.6, 0.25, 'CL');
+  g.dims.forEach(dm => [1, -1].forEach(sg => { const a = sg * dm[0], b = sg * dm[1]; d.line('XS_DIMS', [a, 1.0], [b, 1.0]); d.line('XS_DIMS', [a, 0.9], [a, 1.1]); d.line('XS_DIMS', [b, 0.9], [b, 1.1]); d.text('XS_DIMS', (a + b) / 2, 1.1, 0.15, `${dm[2]} ${dm[3]}`, 0, 1); }));
+  d.text('XS_TEXT', -g.W, -g.h - 1, 0.3, `TYPICAL CROSS-SECTION – ${p.type.toUpperCase()} ${p.dual ? 'DUAL' : ''} ${p.speed} km/h (scale 1:1 in metres)`);
+  d.save('typical_cross_section.dxf'); status('Typical cross-section DXF downloaded (true scale, metres).', 'ok');
+}
+async function svgToPng(svg, w) { const img = new Image(), url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); await new Promise((r, j) => { img.onload = r; img.onerror = j; img.src = url; }); const c = document.createElement('canvas'), s = w / img.width; c.width = w; c.height = Math.round(img.height * s); const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height); return { url: c.toDataURL('image/png'), w: c.width, h: c.height }; }
+async function briefPDF() {
+  if (!window.jspdf) return status('PDF library did not load – check the internet connection.', 'err');
+  busy(true, 'Building road brief…');
+  try {
+    const p = BR.p, F = briefFeatures(p), C = briefChecklists(p), meta = getMeta(), doc = newPDF({ unit: 'mm', format: 'a4' }), M = 14, Wd = 210 - 2 * M, navy = [15, 42, 63];
+    const head = (t, first) => { if (!first) doc.addPage(); doc.setFillColor(...navy); doc.rect(0, 0, 210, 18, 'F'); doc.setFillColor(242, 165, 22); doc.rect(0, 18, 210, 1, 'F'); doc.setTextColor(255); doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.text(t, M, 12); doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.text(`${meta.company || 'Hashim Survey'} · ${meta.project || ''} · ${meta.date || ''}`, 210 - M, 12, { align: 'right' }); doc.setTextColor(29, 42, 53); return 28; };
+    let y = head('ROAD BRIEF', true);
+    doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.text('Description', M, y); y += 5; doc.setFont('helvetica', 'normal');
+    const dl = doc.splitTextToSize(BR.text, Wd); doc.text(dl, M, y); y += dl.length * 4.2 + 4;
+    doc.setFont('helvetica', 'bold'); doc.text('Parameters  (given = from the description, typical = assumed)', M, y); y += 2;
+    p.found.forEach((f, i) => { y += 5.2; if (i % 2) { doc.setFillColor(244, 246, 248); doc.rect(M, y - 3.8, Wd, 5.2, 'F'); } doc.setFont('helvetica', 'normal'); doc.text(f[0], M + 2, y); doc.text(`${f[1]}  ${f[2] ? '(given)' : '(typical)'}`, M + Wd - 2, y, { align: 'right' }); });
+    y += 8; const s1 = await svgToPng(briefSVG(p, 1100), 1800); const ih = Wd * s1.h / s1.w; doc.setFont('helvetica', 'bold'); doc.text('Typical cross-section', M, y); doc.addImage(s1.url, 'PNG', M, y + 3, Wd, ih); y += ih + 8;
+    y = head('FEATURE LAYOUT'); const s2 = await svgToPng(briefLayoutSVG(p, F, 1100), 1800); const ih2 = Wd * s2.h / s2.w; doc.addImage(s2.url, 'PNG', M, y, Wd, ih2); y += ih2 + 6;
+    doc.setFontSize(8.5); const cols = [[22, 'Chainage'], [62, 'Item'], [16, 'Side'], [Wd - 100, 'Note']];
+    const row = (v, hdr) => { if (y > 280) { y = head('FEATURE LAYOUT (cont.)'); } let x = M; if (hdr) { doc.setFillColor(...navy); doc.rect(M, y - 4, Wd, 5.5, 'F'); doc.setTextColor(255); doc.setFont('helvetica', 'bold'); } v.forEach((t, i) => { doc.text(doc.splitTextToSize(String(t), cols[i][0] - 2)[0], x + 1, y); x += cols[i][0]; }); doc.setTextColor(29, 42, 53); doc.setFont('helvetica', 'normal'); y += 5.5; };
+    row(cols.map(c => c[1]), true); F.filter(f => f.kind !== 'light').forEach(f => row([fmtCh(f.ch), f.item, f.side, f.note])); if (p.lighting) row(['', `+ ${F.filter(f => f.kind === 'light').length} street lights`, '', 'typical spacing']);
+    y = head('CHECKLISTS'); const list = (t, arr) => { doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.text(t, M, y); y += 6; doc.setFont('helvetica', 'normal'); doc.setFontSize(9); arr.forEach((s, i) => { const l = doc.splitTextToSize(`${i + 1}. ${s}`, Wd - 4); if (y + l.length * 4.3 > 285) y = head('CHECKLISTS (cont.)'); doc.text(l, M + 2, y); y += l.length * 4.3 + 1.5; }); y += 4; };
+    list('Field survey checklist', C.survey); list('Design checklist', C.design); list('Notes', p.notes);
+    doc.save('road_brief.pdf'); status('Road brief PDF downloaded.', 'ok');
+  } catch (e) { status('PDF failed: ' + e.message, 'err'); console.error(e); }
+  busy(false);
+}
+$('brOpen').onclick = () => { $('brief').classList.add('on'); try { if (!$('brText').value) $('brText').value = localStorage.getItem('hs_brief') || ''; } catch (e) { } briefRender(); $('brText').focus(); };
+$('brClose').onclick = () => $('brief').classList.remove('on');
+$('brief').addEventListener('click', e => { if (e.target.id === 'brief') $('brief').classList.remove('on'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('brief').classList.contains('on')) $('brief').classList.remove('on'); });
+$('brGo').onclick = briefAnalyse;
+$('brText').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) briefAnalyse(); });
+$('brEx').innerHTML = BR_EX.map((x, i) => `<button class="chip" data-i="${i}">${x[0]}</button>`).join('');
+$('brEx').onclick = e => { const b = e.target.closest('[data-i]'); if (b) { $('brText').value = BR_EX[+b.dataset.i][1]; briefAnalyse(); } };
+$('brTabs').onclick = e => { const b = e.target.closest('[data-t]'); if (b) { BR.tab = b.dataset.t; briefRender(); } };
+
 function setMode(m) {
   if (drawMode) endDraw();
   S.mode = m;
@@ -4132,11 +4886,13 @@ function setMode(m) {
   $('tabVec').style.display = m === 'vec' ? '' : 'none';
   $('tabRoad').style.display = m === 'road' ? '' : 'none';
   $('tabGeo').style.display = m === 'geo' ? '' : 'none';
+  $('tabCF').style.display = m === 'cf' ? '' : 'none';
   if (m !== 'snap' && S.ovlLayer && map.removeLayer) { map.removeLayer(S.ovlLayer); S.ovlLayer = null; } else if (m === 'snap') setTimeout(updateOverlay, 0);
   $('mapwrap').classList.toggle('road', m === 'road'); $('drawer').style.display = m === 'road' ? 'flex' : 'none';
   setTimeout(() => { if (map.invalidateSize) map.invalidateSize(); drawRoadCanvases(); }, 60);
-  $('dropHint').textContent = m === 'geo' ? 'GeoTIFF DEM (.tif) · KML/KMZ · or Ctrl+V a place copied in Google Earth' : m === 'snap' ? 'KML/KMZ plot boundary or CSV survey levels → contours & report' : m === 'vec' ? 'KML/KMZ with plots and roads → vector map & plan' : 'KML/KMZ road centreline · Excel / CSV ground levels (chainage, offset, level)';
+  $('dropHint').textContent = m === 'cf' ? 'OGL / final points (CSV · TXT · Excel) · KML/KMZ plot limit' : m === 'geo' ? 'GeoTIFF DEM (.tif) · KML/KMZ · or Ctrl+V a place copied in Google Earth' : m === 'snap' ? 'KML/KMZ plot boundary or CSV survey levels → contours & report' : m === 'vec' ? 'KML/KMZ with plots and roads → vector map & plan' : 'KML/KMZ road centreline · Excel / CSV ground levels (chainage, offset, level)';
   fillPolySelect(); drawAll();
+  if (m === 'cf') { cfInfo(); cfFit(); status(CF.res ? 'Cut & fill ready.' : 'Cut & fill – set the plot limit, load the OGL points, then the final survey or a formation level.'); return; }
   if (m === 'geo') { status(`Geo data – coordinate system: ${crsLabel()} · imagery: ${IMG.name}${IMG.date ? ' ' + IMG.date : ''}${S.dem ? ' · DEM: ' + S.dem.name : ''}.`); return; }
   if (m === 'road') { fillRoadSelect(); if (RD.ll) { const b = RD.ll; if (map.fitBounds) map.fitBounds(L.polyline(b).getBounds(), { padding: [40, 40], maxZoom: 18 }); } status(RD.res ? 'Road study ready.' : RD.ll ? 'Centreline loaded – press ▶ Run road study.' : 'Road study – load a KML with the road centreline, draw it, or pick a road from the Vector map.'); return; }
   if (m === 'vec') { if (vecCount()) fitVec(); status(vecCount() ? 'Vector map – digitize or load more plots and roads.' : 'Vector map – load a KML with plots/roads or digitize them on the map.'); }
@@ -4150,7 +4906,469 @@ updateZoneUI(); renderResults(); enableOut();
 })();
 
 </script>
+<style>
+#helpBtn{margin-left:auto;margin-right:10px;background:#fff;color:#0F2A3F;border:0;border-radius:18px;padding:6px 14px;font:600 13px Inter,sans-serif;cursor:pointer;display:flex;align-items:center;gap:6px}
+#helpBtn b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#F2A516;color:#0F2A3F;font-size:12px}
+#helpBtn:hover{background:#fdf3dc}
+#help{position:fixed;inset:0;z-index:5000;background:rgba(9,22,33,.55);display:none;align-items:center;justify-content:center;padding:18px}
+#help.on{display:flex}
+#help .hbox{background:#fff;width:min(1100px,100%);height:min(92vh,900px);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);font:14px/1.6 Inter,sans-serif;color:#1d2a35}
+#help .hhead{background:#0F2A3F;color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px}
+#help .hhead h2{margin:0;font:700 17px 'Space Grotesk',Inter,sans-serif;letter-spacing:.3px}
+#help .hhead h2 span{color:#F2A516}
+#help .hhead input{margin-left:auto;width:230px;max-width:40vw;border:0;border-radius:8px;padding:7px 10px;font:inherit;font-size:13px}
+#help .hhead button{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer}
+#help .hhead button:hover{background:rgba(255,255,255,.12)}
+#help .hmain{flex:1;display:flex;min-height:0}
+#help nav{width:250px;flex:none;border-right:1px solid #e3e8ed;overflow:auto;padding:10px 0;background:#f7f9fb}
+#help nav a{display:block;padding:6px 18px;color:#334452;text-decoration:none;font-size:13.5px;border-left:3px solid transparent}
+#help nav a.sub{padding-left:32px;font-size:12.5px;color:#5b6b78}
+#help nav a:hover{background:#edf2f6}
+#help nav a.on{border-left-color:#F2A516;background:#fff;color:#0F2A3F;font-weight:600}
+#help .hcont{flex:1;overflow:auto;padding:22px 34px 60px;scroll-behavior:smooth}
+#help section{margin-bottom:34px}
+#help h3{font:700 21px 'Space Grotesk',Inter,sans-serif;color:#0F2A3F;margin:0 0 10px;padding-bottom:6px;border-bottom:2px solid #F2A516;display:inline-block}
+#help h4{font-size:15.5px;color:#0F2A3F;margin:22px 0 6px}
+#help p{margin:6px 0}
+#help ol,#help ul{margin:6px 0;padding-left:22px}
+#help li{margin:3px 0}
+#help table{border-collapse:collapse;width:100%;margin:8px 0;font-size:13px}
+#help th,#help td{border:1px solid #dfe5ea;padding:6px 9px;text-align:left;vertical-align:top}
+#help th{background:#f1f5f8;color:#0F2A3F;font-weight:600}
+#help td:first-child{white-space:nowrap;font-weight:500}
+#help kbd{background:#f1f5f8;border:1px solid #cfd8df;border-bottom-width:2px;border-radius:4px;padding:0 5px;font:12px ui-monospace,Consolas,monospace}
+#help code{background:#f1f5f8;border-radius:4px;padding:1px 5px;font:12.5px ui-monospace,Consolas,monospace}
+#help .ui{display:inline-block;background:#0F2A3F;color:#fff;border-radius:5px;padding:0 7px;font-size:12.5px;font-weight:500;white-space:nowrap}
+#help .tip{background:#fff8e6;border-left:4px solid #F2A516;padding:9px 13px;border-radius:0 8px 8px 0;margin:10px 0}
+#help .note{background:#eef4fa;border-left:4px solid #2b6cb0;padding:9px 13px;border-radius:0 8px 8px 0;margin:10px 0}
+#help .steps{counter-reset:s;list-style:none;padding:0}
+#help .steps>li{counter-increment:s;position:relative;padding:8px 0 8px 42px;border-bottom:1px dashed #e3e8ed}
+#help .steps>li:before{content:counter(s);position:absolute;left:0;top:8px;width:28px;height:28px;border-radius:50%;background:#0F2A3F;color:#F2A516;display:grid;place-items:center;font-weight:700;font-size:13px}
+#help .hide{display:none!important}
+#help .nores{display:none;padding:30px;color:#6b7a86}
+#help .hfoot{border-top:1px solid #e3e8ed;padding:8px 18px;display:flex;align-items:center;gap:10px;font-size:12.5px;color:#5b6b78;background:#f7f9fb}
+#help .hfoot label{display:flex;gap:6px;align-items:center;cursor:pointer}
+#help #hTopic{display:none}
+@media (max-width:760px){#help nav{display:none}#help .hhead h2 span,#help #hPrint{display:none}#help .hhead{flex-wrap:wrap;padding:10px 12px}#help .hhead input{order:3;width:100%;max-width:none;margin:0}#help #hTopic{display:block;order:4;width:100%;border:0;border-radius:8px;padding:7px 8px;font:inherit;font-size:13px}#help #hClose{margin-left:auto}#help{padding:8px}#help .hcont{padding:16px 18px 50px}#help .hhead input{width:130px}#helpBtn span{display:none}}
+@media print{body>*:not(#help){display:none!important}#help{position:static;display:block!important;background:none;padding:0}#help .hbox{height:auto;box-shadow:none;width:auto}#help nav,#help .hhead input,#help .hhead button,#help .hfoot{display:none!important}#help .hcont{overflow:visible;padding:0 10px}#help section{break-inside:auto}#help h3{break-after:avoid}}
+</style>
+
+<div id="help" role="dialog" aria-modal="true" aria-label="Hashim Survey help">
+<div class="hbox">
+<div class="hhead">
+  <svg width="26" height="26" viewBox="0 0 120 120" aria-hidden="true"><path d="M16 112 C 34 84, 62 62, 80 30" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M66 112 C 72 86, 86 62, 92 30" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M41 112 C 53 85, 74 62, 86 30" fill="none" stroke="#f2a516" stroke-width="6" stroke-linecap="round" stroke-dasharray="8 7"/><path d="M87.5 8 L 106 16 L 87.5 24 Z" fill="#f2a516"/></svg>
+  <h2>HASHIM SURVEY <span>· User guide</span></h2>
+  <input id="hSearch" type="search" placeholder="Search help…" aria-label="Search help">
+  <select id="hTopic" aria-label="Go to topic"></select>
+  <button id="hPrint" title="Print or save the guide as PDF">⎙ Print / PDF</button>
+  <button id="hClose" title="Close (Esc)">✕</button>
+</div>
+<div class="hmain">
+<nav id="hNav"></nav>
+<div class="hcont" id="hCont">
+
+<section id="h-welcome" data-t="Welcome">
+<h3>Welcome to Hashim Survey</h3>
+<p>Hashim Survey is a road study toolkit for land surveyors. It runs entirely in your web browser – nothing to install, no Civil 3D needed. With it you can:</p>
+<ul>
+<li>Set out a road alignment from PI coordinates or by drawing on satellite imagery, with circular curves at every bend.</li>
+<li>Enter or import your field levels (chainage · offset · level) and get the long section, cross sections, cut &amp; fill volumes and mass haul.</li>
+<li>Design the grade line, check it against design criteria, and register bridges, culverts, pipes and junctions for engineering review.</li>
+<li>Export everything to <b>PDF reports, Excel (with live formulas), AutoCAD DXF, Civil 3D LandXML, KML, CSV and GeoJSON</b>.</li>
+<li>Compute cut &amp; fill and stockpile volumes between OGL and final levels inside a plot limit, with a colour depth map.</li>
+<li>Digitize plots and roads into a vector layout plan, and work in local coordinate systems (DLTM, Nahrwan, Adindan, UTM and 6,000+ EPSG systems).</li>
+</ul>
+<div class="note"><b>Your data stays on your computer.</b> Files you open are read inside your browser – they are not uploaded anywhere. Only the background imagery and the free terrain model are downloaded from the internet.</div>
+<p>Works best in <b>Google Chrome</b> or <b>Microsoft Edge</b> on a laptop or desktop. It also opens on tablets and phones for viewing.</p>
+</section>
+
+<section id="h-quick" data-t="Quick start (5 minutes)">
+<h3>Quick start – your first road in 5 minutes</h3>
+<p>The fastest way to learn is with the built-in example:</p>
+<ol class="steps">
+<li>Open the <span class="ui">🛣 Road study</span> tab (it opens by default).</li>
+<li>Click <span class="ui">📝 Open levels table</span>, then <span class="ui">Load example</span>. A sample level book appears with chainages, offsets and levels.</li>
+<li>Close the table with <span class="ui">✕ Close</span> and press <span class="ui">▶ Road from levels</span>. The road is drawn and the long section appears in the panel under the map.</li>
+<li>Look through the tabs under the map: <i>Longitudinal profile</i>, <i>Cross sections</i>, <i>Setting-out</i>, <i>Volumes &amp; mass haul</i>, <i>Features &amp; review</i>.</li>
+<li>Press <span class="ui">⬇ Report (PDF, A3)</span> or <span class="ui">⬇ Excel (formulas)</span> to see the deliverables.</li>
+</ol>
+<p>For a real job, follow the <a href="#h-field">Field workflow</a>: alignment → stations &amp; offsets → enter levels → road from levels → design → export.</p>
+</section>
+
+<section id="h-screen" data-t="The screen">
+<h3>The screen</h3>
+<table>
+<tr><th>Area</th><th>What it is for</th></tr>
+<tr><td>Header</td><td>The <span class="ui">? Help</span> button opens this guide at any time.</td></tr>
+<tr><td>Status line</td><td>The blue message at the top of the left panel tells you what just happened or what to do next.</td></tr>
+<tr><td>File drop box</td><td><b>Choose KML / KMZ / CSV … or drop here</b> – drag files from your computer straight onto it (KML, KMZ, CSV, TXT, XYZ, PTS, XLSX, TIF). What a file is used for depends on the open tab.</td></tr>
+<tr><td>Coordinate grid</td><td>The UTM zone and hemisphere used for plain Easting/Northing files (UAE = zone 40 N, Sudan = zone 35/36/37 N). Set it automatically from the map, or change it.</td></tr>
+<tr><td>Tabs</td><td><span class="ui">🛣 Road study</span>, <span class="ui">▦ Vector map</span>, <span class="ui">⛰ Cut &amp; fill</span>, <span class="ui">🌍 Geo data</span>. Each tab runs only its own service – switching tabs never repeats work.</td></tr>
+<tr><td>Map</td><td>Satellite imagery with your road, plots and points. Scroll to zoom, drag to pan. The layer button (top right) switches imagery.</td></tr>
+<tr><td>Panel under the map</td><td>Profile, cross sections, setting-out table, volumes and the features register. Use <span class="ui">⤢</span> to make it bigger.</td></tr>
+<tr><td>Report details</td><td>The last card in the left panel: company, client, project, surveyor, logo – printed in the title block of every PDF.</td></tr>
+</table>
+</section>
+
+<section id="h-load" data-t="Loading data">
+<h3>Loading data</h3>
+<h4>Drop or choose a file</h4>
+<table>
+<tr><th>File</th><th>In Road study</th><th>In Vector map</th><th>In Geo data</th></tr>
+<tr><td>KML / KMZ</td><td>Road centreline (a Google Earth path)</td><td>Polygons → plots, lines → roads, pins → placemarks</td><td>Shown on the map</td></tr>
+<tr><td>CSV / TXT / XYZ / PTS</td><td>Survey points used as ground levels</td><td>–</td><td>–</td></tr>
+<tr><td>XLSX / CSV with chainage &amp; level</td><td colspan="3">Use <span class="ui">📥 Import levels from Excel / CSV</span> – see <a href="#h-import">Importing levels</a></td></tr>
+<tr><td>GeoTIFF (.tif)</td><td colspan="3">Elevation model (drone, LiDAR, SRTM…) – see <a href="#h-dem">Terrain</a></td></tr>
+<tr><td>Project (.json)</td><td colspan="3">Use <span class="ui">📂 Open project</span> in Road study card 6</td></tr>
+</table>
+<h4>Copy &amp; paste from Google Earth</h4>
+<p>In Google Earth Pro select a placemark, path or polygon, press <kbd>Ctrl</kbd>+<kbd>C</kbd>, come back to Hashim Survey and press <kbd>Ctrl</kbd>+<kbd>V</kbd> anywhere (not inside a text box). It is imported directly.</p>
+<h4>Survey point files</h4>
+<p>Point files can be <code>Point, E, N, Z, Desc</code>, <code>Point, N, E, Z</code>, <code>E, N, Z</code> or latitude/longitude. The order is detected automatically. Easting/Northing are read in the project coordinate system (<a href="#h-crs">Geo data → Coordinate system</a>) or, if none is set, in the UTM zone shown in the coordinate grid.</p>
+</section>
+
+<section id="h-road" data-t="Road study">
+<h3>Road study</h3>
+<p>The Road study tab is the heart of the program. You can work in two ways:</p>
+<ul>
+<li><b>From your field levels</b> (recommended for real jobs): the levels you measured are used exactly as entered – see <a href="#h-field">Field workflow</a>.</li>
+<li><b>From a terrain model</b>: draw or load the centreline and let the program read ground levels from the free global DEM, your survey points (TIN) or your own GeoTIFF.</li>
+</ul>
+</section>
+
+<section id="h-field" data-t="Field workflow: alignment &amp; stations" data-sub="1">
+<h3>Field workflow – A. Alignment &amp; B. Stations</h3>
+<h4>A. Alignment</h4>
+<p>Type one PI (point of intersection) per line in the box: <code>PI1, 512345.120, 2680123.450</code> (Point, Easting, Northing, in the project coordinate system), then press <span class="ui">Use these PIs</span>.</p>
+<p>Or press <span class="ui">✎ Draw on map</span> and click each PI on the imagery; press <span class="ui">Finish</span> (or double-click) to end. The <span class="ui">⇄</span> button writes the current alignment's PIs back into the box as coordinates so you can correct them.</p>
+<p>A circular curve is fitted at every bend using the radius in <a href="#h-criteria">Design criteria</a>.</p>
+<h4>B. Stations &amp; offsets</h4>
+<table>
+<tr><th>Field</th><th>Meaning</th></tr>
+<tr><td>L2 · L1 · CL · R1 · R2</td><td>Offsets in metres from the centre line where levels are taken – two on the left, two on the right. Make L2/R2 wide enough to cover the whole working area (road + slopes).</td></tr>
+<tr><td>Station interval</td><td>Distance between cross sections, e.g. 20 m → 0+000, 0+020, 0+040…</td></tr>
+<tr><td>Add curve points (TC/MC/CT)</td><td>Also stakes the start, middle and end of every curve.</td></tr>
+<tr><td>Prepare the levels table</td><td>Fills the levels table with every station and offset so you only have to type the levels.</td></tr>
+</table>
+<p>Press <span class="ui">Compute stake-out &amp; level book</span>. You get the coordinates of every CL and offset point:</p>
+<ul>
+<li><span class="ui">⬇ Stake-out Excel</span> – point list with Easting/Northing for the total station or GNSS rover (formulas included).</li>
+<li><span class="ui">Stake-out PDF</span> – printable sheet for the field.</li>
+<li><span class="ui">Stake-out DXF</span> – points with labels for AutoCAD.</li>
+</ul>
+</section>
+
+<section id="h-levels" data-t="Entering levels (levels table)" data-sub="1">
+<h3>C. Entering levels – the levels table</h3>
+<p>Open it with <span class="ui">📝 Open levels table</span>. There is <b>no levelling reduction</b> here: type the final reduced level (RL) of each point directly.</p>
+<table>
+<tr><th>Column</th><th>What to type</th></tr>
+<tr><td>Point</td><td>Optional point name or number.</td></tr>
+<tr><td>Chainage</td><td><code>20</code>, <code>20.5</code> or <code>0+020</code> – all accepted.</td></tr>
+<tr><td>Offset L/R</td><td><code>CL</code> for the centre line, <code>L15</code> / <code>R7.5</code> for left/right. <code>-15</code> = left, <code>15</code> = right also works.</td></tr>
+<tr><td>Level (m)</td><td>Existing ground level.</td></tr>
+<tr><td>Design level</td><td>Optional. If you type (or import) design levels, the road study uses them as the grade line. Empty cells show the grade-line value in grey.</td></tr>
+<tr><td>Cut − / Fill +</td><td>Calculated: design minus ground.</td></tr>
+<tr><td>Remarks</td><td>Free text (e.g. "edge of asphalt", "wadi").</td></tr>
+</table>
+<ul>
+<li><b>Paste from Excel</b>: copy rows in the order Point, Chainage, Offset, Level, Design level, Remarks and press <kbd>Ctrl</kbd>+<kbd>V</kbd> in the table.</li>
+<li><span class="ui">＋ Row</span> adds a row, <span class="ui">Clear</span> empties the table, <span class="ui">⬇ PDF</span> prints the level book.</li>
+<li>The check box on the right reports problems (missing chainage, unreadable level…) or shows <b>✓ All rows readable</b>.</li>
+<li><b>Design level at start</b> + <b>Design gradient %</b> give a simple straight grade line; <span class="ui">Best-fit grade line</span> calculates one that follows the ground.</li>
+</ul>
+<p>CL rows build the long section; L/R rows build the cross sections. When ready, press <span class="ui">▶ Road from levels</span>.</p>
+</section>
+
+<section id="h-import" data-t="Importing levels from Excel / CSV" data-sub="1">
+<h3>Importing levels from Excel / CSV</h3>
+<p>Press <span class="ui">📥 Import levels from Excel / CSV</span> (or <span class="ui">📥 Import Excel / CSV</span> inside the table) and choose an <code>.xlsx</code>, <code>.xls</code>, <code>.csv</code> or <code>.txt</code> file. The columns are detected from the headers – check them in the dialog before importing:</p>
+<table>
+<tr><th>Setting</th><th>Meaning</th></tr>
+<tr><td>Sheet</td><td>Which worksheet to read.</td></tr>
+<tr><td>Header row</td><td>Row number holding the column titles (0 = no header).</td></tr>
+<tr><td>Layout</td><td><b>One level per row</b> (Chainage · Offset · Level) or <b>one row per chainage</b> with offset columns (L15 · CL · R15).</td></tr>
+<tr><td>Chainage / Level / Offset / Point columns</td><td>Pick the matching column if the detection is wrong.</td></tr>
+<tr><td>Side column L/R</td><td>Use when the side is in its own column and offsets are written without L/R.</td></tr>
+<tr><td>Design level column</td><td>If your file has design levels they are taken as the grade line automatically.</td></tr>
+<tr><td>Add to existing levels</td><td>Tick to append instead of replacing the table.</td></tr>
+</table>
+<p>A preview shows the first rows as they will be read. Press <span class="ui">Import</span>.</p>
+<div class="tip">Files exported by Hashim Survey itself (the Excel report) can be imported again.</div>
+</section>
+
+<section id="h-brief" data-t="Describe your road (assistant)" data-sub="1">
+<h3>💬 Describe your road</h3>
+<p>At the top of the Road study tab, press <span class="ui">💬 Describe your road…</span> and write a few lines in your own words, for example: <i>“Rural road 6 km across sandy desert, 2 lanes, 80 km/h, trucks, crosses 2 wadis, junction with the highway at 0+000.”</i> Press <span class="ui">▶ Analyse</span> (or <kbd>Ctrl</kbd>+<kbd>Enter</kbd>), or click one of the examples.</p>
+<p><b>What I understood</b> lists every value: <span style="color:#2e7d32">✓</span> = read from your text, <span style="color:#b26a00">≈</span> = typical value assumed. Add more detail to the text and analyse again to change them.</p>
+<table>
+<tr><th>Tab</th><th>You get</th></tr>
+<tr><td>Cross-section</td><td>Typical cross-section with lanes, shoulders or kerbs and footpaths, camber, side slopes and pavement layers – download as DXF (true scale) or SVG.</td></tr>
+<tr><td>Feature layout</td><td>Strip plan with start/end, junctions, roundabouts, culverts, signs, lights, km posts and utilities, with a chainage table. After running the road study you can add the junctions and culverts to the features register for review.</td></tr>
+<tr><td>Checklists</td><td>What to survey in the field and what to check in the design.</td></tr>
+<tr><td>Templates</td><td><b>Apply to Design criteria</b>, <b>Apply offsets to stake-out</b>, a <b>level book Excel template</b> with every station and offset ready for the field, and a <b>Road brief PDF</b> to send to the engineer or client.</td></tr>
+<tr><td>Pictures</td><td>An illustration of the road and links to real example photos on the web.</td></tr>
+</table>
+<div class="note">The assistant works offline with built-in road rules. Values it assumes are typical starting points – always check them against the client’s design standard.</div>
+</section>
+
+<section id="h-center" data-t="Centreline (terrain workflow)" data-sub="1">
+<h3>1. Centreline</h3>
+<p>Instead of the field workflow you can get the centreline by:</p>
+<ul>
+<li><span class="ui">✎ Draw centreline (PIs)</span> – click the PIs on the map.</li>
+<li>Dropping a <b>KML/KMZ</b> with a path drawn in Google Earth.</li>
+<li><b>Use road from vector map</b> – pick a road digitized in the Vector map tab.</li>
+</ul>
+<p>Then set the criteria and press <span class="ui">▶ Run road study</span>.</p>
+</section>
+
+<section id="h-criteria" data-t="Design criteria" data-sub="1">
+<h3>2. Design criteria</h3>
+<table>
+<tr><th>Setting</th><th>Meaning</th></tr>
+<tr><td>Road type</td><td><b>Rural / open land</b>: carriageway + shoulders + cut/fill side slopes. <b>Urban / inside town</b>: carriageway + kerbs + footpaths; the road is checked to fit between the plots in the Vector map.</td></tr>
+<tr><td>Design speed</td><td>Used to check minimum curve radius, stopping sight distance and vertical curve K values.</td></tr>
+<tr><td>Curve radius</td><td>Radius of the circular curve at each bend. Reduced automatically (⚠) if two bends are too close.</td></tr>
+<tr><td>Carriageway width</td><td>Total paved width for traffic (e.g. 7.3 m = two 3.65 m lanes).</td></tr>
+<tr><td>Camber</td><td>Cross slope of the carriageway from the crown to the edge (typically 2–2.5 %).</td></tr>
+<tr><td>Shoulder width / slope</td><td>Rural only: the strip beside the carriageway and its cross slope.</td></tr>
+<tr><td>Fill slope / Cut slope 1V : H</td><td>Rural only: side slope steepness – 1 vertical to H horizontal (e.g. 2 = 1:2).</td></tr>
+<tr><td>Footpath width / Kerb height / Footpath crossfall</td><td>Urban only.</td></tr>
+<tr><td>Max. grade</td><td>Steepest allowed longitudinal gradient. Steeper sections are flagged.</td></tr>
+<tr><td>Height above ground</td><td>Minimum height of the road above existing ground used by the auto grade line (protects from flooding/sand).</td></tr>
+<tr><td>Section interval</td><td>Distance between cross sections.</td></tr>
+<tr><td>Section half-width</td><td>How far left and right each cross section is drawn.</td></tr>
+<tr><td>Fill factor</td><td>Bulking/compaction factor applied to fill volume (1.00 = none, 1.15 = 15 % more).</td></tr>
+<tr><td>Ground levels</td><td><b>Levels table</b> (your field levels), <b>My survey points</b> (TIN), <b>Free global DEM</b> (~30 m), or <b>Auto</b>. A loaded GeoTIFF is used automatically inside its area.</td></tr>
+</table>
+</section>
+
+<section id="h-curves" data-t="Curves &amp; vertical alignment" data-sub="1">
+<h3>3. Horizontal curves &amp; 4. Vertical alignment</h3>
+<p><b>Horizontal curves</b> lists every bend: deflection angle, radius, tangent length, curve length and the chainages of TC (start), MC (middle) and CT (end). Change a radius in the table to update the road. ⚠ means the radius was reduced to fit between bends.</p>
+<p><b>Vertical alignment</b> lists the PVIs (grade-line break points) with chainage, level, grades in/out and vertical curve length / K value.</p>
+<ul>
+<li><span class="ui">Auto grade line</span> – fits a grade line that keeps the minimum height above ground and stays under the max. grade. If design levels were given in the levels table, those are used instead.</li>
+<li><span class="ui">Auto curve lengths</span> – sets vertical curve lengths from the design speed.</li>
+<li>In the <b>Longitudinal profile</b> under the map: <b>drag</b> a PVI to move it, <b>double-click</b> to add one, <b>right-click</b> to delete.</li>
+</ul>
+</section>
+
+<section id="h-panel" data-t="Results &amp; panel under the map" data-sub="1">
+<h3>5. Results and the panel under the map</h3>
+<p>The <b>Results</b> card summarises length, cut and fill volumes, balance, highest cut/fill and any design warnings.</p>
+<table>
+<tr><th>Panel tab</th><th>Shows</th></tr>
+<tr><td>Longitudinal profile</td><td>Ground line, design grade line, PVIs and vertical curves. Editable (see above).</td></tr>
+<tr><td>Cross sections</td><td>One section per station – use ◀ ▶ or the list. Shows ground, road template, cut/fill areas.</td></tr>
+<tr><td>Setting-out</td><td>Coordinates and levels of CL, edges and catch points at every station.</td></tr>
+<tr><td>Volumes &amp; mass haul</td><td>Cut/fill areas and volumes per station and the mass-haul diagram.</td></tr>
+<tr><td>Features &amp; review</td><td>The features register – see next section.</td></tr>
+</table>
+</section>
+
+<section id="h-review" data-t="Features &amp; engineering review" data-sub="1">
+<h3>6. Road features &amp; engineering review</h3>
+<p>The program lists automatically: <b>start and end points</b>, <b>intersections</b> with other roads in the Vector map, every <b>horizontal curve</b>, <b>vertical points</b> (PVIs, high and low points) and <b>crossings</b>.</p>
+<p>Add your own items with <span class="ui">＋ Bridge / culvert / pipe / junction</span>: type, chainage (or <span class="ui">⌖</span> to pick on the map), name/ref., size/span, invert level, skew and notes → <span class="ui">Add to register</span>.</p>
+<h4>Review by an engineer</h4>
+<ol>
+<li>The designer saves the job with <span class="ui">💾 Save project</span> (a <code>.json</code> file) and sends it to the engineer.</li>
+<li>The engineer opens it with <span class="ui">📂 Open project</span>, types their name in <b>Reviewing engineer</b>, and marks every item in <i>Features &amp; review</i>: <b>✓ Approve</b>, <b>✎ Revise</b> or <b>✕ Reject</b>.</li>
+<li>The engineer saves and returns the project. The progress bar shows how many items are approved.</li>
+</ol>
+<div class="note">If an approved item is changed afterwards (e.g. a curve radius), it goes back to <b>Pending</b> automatically.</div>
+<p><span class="ui">↺ Restore last session on this device</span> brings back your last work if the browser was closed.</p>
+</section>
+
+<section id="h-exports" data-t="Report &amp; exports" data-sub="1">
+<h3>7. Road report &amp; exports</h3>
+<table>
+<tr><th>Button</th><th>You get</th></tr>
+<tr><td>⬇ Report (PDF, A3)</td><td>Full road report with title block: plan, long section, cross sections, curve and PVI tables, volumes, features register with signature boxes.</td></tr>
+<tr><td>⬇ Excel (formulas)</td><td>Workbook with stations, levels, cut/fill and volumes calculated by real Excel formulas – change a level and the totals update.</td></tr>
+<tr><td>Plan DXF (UTM)</td><td>Alignment, edges, chainage ticks and labels for AutoCAD, in the project coordinate system.</td></tr>
+<tr><td>Profile &amp; sections DXF</td><td>Long section and cross sections drawn to scale for AutoCAD.</td></tr>
+<tr><td>LandXML (Civil 3D)</td><td>Alignment (lines + arcs), ground profile, design grade line and TIN surface for Civil 3D, 12d and other road software.</td></tr>
+<tr><td>Setting-out CSV · Volumes CSV · Features &amp; review CSV</td><td>Plain tables for any program.</td></tr>
+</table>
+</section>
+
+<section id="h-vec" data-t="Vector map">
+<h3>Vector map – plots &amp; roads</h3>
+<p>Digitize plot limits and roads over the satellite imagery, or load a KML: polygons become <b>plots</b>, lines become <b>roads</b> (names or folders containing "road" or "street" are treated as roads).</p>
+<ul>
+<li><span class="ui">＋ Plot</span>, <span class="ui">＋ Road</span>, <span class="ui">＋ Placemark</span> – click on the map to digitize; <span class="ui">Finish</span> ends the shape.</li>
+<li><b>New road width</b> – width given to roads you draw.</li>
+<li><b>Snap to corners</b> – clicks jump to existing corners so neighbouring plots share boundaries exactly.</li>
+<li><b>Keep digitizing</b> – start the next plot straight away.</li>
+</ul>
+<h4>Layout plan and exports</h4>
+<ul>
+<li><b>Plan background</b>: white (clean plan) or satellite imagery; <b>Plan paper</b>: A3 or A4 landscape; optionally <b>add corner coordinates of every plot</b>.</li>
+<li><span class="ui">⬇ Layout plan PDF</span>, <span class="ui">DXF (AutoCAD)</span>, <span class="ui">KML (Google Earth)</span>, <span class="ui">GeoJSON (GIS)</span>, <span class="ui">Plot schedule CSV</span> (plot numbers and areas).</li>
+<li><span class="ui">Clear vector map</span> deletes all plots and roads.</li>
+</ul>
+<div class="tip">Roads in the Vector map can be used as a centreline in Road study, and urban roads are checked to fit between these plots.</div>
+</section>
+
+<section id="h-cf" data-t="Cut &amp; fill / soil stock">
+<h3>Cut &amp; fill / soil stock</h3>
+<p>The <span class="ui">⛰ Cut &amp; fill</span> tab compares the <b>OGL</b> (original ground levels) with a <b>final surface</b> inside a <b>plot limit</b> and gives the cut, fill and stockpile volumes, with a colour depth map.</p>
+<ol class="steps">
+<li><b>Plot limit</b> – type the corners (<code>C1, 226268.52, 2572690.99</code> one per line) and press <span class="ui">Use these corners</span>, draw it with <span class="ui">✎ Draw limit on map</span>, pick a plot from the Vector map, drop a KML polygon, or use the outline of the OGL points.</li>
+<li><b>OGL</b> – <span class="ui">📥 Load OGL file…</span> (CSV, TXT or Excel: Point, Easting, Northing, Level) or paste the points.</li>
+<li><b>Final surface</b> – choose one:
+<ul>
+<li><b>Final survey points</b> – the as-built or stockpile survey. Tick “Outside the final survey, ground is unchanged” when you only surveyed the stockpile.</li>
+<li><b>Flat formation level</b> – type the level (e.g. 134.274).</li>
+<li><b>Balance level</b> – the program finds the level where cut × factor = fill.</li>
+</ul></li>
+<li>Set the <b>cut → fill factor</b> (1.00 = none; e.g. 0.90 if compacted fill needs more material) and press <span class="ui">▶ Compute cut &amp; fill</span>.</li>
+</ol>
+<table>
+<tr><th>Result</th><th>Meaning</th></tr>
+<tr><td>CUT</td><td>Volume where the OGL is above the final surface (material removed).</td></tr>
+<tr><td>FILL / STOCK</td><td>Volume where the final surface is above the OGL (fill placed or stockpile).</td></tr>
+<tr><td>Surplus / shortage</td><td>Cut × factor − fill. With final points: net added = fill − cut.</td></tr>
+<tr><td>Depth map</td><td>Red = cut (+), blue = fill (−), black line = zero line, dashed lines = depth contours.</td></tr>
+</table>
+<p><b>Exports:</b> <span class="ui">⬇ Report (PDF, A3)</span> (depth map, volumes, corner coordinates, table of every point), <span class="ui">⬇ Excel (formulas)</span> (every grid cell with live formulas – with a formation level you can change the level in Excel and the volumes update), <span class="ui">DXF (AutoCAD)</span> (limit, zero line, depth contours, points and labels) and <span class="ui">Points CSV</span>.</p>
+<div class="note">Method: both surfaces are triangulated (TIN) and compared on a grid clipped to the plot limit; edge cells count only their area inside. The grid cell is chosen automatically (about 40,000 cells) or typed in.</div>
+</section>
+
+<section id="h-geo" data-t="Geo data">
+<h3>Geo data</h3>
+<p>Settings shared by all tabs: coordinate system, imagery, historical imagery, terrain and Google Earth export.</p>
+</section>
+
+<section id="h-crs" data-t="Coordinate system" data-sub="1">
+<h3>1. Coordinate system</h3>
+<p>Choose the system your client works in. All imports, tables, CSV, DXF and LandXML use it.</p>
+<ul>
+<li><span class="ui">Use WGS 84 / UTM (automatic)</span> – the UTM zone of the map.</li>
+<li><b>Search built-in systems</b> – type <i>Dubai</i>, <i>Nahrwan</i>, <i>Adindan</i>, <i>Ain el Abd</i>, an EPSG number like <i>32640</i>… Built-in: all WGS 84 UTM zones, Dubai Local TM (3997), Nahrwan 1967 UTM 39/40, Adindan UTM 35–37 (Sudan), Ain el Abd, Egypt grids and more.</li>
+<li><b>EPSG or Civil 3D code</b> + <span class="ui">Look up</span> – fetches any of the 6,000+ EPSG systems online.</li>
+<li><b>.prj file</b> – load the projection file from AutoCAD Civil 3D, ArcGIS or QGIS.</li>
+<li><b>Paste a definition</b> – proj4 or WKT text for local grids, then <span class="ui">Use this system</span>.</li>
+</ul>
+<div class="note">Calculations are done in WGS 84 / UTM and converted to your system on output, including datum shifts.</div>
+</section>
+
+<section id="h-img" data-t="Imagery &amp; timeline" data-sub="1">
+<h3>2. Imagery &amp; 3. Timeline</h3>
+<p><b>Source</b>: Esri World Imagery, Esri Clarity (sharper, beta), Esri Wayback (historical dates), Esri Topographic, Esri Street Map, OpenStreetMap, or <b>Custom</b> (WMS, WMTS/XYZ or ArcGIS MapServer link with your own API key – Maxar, Airbus, Nearmap…). <b>Opacity</b> fades the imagery.</p>
+<p>With <b>Esri Wayback</b> use ◀ ▶ to step through release dates and see how the site changed.</p>
+<p><b>Timeline PDF</b>: choose the number of snapshots and a start date, then <span class="ui">⬇ Timeline PDF of the current map view</span>. Dates with no change at your site are skipped automatically.</p>
+</section>
+
+<section id="h-dem" data-t="Terrain (GeoTIFF)" data-sub="1">
+<h3>4. Terrain – GeoTIFF DEM</h3>
+<p>Load an elevation GeoTIFF from a drone survey, LiDAR, SRTM, Copernicus or USGS. Its coordinate system is read from the file, or choose it. The footprint is shown on the map; <span class="ui">Remove DEM</span> unloads it.</p>
+<p>The Road study uses it automatically inside its area when <b>Ground levels</b> is <i>Auto</i>.</p>
+</section>
+
+<section id="h-kml" data-t="KML &amp; Google Earth" data-sub="1">
+<h3>5. KML &amp; Google Earth</h3>
+<p>Paste from Google Earth with <kbd>Ctrl</kbd>+<kbd>V</kbd> (see <a href="#h-load">Loading data</a>). <span class="ui">⬇ 3D KML for Google Earth</span> exports the road design and/or the vector map; choose <b>Absolute</b> heights (real 3D levels) or <b>Clamped to ground</b>.</p>
+</section>
+
+<section id="h-meta" data-t="Report details (title block)">
+<h3>Report details (title block)</h3>
+<p>Fill in Company, Phone/email, Project/site, Plot/sector no., Client, Surveyor, Report ref., Date, Location and an optional logo (PNG/JPG). They appear in the title block of every PDF. Company, contact, surveyor and logo are remembered on this computer.</p>
+</section>
+
+<section id="h-formats" data-t="File formats">
+<h3>File formats at a glance</h3>
+<table>
+<tr><th>Format</th><th>Open</th><th>Save</th><th>Used for</th></tr>
+<tr><td>KML / KMZ</td><td>✓</td><td>✓</td><td>Google Earth paths, polygons, 3D road</td></tr>
+<tr><td>CSV / TXT</td><td>✓</td><td>✓</td><td>Points, levels, setting-out, volumes</td></tr>
+<tr><td>XLSX / XLS</td><td>✓</td><td>✓</td><td>Levels (import), report and stake-out with formulas</td></tr>
+<tr><td>PDF</td><td></td><td>✓</td><td>Road report, level book, stake-out, layout plan, timeline</td></tr>
+<tr><td>DXF</td><td></td><td>✓</td><td>AutoCAD plan, profile, sections, stake-out points</td></tr>
+<tr><td>LandXML</td><td></td><td>✓</td><td>Civil 3D / 12d alignment, profiles, surface</td></tr>
+<tr><td>GeoJSON</td><td></td><td>✓</td><td>QGIS / ArcGIS</td></tr>
+<tr><td>GeoTIFF</td><td>✓</td><td></td><td>Terrain model</td></tr>
+<tr><td>PRJ / WKT</td><td>✓</td><td></td><td>Coordinate system</td></tr>
+<tr><td>JSON project</td><td>✓</td><td>✓</td><td>Full job incl. features review</td></tr>
+</table>
+</section>
+
+<section id="h-faq" data-t="Tips &amp; questions">
+<h3>Tips &amp; common questions</h3>
+<h4>My points appear in the wrong place (or in the sea).</h4>
+<p>The coordinate system is wrong. Set it in <a href="#h-crs">Geo data → Coordinate system</a> before importing, or check the UTM zone in the coordinate grid. Also check that Easting and Northing are not swapped.</p>
+<h4>How does the program know the design level of each cross section?</h4>
+<p>From the grade line: if you gave design levels in the levels table they are used directly; otherwise the auto grade line (or your PVIs) gives the design level at every chainage, including vertical curves.</p>
+<h4>The import put my levels in the wrong columns.</h4>
+<p>In the import dialog correct the <b>Header row</b> and each column choice; switch <b>Layout</b> if your file has one row per chainage.</p>
+<h4>A button is grey.</h4>
+<p>It needs data first – for example exports are enabled after the road study has been run.</p>
+<h4>Will I lose my work if I close the browser?</h4>
+<p>Use <span class="ui">💾 Save project</span> to keep a file. The last session can also be restored on the same computer with <span class="ui">↺ Restore last session</span>.</p>
+<h4>Can I use it without internet?</h4>
+<p>The program needs internet to open and to show imagery and the free DEM. Your own levels, calculations and exports do not depend on online services.</p>
+</section>
+
+<section id="h-gloss" data-t="Glossary">
+<h3>Glossary</h3>
+<table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td>Chainage (CH)</td><td>Distance along the centre line from the start, written 0+250 = 250 m.</td></tr>
+<tr><td>CL</td><td>Centre line of the road.</td></tr>
+<tr><td>Offset</td><td>Distance left (L) or right (R) of the centre line, at right angles.</td></tr>
+<tr><td>PI</td><td>Point of intersection – where two straight sections of the alignment meet.</td></tr>
+<tr><td>TC · MC · CT</td><td>Tangent to curve (curve start), mid curve, curve to tangent (curve end).</td></tr>
+<tr><td>Deflection angle (Δ)</td><td>Change of direction at a PI.</td></tr>
+<tr><td>PVI</td><td>Point of vertical intersection – break point of the grade line.</td></tr>
+<tr><td>Grade (%)</td><td>Longitudinal slope: rise ÷ distance × 100.</td></tr>
+<tr><td>Vertical curve · K value</td><td>Parabola that smooths the change of grade at a PVI; K = curve length ÷ change of grade (%).</td></tr>
+<tr><td>Camber · crossfall</td><td>Cross slope of the carriageway or footpath for drainage.</td></tr>
+<tr><td>Catch point</td><td>Where the cut or fill slope meets existing ground.</td></tr>
+<tr><td>Cut · Fill</td><td>Material removed where the road is below ground · added where it is above.</td></tr>
+<tr><td>Mass haul</td><td>Running total of cut minus fill along the road – shows where earth can be moved instead of imported.</td></tr>
+<tr><td>RL</td><td>Reduced level – the final height of a point.</td></tr>
+<tr><td>DEM · TIN</td><td>Digital elevation model (grid of heights) · triangulated surface through survey points.</td></tr>
+<tr><td>EPSG</td><td>International code for a coordinate system, e.g. 3997 = Dubai Local TM.</td></tr>
+</table>
+</section>
+
+<div class="nores" id="hNo">No help topics match your search.</div>
+</div>
+</div>
+<div class="hfoot"><label><input type="checkbox" id="hAuto"> Show this guide when the program opens</label><span style="margin-left:auto">Hashim Survey · Road study toolkit</span></div>
+</div>
+</div>
+
+<script>
+(function(){
+  const H=document.getElementById('help'),C=document.getElementById('hCont'),N=document.getElementById('hNav'),S=document.getElementById('hSearch');
+  const secs=[...C.querySelectorAll('section')];
+  N.innerHTML=secs.map(s=>`<a href="#${s.id}" data-id="${s.id}"${s.dataset.sub?' class="sub"':''}>${s.dataset.t}</a>`).join('');
+  const links=[...N.querySelectorAll('a')];
+  const T=document.getElementById('hTopic');T.innerHTML=secs.map(s=>`<option value="${s.id}">${s.dataset.sub?'\u2003':''}${s.dataset.t}</option>`).join('');T.onchange=()=>go(T.value);
+  function top(el){return el.getBoundingClientRect().top-C.getBoundingClientRect().top+C.scrollTop;}
+  function go(id){const el=document.getElementById(id);if(el)C.scrollTo({top:top(el)-8,behavior:'smooth'});}
+  H.addEventListener('click',e=>{const a=e.target.closest('a[href^="#h-"]');if(a){e.preventDefault();if(S.value){S.value='';filt();}go(a.getAttribute('href').slice(1));}if(e.target===H)close();});
+  C.addEventListener('scroll',()=>{let cur=secs[0].id;for(const s of secs){if(s.classList.contains('hide'))continue;if(top(s)-40<=C.scrollTop)cur=s.id;}links.forEach(a=>a.classList.toggle('on',a.dataset.id===cur));if(T.value!==cur)T.value=cur;});
+  function filt(){const q=S.value.trim().toLowerCase();let n=0;secs.forEach((s,i)=>{const hit=!q||s.textContent.toLowerCase().includes(q);s.classList.toggle('hide',!hit);links[i].classList.toggle('hide',!hit);if(hit)n++;});document.getElementById('hNo').style.display=n?'none':'block';C.scrollTop=0;}
+  S.addEventListener('input',filt);
+  function open(id){H.classList.add('on');document.body.style.overflow='hidden';C.dispatchEvent(new Event('scroll'));if(id)setTimeout(()=>go(id),30);}
+  function close(){H.classList.remove('on');document.body.style.overflow='';}
+  window.openHelp=open;
+  document.getElementById('hClose').onclick=close;
+  document.getElementById('hPrint').onclick=()=>{S.value='';filt();window.print();};
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&H.classList.contains('on'))close();if(e.key==='F1'){e.preventDefault();open();}});
+  const btn=document.getElementById('helpBtn');if(btn)btn.onclick=()=>open();
+  const A=document.getElementById('hAuto');let seen=null;try{seen=localStorage.getItem('hs_help_seen');}catch(e){}
+  A.checked=seen!=='off';
+  A.onchange=()=>{try{localStorage.setItem('hs_help_seen',A.checked?'on':'off');}catch(e){}};
+  if(seen===null){try{localStorage.setItem('hs_help_seen','off');}catch(e){}A.checked=false;open();}
+  else if(seen==='on')open();
+})();
+</script>
+
 </body>
 </html>
-
-<script src="/help.js"></script>
