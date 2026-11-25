@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hashim Survey – Road Study Toolkit</title>
+<title>X-SEC PRO – Road Study Toolkit by Hashim Survey</title>
 <meta name="description" content="Load a Google Earth KML/KMZ, draw a plot or import survey points; get area, contours, profile, cut & fill and a one-click PDF report with DXF, KML and CSV downloads.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 120 120%27%3E%3Crect width=%27120%27 height=%27120%27 rx=%2726%27 fill=%27%230F2A3F%27/%3E%3Cpath d=%27M16 112 C 34 84, 62 62, 80 30%27 fill=%27none%27 stroke=%27white%27 stroke-width=%279%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M66 112 C 72 86, 86 62, 92 30%27 fill=%27none%27 stroke=%27white%27 stroke-width=%279%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M88 8 L 108 17 L 88 26 Z%27 fill=%27%23F2A516%27/%3E%3C/svg%3E">
@@ -223,11 +223,26 @@
   #brief .brtpl .btn{flex:none;width:250px}
   #brief .brtpl span{font-size:12.5px;color:#334452}
   @media (max-width:820px){#brief .brmain{flex-direction:column;overflow:auto}#brief .brleft{width:auto;border-right:0;border-bottom:1px solid var(--line)}#brief .brtpl{flex-direction:column;align-items:stretch}#brief .brtpl .btn{width:auto}}
+
+
+  #dxfDlg{position:fixed;inset:0;z-index:4800;background:rgba(9,22,33,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+  #dxfDlg .dxbox{background:#fff;width:min(720px,100%);max-height:90vh;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  #dxfDlg .dxhead{background:#0F2A3F;color:#fff;padding:12px 16px;font:700 16px 'Space Grotesk',Inter,sans-serif;border-bottom:3px solid #F2A516}
+  #dxfDlg .dxbody{padding:12px 16px 14px;font-size:13px;line-height:1.5;overflow:auto}
+  #dxfDlg .dxbody p{margin:0 0 8px}
+  #dxfDlg .note{background:#eef4fa;border-left:4px solid #2b6cb0;padding:8px 11px;border-radius:0 8px 8px 0;margin-bottom:10px}
+  #dxfDlg .note.bad{background:#fdecea;border-left-color:#b3261e}
+  #dxfDlg .dxtbl{max-height:46vh;overflow:auto;border:1px solid var(--line);border-radius:8px}
+  #dxfDlg table{width:100%;border-collapse:collapse;font-size:12.5px}
+  #dxfDlg th{position:sticky;top:0;background:#f1f5f8;text-align:left;padding:6px 8px;color:#0F2A3F}
+  #dxfDlg td{padding:5px 8px;border-top:1px solid var(--line)}
+  #dxfDlg td select{font:inherit;font-size:12.5px;padding:3px 4px;max-width:260px}
+  #dxfDlg .pfbtns{display:flex;gap:8px;margin-top:12px}#dxfDlg .pfbtns .btn{flex:1}
 </style>
 </head>
 <body>
 <div class="top">
-  <svg width="34" height="34" viewBox="0 0 120 120" role="img" aria-label="Hashim Survey">
+  <svg width="34" height="34" viewBox="0 0 120 120" role="img" aria-label="X-SEC PRO">
     <rect x="0" y="0" width="120" height="120" rx="26" fill="#ffffff" fill-opacity="0.08"></rect>
     <path d="M16 112 C 34 84, 62 62, 80 30" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
     <path d="M66 112 C 72 86, 86 62, 92 30" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
@@ -235,7 +250,7 @@
     <path d="M86 30 L 86 12" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
     <path d="M87.5 12 L 104 18 L 87.5 24 Z" fill="#f2a516"/>
   </svg>
-  <div><h1 style="font-family:'Space Grotesk',Inter,sans-serif;letter-spacing:.5px">HASHIM <span style="font-weight:500;letter-spacing:3px;color:#c8d6e1">SURVEY</span></h1><span>Road study toolkit · alignment · levels · sections · setting-out · coordinate systems · imagery</span></div>
+  <div><h1 style="font-family:'Space Grotesk',Inter,sans-serif;letter-spacing:.5px">X-SEC <span style="color:#F2A516">PRO</span> <span style="font:500 11px Inter,sans-serif;letter-spacing:.3px;color:#a9bccb;vertical-align:middle">v1.0 · by Hashim Survey</span></h1><span>Road study toolkit · alignment · levels · sections · setting-out · coordinate systems · imagery</span></div>
   <span class="tag">Free tool</span>
   <button id="helpBtn" title="User guide (F1)" style="margin-left:10px;margin-right:0"><b>?</b><span style="color:#0F2A3F;font-size:13px">Help</span></button>
 </div>
@@ -245,10 +260,10 @@
 
     <div class="tabs"><button class="tab on" data-m="road">🛣 Road study<small>alignment · levels · sections</small></button><button class="tab" data-m="vec">▦ Vector map<small>plots &amp; roads</small></button><button class="tab" data-m="cf">⛰ Cut &amp; fill<small>OGL · final · stock</small></button><button class="tab" data-m="geo">🌍 Geo data<small>CRS · imagery · terrain</small></button></div>
     <div class="card">
-      <div class="drop" id="drop"><strong>Choose KML / KMZ / CSV</strong> or drop here
+      <div class="drop" id="drop"><strong>Choose KML / KMZ / DXF / CSV</strong> or drop here
         <small id="dropHint">KML/KMZ plot boundary or CSV survey levels → contours &amp; report</small>
         <small>Files stay in your browser – nothing is uploaded.</small>
-        <input type="file" id="file" accept=".kml,.kmz,.csv,.txt,.xyz,.pts,.xlsx,.xlsm,.tif,.tiff" multiple hidden></div>
+        <input type="file" id="file" accept=".kml,.kmz,.dxf,.dwg,.csv,.txt,.xyz,.pts,.xlsx,.xlsm,.tif,.tiff" multiple hidden></div>
       <div class="row"><label>Coordinate grid</label><input id="zone" type="number" min="1" max="60" style="width:62px;flex:none"><select id="hemi" style="flex:none;width:58px"><option>N</option><option>S</option></select></div>
       <div class="hint" id="zoneLbl"></div>
     </div>
@@ -345,6 +360,27 @@
         <button class="btn alt" id="vCSV" disabled>Plot schedule CSV</button>
       </div>
       <div class="btns"><button class="btn alt" id="vClear" disabled style="color:#b3261e;border-color:#e3b4b0">Clear vector map</button></div>
+    </div>
+    <div class="card" id="gmCard">
+      <h2><b>⌗</b> Grid maker</h2>
+      <div class="hint" style="margin:-4px 0 8px">Draw a polygon (or pick a plot) – the program creates points inside it on a regular grid and along its border, ready to export to Excel for levelling or setting-out.</div>
+      <div class="btns" style="margin-top:0"><button class="btn alt" id="gmDrawBtn">✎ Draw polygon</button></div>
+      <div class="row"><label for="gmPlot">Or use a plot</label><select id="gmPlot"><option value="">– use a plot from the list –</option></select></div>
+      <div class="hint" id="gmInfo">No polygon yet.</div>
+      <div class="grid2" style="margin-top:8px"><div class="fld">Grid spacing X (m)<input id="gmSx" type="number" min="0.1" step="0.5" value="10"></div><div class="fld">Grid spacing Y (m)<input id="gmSy" type="number" min="0.1" step="0.5" placeholder="same as X"></div></div>
+      <div class="row"><label for="gmDir">Grid direction</label><select id="gmDir"><option value="north">Grid north (E/N axes)</option><option value="edge">Parallel to the longest side</option><option value="custom">Rotate by an angle</option></select></div>
+      <div class="row" id="gmAngRow" style="display:none"><label for="gmAng">Rotation (° clockwise)</label><input id="gmAng" type="number" step="0.5" value="0"></div>
+      <label class="chk" id="gmSnapRow" style="margin-top:4px"><input type="checkbox" id="gmSnap" checked> Round coordinates (grid on multiples of the spacing)</label>
+      <div class="grid2" style="margin-top:8px"><div class="fld">Border points every (m)<input id="gmBs" type="number" min="0" step="0.5" placeholder="= grid spacing"></div><div class="fld">Keep inside points ≥ (m) from border<input id="gmMin" type="number" min="0" step="0.5" value="1"></div></div>
+      <label class="chk" style="margin-top:4px"><input type="checkbox" id="gmCorners" checked> Add the polygon corners</label>
+      <div class="grid2" style="margin-top:8px"><div class="fld">Point name prefix<input id="gmPre" placeholder="e.g. G"></div><div class="fld">Start number<input id="gmStart" type="number" min="0" value="1"></div></div>
+      <div class="row"><label for="gmOrder">Order of grid points</label><select id="gmOrder"><option value="snake">Snake – row by row, alternating</option><option value="rows">Row by row, same direction</option></select></div>
+      <div class="btns"><button class="btn amber" id="gmGo" disabled>▶ Create grid points</button></div>
+      <div class="hint" id="gmRes"></div>
+      <div class="grid2" style="margin-top:6px"><button class="btn amber" id="gmXLSX" disabled>⬇ Excel</button><button class="btn alt" id="gmCSV" disabled>CSV</button></div>
+      <div class="grid2" style="margin-top:6px"><button class="btn alt" id="gmDXF" disabled>DXF (AutoCAD)</button><button class="btn alt" id="gmKML" disabled>KML (Google Earth)</button></div>
+      <div class="btns"><button class="btn alt" id="gmClr" disabled>Clear grid points</button></div>
+      <div class="hint">Border points are spread evenly on every side (e.g. a 23 m side at 10 m → points every 7.67 m). Coordinates are in the project coordinate system (Geo data tab).</div>
     </div>
     </div>
     <div id="tabRoad" style="display:none">
@@ -1310,6 +1346,10 @@ async function readKFile(f) {
   return f.text();
 }
 async function loadFiles(files) {
+  if (files.some(f => /\.dwg$/i.test(f.name))) status('DWG drawings cannot be read in the browser – in AutoCAD use SAVEAS → DXF and load the DXF file.', 'warn');
+  const dxs = files.filter(f => /\.dxf$/i.test(f.name)); files = files.filter(f => !/\.(dxf|dwg)$/i.test(f.name));
+  for (const f of dxs) await loadDXF(f);
+  if (!files.length) return;
   if (S.mode === 'cf') {
     const pf = files.filter(f => /\.(csv|txt|xyz|pts|xlsx|xlsm|xls)$/i.test(f.name)), kf = files.filter(f => /\.(kml|kmz)$/i.test(f.name));
     for (const f of pf) await cfLoad(CF.ogl.length && !CF.fin.length && $('cfMode').value === 'pts' ? 'fin' : 'ogl', f);
@@ -1596,7 +1636,7 @@ function profile() {
 // ---------------- drawing on map ----------------
 function drawAll() {
   Object.values(LG).forEach(g => { if (g !== LG.draw) g.clearLayers(); });
-  if (S.mode === 'vec') { drawVec(); return; }
+  if (S.mode === 'vec') { drawVec(); gmPlots(); gmDraw(); return; }
   if (S.mode === 'road') { drawRoad(); return; }
   if (S.mode === 'cf') { cfDrawMap(); return; }
   if (S.mode === 'geo') { drawVec(); if (S.boundary) L.polygon(S.boundary, { color: COL.bound, weight: 3, fillOpacity: 0.05 }).addTo(LG.bound); if (RD.ll) L.polyline(RD.ali ? roadLine(0).map(p => toLL(p[0], p[1])) : RD.ll, { color: COL.prof, weight: 3 }).addTo(LG.road); return; }
@@ -1635,6 +1675,7 @@ const DRAW_MSG = {
   plot: 'Digitize a plot: click its corners (snaps to nearby corners). Double-click or Finish. Backspace = undo point.',
   road: 'Digitize a road centreline: click along the road. Double-click or Finish. Backspace = undo point.',
   point: 'Click on the map to drop a placemark (keep digitizing = several). Esc to stop.',
+  gridpoly: 'Click the corners of the grid polygon. Double-click or Finish when done. Backspace = undo point.',
   cflimit: 'Click the corners of the plot limit. Double-click or Finish when done. Backspace = undo point.',
   centre: 'Click the road centreline points (PIs) from start to end. Curves are fitted at the bends. Double-click or Finish.'
 };
@@ -1647,6 +1688,7 @@ function endDraw() { drawMode = null; LG.draw.clearLayers(); map.doubleClickZoom
 function finishDraw() {
   const pts = drawPts.filter((p, i) => i === 0 || p[0] !== drawPts[i - 1][0] || p[1] !== drawPts[i - 1][1]);
   const mode = drawMode; endDraw();
+  if (mode === 'gridpoly') { if (pts.length < 3) return status('Draw at least 3 corners.', 'warn'); return gmSetPoly(pts, 'Drawn polygon'); }
   if (mode === 'cflimit') { if (pts.length < 3) return status('Draw at least 3 corners.', 'warn'); return cfSetLimit(pts, 'Drawn limit'); }
   if (mode === 'boundary' || mode === 'plot') {
     if (pts.length < 3) return status('Draw at least 3 corners.', 'warn');
@@ -1680,7 +1722,7 @@ function snapPt(ll) {
 }
 function redrawTemp() {
   LG.draw.clearLayers(); if (!drawPts.length) return;
-  const poly = (drawMode === 'boundary' || drawMode === 'plot' || drawMode === 'cflimit'), c = drawMode === 'road' ? '#ff5252' : drawMode === 'centre' ? '#00e5ff' : drawMode === 'profile' ? COL.prof : COL.bound;
+  const poly = (drawMode === 'boundary' || drawMode === 'plot' || drawMode === 'cflimit' || drawMode === 'gridpoly'), c = drawMode === 'road' ? '#ff5252' : drawMode === 'centre' ? '#00e5ff' : drawMode === 'profile' ? COL.prof : COL.bound;
   (poly && drawPts.length > 2 ? L.polygon(drawPts, { color: c, weight: 2, dashArray: '5 4', fillOpacity: 0.1 }) : L.polyline(drawPts, { color: c, weight: 2, dashArray: '5 4' })).addTo(LG.draw);
   drawPts.forEach(p => L.circleMarker(p, { radius: 4, color: '#000', weight: 1, fillColor: '#fff', fillOpacity: 1 }).addTo(LG.draw));
 }
@@ -4831,7 +4873,7 @@ async function briefBook() {
   const rows = [[H('Point'), H('Chainage'), H('Offset L/R'), H('Level (m)'), H('Design level'), H('Remarks')]]; let n = 1;
   const offs = [['L' + C.outer, ''], ['L' + C.edge.toFixed(2), 'edge'], ['CL', ''], ['R' + C.edge.toFixed(2), 'edge'], ['R' + C.outer, '']];
   for (let ch = 0; ch <= Lr + 1e-6; ch += step) offs.forEach(o => rows.push([n++, fmtCh(ch), o[0], { v: '', s: 5 }, '', o[1]]));
-  const info = [[{ v: 'ROAD BRIEF – LEVEL BOOK TEMPLATE', s: 7 }], [], ['Description', BR.text]].concat(p.found.map(f => [f[0], f[1]])).concat([[], ['How to use', 'Type the measured level of each point in the yellow column (Levels sheet), then in Hashim Survey: Road study → 📥 Import levels from Excel / CSV.']]);
+  const info = [[{ v: 'ROAD BRIEF – LEVEL BOOK TEMPLATE', s: 7 }], [], ['Description', BR.text]].concat(p.found.map(f => [f[0], f[1]])).concat([[], ['How to use', 'Type the measured level of each point in the yellow column (Levels sheet), then in X-SEC PRO: Road study → 📥 Import levels from Excel / CSV.']]);
   download(await XL.build([{ name: 'Levels', rows, cols: [8, 12, 12, 12, 12, 24], freeze: 1, hdrRow: 1 }, { name: 'Brief', rows: info, cols: [24, 90] }]), 'level_book_template.xlsx');
   status(`Level book template downloaded: ${n - 1} points (${offs.length} offsets every ${step} m).`, 'ok');
 }
@@ -4851,7 +4893,7 @@ async function briefPDF() {
   busy(true, 'Building road brief…');
   try {
     const p = BR.p, F = briefFeatures(p), C = briefChecklists(p), meta = getMeta(), doc = newPDF({ unit: 'mm', format: 'a4' }), M = 14, Wd = 210 - 2 * M, navy = [15, 42, 63];
-    const head = (t, first) => { if (!first) doc.addPage(); doc.setFillColor(...navy); doc.rect(0, 0, 210, 18, 'F'); doc.setFillColor(242, 165, 22); doc.rect(0, 18, 210, 1, 'F'); doc.setTextColor(255); doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.text(t, M, 12); doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.text(`${meta.company || 'Hashim Survey'} · ${meta.project || ''} · ${meta.date || ''}`, 210 - M, 12, { align: 'right' }); doc.setTextColor(29, 42, 53); return 28; };
+    const head = (t, first) => { if (!first) doc.addPage(); doc.setFillColor(...navy); doc.rect(0, 0, 210, 18, 'F'); doc.setFillColor(242, 165, 22); doc.rect(0, 18, 210, 1, 'F'); doc.setTextColor(255); doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.text(t, M, 12); doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.text(`${meta.company || 'X-SEC PRO'} · ${meta.project || ''} · ${meta.date || ''}`, 210 - M, 12, { align: 'right' }); doc.setTextColor(29, 42, 53); return 28; };
     let y = head('ROAD BRIEF', true);
     doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.text('Description', M, y); y += 5; doc.setFont('helvetica', 'normal');
     const dl = doc.splitTextToSize(BR.text, Wd); doc.text(dl, M, y); y += dl.length * 4.2 + 4;
@@ -4878,6 +4920,280 @@ $('brEx').innerHTML = BR_EX.map((x, i) => `<button class="chip" data-i="${i}">${
 $('brEx').onclick = e => { const b = e.target.closest('[data-i]'); if (b) { $('brText').value = BR_EX[+b.dataset.i][1]; briefAnalyse(); } };
 $('brTabs').onclick = e => { const b = e.target.closest('[data-t]'); if (b) { BR.tab = b.dataset.t; briefRender(); } };
 
+// ================= GRID MAKER – points inside a polygon + along its border =================
+const GM = { ll: null, name: '', pts: [], info: null };
+function gmPlots() {
+  const sel = $('gmPlot'); if (!sel) return; const v = sel.value;
+  sel.innerHTML = '<option value="">– use a plot from the list –</option>' + S.vec.plots.map((p, i) => `<option value="${i}">${esc(p.name)}</option>`).join('');
+  if (v && S.vec.plots[+v]) sel.value = v;
+}
+function gmSetPoly(ll, name) {
+  ll = cleanRing(ll); if (ll.length < 3) return status('The grid polygon needs at least 3 corners.', 'warn');
+  if (!S.vec.plots.length && !GM.ll) ensureZone(ll[0][0], ll[0][1]);
+  GM.ll = ll; GM.name = name || 'Grid polygon'; GM.pts = []; GM.info = null;
+  const P = ll.map(q => TX(...toU(q[0], q[1])));
+  $('gmInfo').innerHTML = `<b>${esc(GM.name)}</b> – ${ll.length} corners · area ${fmt(G.area(P), 2)} m² · perimeter ${fmt(P.reduce((s, q, i) => s + Math.hypot(P[(i + 1) % P.length][0] - q[0], P[(i + 1) % P.length][1] - q[1]), 0), 2)} m`;
+  gmUI(); drawAll(); status(`${GM.name} ready – set the spacing and press ▶ Create grid points.`, 'ok');
+}
+function gmUI() {
+  $('gmAngRow').style.display = $('gmDir').value === 'custom' ? 'flex' : 'none';
+  $('gmSnapRow').style.display = $('gmDir').value === 'north' ? 'flex' : 'none';
+  $('gmGo').disabled = !GM.ll; ['gmXLSX', 'gmCSV', 'gmDXF', 'gmKML', 'gmClr'].forEach(id => $(id).disabled = !GM.pts.length);
+}
+function gmMake() {
+  if (!GM.ll) return status('Draw a polygon or choose a plot first.', 'warn');
+  const sx = +$('gmSx').value, sy = +$('gmSy').value || sx, bs = $('gmBs').value === '' ? sx : +$('gmBs').value, minD = +$('gmMin').value || 0;
+  if (!(sx > 0) || !(sy > 0)) return status('Type a grid spacing greater than 0.', 'warn');
+  const P = GM.ll.map(q => TX(...toU(q[0], q[1]))), A = G.area(P);
+  if (A / (sx * sy) > 100000) return status(`That would make about ${fmt(A / (sx * sy), 0)} points – use a bigger spacing (max. 100,000).`, 'err');
+  // grid direction
+  const dir = $('gmDir').value; let th = 0, x0 = 0, y0 = 0, kL = 0, Lmax = 0;
+  P.forEach((q, i) => { const r = P[(i + 1) % P.length], L0 = Math.hypot(r[0] - q[0], r[1] - q[1]); if (L0 > Lmax) { Lmax = L0; kL = i; } });
+  if (dir === 'edge') { const q = P[kL], r = P[(kL + 1) % P.length]; th = Math.atan2(r[1] - q[1], r[0] - q[0]); x0 = q[0]; y0 = q[1]; }
+  else if (dir === 'custom') { th = -(+$('gmAng').value || 0) * Math.PI / 180; x0 = P[0][0]; y0 = P[0][1]; }
+  else if (!$('gmSnap').checked) { x0 = P[0][0]; y0 = P[0][1]; }
+  const c = Math.cos(th), s = Math.sin(th);
+  const loc = q => [(q[0] - x0) * c + (q[1] - y0) * s, -(q[0] - x0) * s + (q[1] - y0) * c], glob = (u, v) => [x0 + u * c - v * s, y0 + u * s + v * c];
+  const Pl = P.map(loc), us = Pl.map(q => q[0]), vs = Pl.map(q => q[1]);
+  const dEdge = (u, v) => { let d = Infinity; for (let i = 0; i < Pl.length; i++) { const a = Pl[i], b = Pl[(i + 1) % Pl.length], dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx * dx + dy * dy || 1; let t = ((u - a[0]) * dx + (v - a[1]) * dy) / L2; t = Math.max(0, Math.min(1, t)); d = Math.min(d, Math.hypot(u - a[0] - t * dx, v - a[1] - t * dy)); } return d; };
+  const out = [], eps = 1e-6;
+  // corners + border points (evenly divided on every side)
+  const withC = $('gmCorners').checked;
+  P.forEach((q, i) => {
+    if (withC) out.push({ type: 'Corner', x: q[0], y: q[1] });
+    const r = P[(i + 1) % P.length], L0 = Math.hypot(r[0] - q[0], r[1] - q[1]);
+    if (bs > 0 && L0 > bs * 0.5) { const n = Math.max(1, Math.round(L0 / bs)); for (let k = 1; k < n; k++) out.push({ type: 'Border', x: q[0] + (r[0] - q[0]) * k / n, y: q[1] + (r[1] - q[1]) * k / n }); }
+  });
+  // inside grid, row by row (snake order for setting-out)
+  const i0 = Math.ceil(Math.min(...us) / sx - eps), i1 = Math.floor(Math.max(...us) / sx + eps), j0 = Math.ceil(Math.min(...vs) / sy - eps), j1 = Math.floor(Math.max(...vs) / sy + eps);
+  const snake = $('gmOrder').value === 'snake'; let row = 0;
+  for (let j = j0; j <= j1; j++) {
+    const line = [];
+    for (let i = i0; i <= i1; i++) { const u = i * sx, v = j * sy; if (!G.inPoly(u, v, Pl)) continue; const d = dEdge(u, v); if (d < Math.max(minD, 1e-3)) continue; const [x, y] = glob(u, v); line.push({ type: 'Grid', x, y, row: j - j0 + 1, col: i - i0 + 1 }); }
+    if (!line.length) continue; row++; if (snake && row % 2 === 0) line.reverse(); out.push(...line);
+  }
+  // names & geographic positions
+  const pre = $('gmPre').value.trim(), st = parseInt($('gmStart').value) || 1;
+  out.forEach((p, k) => { const [lat, lon] = fromProj(p.x, p.y); p.lat = lat; p.lon = lon; [p.E, p.N] = toU(lat, lon); p.id = pre + (st + k); });
+  GM.pts = out;
+  const n = t => out.filter(p => p.type === t).length;
+  GM.info = { A, sx, sy, bs, minD, dir: dir === 'north' ? `Grid north${$('gmSnap').checked ? ' (round coordinates)' : ''}` : dir === 'edge' ? `Parallel to the longest side (bearing ${((90 - th * 180 / Math.PI + 360) % 360).toFixed(2)}°)` : `Rotated ${(+$('gmAng').value || 0)}° clockwise`, nC: n('Corner'), nB: n('Border'), nG: n('Grid') };
+  $('gmRes').innerHTML = `<b>${fmt(out.length, 0)} points</b>: ${GM.info.nG} grid · ${GM.info.nB} border · ${GM.info.nC} corners<br>Spacing ${sx} × ${sy} m · border every ~${bs || '–'} m · ${GM.info.dir}`;
+  gmUI(); drawAll();
+  status(`Grid made: ${fmt(out.length, 0)} points (${GM.info.nG} inside, ${GM.info.nB} on the border, ${GM.info.nC} corners). Export them with ⬇ Excel.`, 'ok');
+}
+function gmDraw() {
+  if (!GM.ll) return;
+  L.polygon(GM.ll, { color: '#F2A516', weight: 2, dashArray: '6 4', fill: true, fillOpacity: 0.05, interactive: false }).addTo(LG.bound);
+  const col = { Grid: '#1565c0', Border: '#ef6c00', Corner: '#c62828' }, many = GM.pts.length > 4000;
+  GM.pts.forEach(p => { const m = L.circleMarker([p.lat, p.lon], { radius: p.type === 'Grid' ? (many ? 1.5 : 2.6) : 3.4, color: '#fff', weight: many ? 0 : 0.8, fillColor: col[p.type], fillOpacity: 1 }); if (!many) m.bindTooltip(`${esc(p.id)} · ${p.type}<br>E ${p.x.toFixed(3)} N ${p.y.toFixed(3)}`); m.addTo(LG.pts); });
+}
+const gmBase = () => ((GM.name || 'grid').trim().replace(/[^\w\-]+/g, '_') || 'grid') + '_grid_points';
+async function gmXLSX() {
+  if (!GM.pts.length) return; if (!window.JSZip) return status('The zip library did not load – check the internet connection.', 'err');
+  const H = t => ({ v: t, s: 1 }), meta = getMeta(), I = GM.info, last = GM.pts.length + 1;
+  const pts = [[H('No.'), H('Point'), H(`Easting (${crsShort()})`), H(`Northing (${crsShort()})`), H('Type'), H('Latitude'), H('Longitude'), H('Level (m)'), H('Remarks')]];
+  GM.pts.forEach((p, k) => pts.push([k + 1, p.id, { v: +p.x.toFixed(3), s: 2 }, { v: +p.y.toFixed(3), s: 2 }, p.type, { v: +p.lat.toFixed(8), s: 0 }, { v: +p.lon.toFixed(8), s: 0 }, { v: '', s: 5 }, p.type === 'Grid' ? `row ${p.row} col ${p.col}` : '']));
+  const P = GM.ll.map(q => TX(...toU(q[0], q[1])));
+  const F = (f, v, s = 0) => ({ f, v, s });
+  const sum = [[{ v: 'GRID POINTS', s: 7 }], [], [{ v: 'Project', s: 6 }, meta.project || GM.name], [{ v: 'Polygon', s: 6 }, GM.name], [{ v: 'Coordinates', s: 6 }, crsLabel()], [{ v: 'Date', s: 6 }, meta.date], [],
+    [{ v: 'Grid spacing X (m)', s: 6 }, { v: I.sx, s: 3 }], [{ v: 'Grid spacing Y (m)', s: 6 }, { v: I.sy, s: 3 }], [{ v: 'Border spacing (m)', s: 6 }, { v: I.bs, s: 3 }], [{ v: 'Direction', s: 6 }, I.dir], [{ v: 'Polygon area (m²)', s: 6 }, { v: +I.A.toFixed(3), s: 3 }], [],
+    [H('Type'), H('Count')],
+    ['Grid', F(`COUNTIF(Points!E2:E${last},"Grid")`, I.nG)], ['Border', F(`COUNTIF(Points!E2:E${last},"Border")`, I.nB)], ['Corner', F(`COUNTIF(Points!E2:E${last},"Corner")`, I.nC)], [{ v: 'Total', s: 6 }, F(`SUM(B15:B17)`, GM.pts.length)],
+    ['Levels filled in', F(`COUNT(Points!H2:H${last})`, 0)], [],
+    ['Type the field level of each point in the yellow column of the Points sheet.']];
+  const poly = [[H('Corner'), H(`Easting (${crsShort()})`), H(`Northing (${crsShort()})`)]].concat(P.map((q, i) => [`C${i + 1}`, { v: +q[0].toFixed(3), s: 2 }, { v: +q[1].toFixed(3), s: 2 }]));
+  download(await XL.build([{ name: 'Points', rows: pts, cols: [7, 10, 16, 16, 9, 13, 13, 11, 16], freeze: 1, hdrRow: 1 }, { name: 'Summary', rows: sum, cols: [24, 60] }, { name: 'Polygon', rows: poly, cols: [9, 16, 16], freeze: 1 }]), gmBase() + '.xlsx');
+  status(`Excel downloaded: ${fmt(GM.pts.length, 0)} points with Easting/Northing in ${crsShort()} and an empty Level column for the field.`, 'ok');
+}
+function gmCSV() { const L0 = [`Point,Easting,Northing,Type,Latitude,Longitude`]; GM.pts.forEach(p => L0.push([`"${String(p.id).replace(/"/g, '')}"`, p.x.toFixed(3), p.y.toFixed(3), p.type, p.lat.toFixed(8), p.lon.toFixed(8)].join(','))); download(new Blob(['﻿' + L0.join('\r\n')], { type: 'text/csv' }), gmBase() + '.csv'); }
+function gmDXF() {
+  const h = Math.max(0.2, Math.min(GM.info.sx, GM.info.sy) / 8), d = dxfWriter([['GRID_POLYGON', 2], ['GRID_POINTS', 5], ['GRID_BORDER', 30], ['GRID_CORNERS', 1], ['GRID_LABELS', 7]], true);
+  d.pline('GRID_POLYGON', GM.ll.map(q => toU(q[0], q[1])), true);
+  GM.pts.forEach(p => { const ly = p.type === 'Grid' ? 'GRID_POINTS' : p.type === 'Border' ? 'GRID_BORDER' : 'GRID_CORNERS'; d.circle(ly, [p.E, p.N], h * 0.35); d.text('GRID_LABELS', p.E + h * 0.5, p.N + h * 0.3, h, String(p.id)); });
+  d.save(gmBase() + '.dxf'); status('DXF downloaded: polygon, grid / border / corner points and labels.', 'ok');
+}
+function gmKML() {
+  const x = s => String(s).replace(/[<&>]/g, c => ({ '<': '&lt;', '&': '&amp;', '>': '&gt;' }[c]));
+  const st = { Grid: 'ff1565c0', Border: 'ff006cef', Corner: 'ff2828c6' };
+  let k = `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>${x(GM.name)} – grid points</name>`;
+  Object.keys(st).forEach(t => k += `<Style id="${t}"><IconStyle><color>${st[t]}</color><scale>0.6</scale><Icon><href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon></IconStyle><LabelStyle><scale>0.6</scale></LabelStyle></Style>`);
+  k += `<Placemark><name>${x(GM.name)}</name><Style><LineStyle><color>ff16a5f2</color><width>2</width></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style><Polygon><outerBoundaryIs><LinearRing><coordinates>${GM.ll.concat([GM.ll[0]]).map(q => `${q[1].toFixed(8)},${q[0].toFixed(8)},0`).join(' ')}</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>`;
+  ['Corner', 'Border', 'Grid'].forEach(t => { k += `<Folder><name>${t}</name>`; GM.pts.filter(p => p.type === t).forEach(p => k += `<Placemark><name>${x(p.id)}</name><styleUrl>#${t}</styleUrl><description>E ${p.x.toFixed(3)} N ${p.y.toFixed(3)}</description><Point><coordinates>${p.lon.toFixed(8)},${p.lat.toFixed(8)},0</coordinates></Point></Placemark>`); k += '</Folder>'; });
+  download(new Blob([k + '</Document></kml>'], { type: 'application/vnd.google-earth.kml+xml' }), gmBase() + '.kml');
+}
+$('gmDrawBtn').onclick = () => startDraw('gridpoly');
+$('gmPlot').onchange = () => { const p = S.vec.plots[+$('gmPlot').value]; if (p) gmSetPoly(p.ll, p.name); };
+$('gmDir').onchange = gmUI; $('gmGo').onclick = gmMake;
+$('gmXLSX').onclick = gmXLSX; $('gmCSV').onclick = gmCSV; $('gmDXF').onclick = gmDXF; $('gmKML').onclick = gmKML;
+$('gmClr').onclick = () => { GM.pts = []; GM.info = null; $('gmRes').innerHTML = ''; gmUI(); drawAll(); };
+gmUI();
+
+// ================= DXF IMPORT (ASCII DXF from AutoCAD / Civil 3D) =================
+function dxfRead(text) {
+  if (/^AutoCAD Binary DXF/.test(text.slice(0, 22))) throw new Error('this is a binary DXF – in AutoCAD use SAVEAS → DXF (ASCII) and load it again');
+  const L0 = text.split(/\r\n|\r|\n/), pairs = [];
+  for (let i = 0; i + 1 < L0.length; i += 2) { const c = parseInt(L0[i].trim(), 10); if (isNaN(c)) { i--; continue; } pairs.push([c, L0[i + 1]]); }
+  // locate ENTITIES section
+  let i = 0, start = -1, end = pairs.length;
+  for (; i < pairs.length - 1; i++) if (pairs[i][0] === 0 && pairs[i][1].trim() === 'SECTION' && pairs[i + 1][0] === 2 && pairs[i + 1][1].trim() === 'ENTITIES') { start = i + 2; break; }
+  if (start < 0) throw new Error('no ENTITIES section – is this a DXF file?');
+  for (i = start; i < pairs.length; i++) if (pairs[i][0] === 0 && pairs[i][1].trim() === 'ENDSEC') { end = i; break; }
+  const ents = []; let cur = null;
+  for (i = start; i < end; i++) { const [c, v] = pairs[i]; if (c === 0) { cur = { type: v.trim(), g: [] }; ents.push(cur); } else if (cur) cur.g.push([c, v]); }
+  return ents;
+}
+const dxfNum = v => parseFloat(String(v).trim());
+function dxfGet(e, code, def) { const p = e.g.find(q => q[0] === code); return p ? (typeof def === 'string' ? p[1].trim() : dxfNum(p[1])) : def; }
+function dxfArc(p1, p2, b, out) {   // points along a bulge arc from p1 to p2 (p1 excluded, p2 included)
+  if (!b || Math.abs(b) < 1e-9) { out.push(p2); return; }
+  const th = 4 * Math.atan(b), dx = p2[0] - p1[0], dy = p2[1] - p1[1], c = Math.hypot(dx, dy); if (c < 1e-9) { out.push(p2); return; }
+  const dist = (c / 2) / Math.tan(th / 2), cx = (p1[0] + p2[0]) / 2 - dy / c * dist, cy = (p1[1] + p2[1]) / 2 + dx / c * dist, r = c / (2 * Math.sin(th / 2));
+  const a1 = Math.atan2(p1[1] - cy, p1[0] - cx), n = Math.max(2, Math.ceil(Math.abs(th) / (5 * Math.PI / 180))), R = Math.abs(r);
+  for (let k = 1; k <= n; k++) { const a = a1 + th * k / n; out.push(k === n ? p2 : [cx + R * Math.cos(a), cy + R * Math.sin(a), p1[2] != null && p2[2] != null ? p1[2] + (p2[2] - p1[2]) * k / n : null]); }
+}
+function parseDXF(text) {
+  const ents = dxfRead(text), layers = {}, LY = n => layers[n] || (layers[n] = { name: n, polys: [], lines: [], pts: [], texts: [] });
+  const segs = [];   // LINE / ARC pieces to be chained per layer
+  for (let k = 0; k < ents.length; k++) {
+    const e = ents[k], ly = dxfGet(e, 8, '0') || '0', T = e.type;
+    if (T === 'LWPOLYLINE') {
+      const flags = dxfGet(e, 70, 0), elev = dxfGet(e, 38, 0); const v = []; let last = null;
+      e.g.forEach(([c, val]) => { if (c === 10) { last = { x: dxfNum(val), y: null, b: 0 }; v.push(last); } else if (c === 20 && last) last.y = dxfNum(val); else if (c === 42 && last) last.b = dxfNum(val); });
+      const P = v.filter(q => isFinite(q.x) && isFinite(q.y)); if (P.length < 2) continue;
+      const out = [[P[0].x, P[0].y, elev || null]], closed = (flags & 1) === 1;
+      for (let j = 1; j < P.length; j++) dxfArc(out[out.length - 1], [P[j].x, P[j].y, elev || null], P[j - 1].b, out);
+      if (closed && P[P.length - 1].b) dxfArc(out[out.length - 1], out[0], P[P.length - 1].b, out);
+      (closed ? LY(ly).polys : LY(ly).lines).push({ pts: out, z: elev || null });
+    } else if (T === 'POLYLINE') {
+      const flags = dxfGet(e, 70, 0); if (flags & 16 || flags & 64) { while (k + 1 < ents.length && ents[k + 1].type !== 'SEQEND') k++; continue; }   // polygon mesh / polyface
+      const v = []; while (k + 1 < ents.length && ents[k + 1].type === 'VERTEX') { k++; const q = ents[k]; v.push({ x: dxfGet(q, 10, NaN), y: dxfGet(q, 20, NaN), z: dxfGet(q, 30, 0), b: dxfGet(q, 42, 0) }); }
+      if (k + 1 < ents.length && ents[k + 1].type === 'SEQEND') k++;
+      const P = v.filter(q => isFinite(q.x) && isFinite(q.y)); if (P.length < 2) continue;
+      const is3d = (flags & 8) === 8, zz = q => (is3d || q.z) ? q.z : null, out = [[P[0].x, P[0].y, zz(P[0])]], closed = (flags & 1) === 1;
+      for (let j = 1; j < P.length; j++) dxfArc(out[out.length - 1], [P[j].x, P[j].y, zz(P[j])], P[j - 1].b, out);
+      (closed ? LY(ly).polys : LY(ly).lines).push({ pts: out, z: null, is3d });
+    } else if (T === 'LINE') {
+      segs.push({ ly, pts: [[dxfGet(e, 10, NaN), dxfGet(e, 20, NaN), dxfGet(e, 30, 0) || null], [dxfGet(e, 11, NaN), dxfGet(e, 21, NaN), dxfGet(e, 31, 0) || null]] });
+    } else if (T === 'ARC') {
+      const cx = dxfGet(e, 10, NaN), cy = dxfGet(e, 20, NaN), r = dxfGet(e, 40, 0); let a1 = dxfGet(e, 50, 0), a2 = dxfGet(e, 51, 0); if (a2 <= a1) a2 += 360;
+      const n = Math.max(2, Math.ceil((a2 - a1) / 5)), pts = []; for (let j = 0; j <= n; j++) { const a = (a1 + (a2 - a1) * j / n) * Math.PI / 180; pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a), null]); }
+      segs.push({ ly, pts });
+    } else if (T === 'POINT') {
+      LY(ly).pts.push({ x: dxfGet(e, 10, NaN), y: dxfGet(e, 20, NaN), z: dxfGet(e, 30, 0), id: '', d: '' });
+    } else if (T === 'INSERT') {
+      const p = { x: dxfGet(e, 10, NaN), y: dxfGet(e, 20, NaN), z: dxfGet(e, 30, 0), id: '', d: dxfGet(e, 2, '') };
+      if (dxfGet(e, 66, 0) === 1) while (k + 1 < ents.length && (ents[k + 1].type === 'ATTRIB' || ents[k + 1].type === 'SEQEND')) {
+        k++; const a = ents[k]; if (a.type === 'SEQEND') break; const tag = dxfGet(a, 2, '').toUpperCase(), val = dxfGet(a, 1, '');
+        if (/ELEV|LEVEL|^RL$|^Z$|HEIGHT|^HT$/.test(tag) && isFinite(parseFloat(val))) p.z = parseFloat(val);
+        else if (/PNT|POINT|^NO|NUM|^ID$|NAME/.test(tag)) p.id = val; else if (/DESC|CODE/.test(tag)) p.d = val;
+      }
+      LY(ly).pts.push(p);
+    } else if (T === 'TEXT' || T === 'MTEXT') {
+      const s = dxfGet(e, 1, '').replace(/\\[A-Za-z][^;]*;|[{}]/g, '').trim(); if (/^[+]?-?\d{1,4}\.\d{1,4}$/.test(s)) LY(ly).texts.push({ x: dxfGet(e, 10, NaN), y: dxfGet(e, 20, NaN), z: parseFloat(s), id: '', d: 'text level' });
+    } else if (T === '3DFACE') {
+      [[10, 20, 30], [11, 21, 31], [12, 22, 32], [13, 23, 33]].forEach(c => LY(ly).pts.push({ x: dxfGet(e, c[0], NaN), y: dxfGet(e, c[1], NaN), z: dxfGet(e, c[2], 0), id: '', d: '3dface' }));
+    }
+  }
+  // chain LINE/ARC pieces that touch end-to-end (same layer)
+  const byLy = {}; segs.forEach(s => (byLy[s.ly] = byLy[s.ly] || []).push(s.pts.filter(q => isFinite(q[0]) && isFinite(q[1]))));
+  const near = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]) < 1e-3;
+  Object.entries(byLy).forEach(([ly, arr]) => {
+    arr = arr.filter(a => a.length >= 2); const used = new Array(arr.length).fill(false);
+    for (let s = 0; s < arr.length; s++) {
+      if (used[s]) continue; used[s] = true; let ch = arr[s].slice(), grew = true;
+      while (grew) { grew = false; for (let t = 0; t < arr.length; t++) { if (used[t]) continue; const a = arr[t];
+        if (near(ch[ch.length - 1], a[0])) { ch = ch.concat(a.slice(1)); used[t] = grew = true; } else if (near(ch[ch.length - 1], a[a.length - 1])) { ch = ch.concat(a.slice(0, -1).reverse()); used[t] = grew = true; }
+        else if (near(ch[0], a[a.length - 1])) { ch = a.slice(0, -1).concat(ch); used[t] = grew = true; } else if (near(ch[0], a[0])) { ch = a.slice(1).reverse().concat(ch); used[t] = grew = true; } } }
+      if (ch.length > 3 && near(ch[0], ch[ch.length - 1])) LY(ly).polys.push({ pts: ch.slice(0, -1), z: null }); else LY(ly).lines.push({ pts: ch, z: null });
+    }
+  });
+  // close polylines whose first and last points coincide
+  Object.values(layers).forEach(l => { l.lines = l.lines.filter(pl => { const a = pl.pts; if (a.length > 3 && near(a[0], a[a.length - 1])) { l.polys.push({ pts: a.slice(0, -1), z: pl.z }); return false; } return true; }); });
+  // level points: real points with Z, vertices of 3D polylines / contours with elevation; numeric text only when the layer has no Z data
+  Object.values(layers).forEach(l => {
+    l.zpts = l.pts.filter(p => isFinite(p.x) && isFinite(p.y) && isFinite(p.z) && p.z !== 0);
+    l.lines.concat(l.polys).forEach(pl => pl.pts.forEach(q => { if (q[2] != null && isFinite(q[2]) && q[2] !== 0) l.zpts.push({ x: q[0], y: q[1], z: q[2], id: '', d: 'line vertex' }); }));
+    if (!l.zpts.length && l.texts.length) l.zpts = l.texts.filter(p => isFinite(p.x) && isFinite(p.y));
+    l.flat = l.pts.filter(p => isFinite(p.x) && isFinite(p.y) && !(isFinite(p.z) && p.z !== 0));
+    const seen = new Set(); l.zpts = l.zpts.filter(p => { const k = p.x.toFixed(3) + ',' + p.y.toFixed(3); if (seen.has(k)) return false; seen.add(k); return true; });
+  });
+  return Object.values(layers).filter(l => l.polys.length || l.lines.length || l.zpts.length || l.flat.length).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+}
+const DXF_IGN = /text|dim|title|frame|border|grid[\s_-]*(line|tick|mark)|hatch|depth|label|lbl|defpoints|viewport|anno|legend|north|logo|sheet|tbl|table|symbol/i, DXF_CL = /(^|[^a-z])(c[\s._-]?l|centre|center|axis|align)/i, DXF_PLOT = /plot|parcel|lot|bound|limit|site|property|cadast|plan|qita/i, DXF_PT = /point|pnt|level|spot|elev|ngl|ogl|topo|survey|cont|tin|surf|ground|egl|nsl/i, DXF_FIN = /final|fgl|fl\b|as[\s-]?built|stock|design|formation|prop/i;
+function dxfRoles(mode) {
+  return mode === 'road' ? [['cl', 'Centreline'], ['ground', 'Ground points (levels)'], ['', 'Ignore']]
+    : mode === 'cf' ? [['limit', 'Plot limit'], ['ogl', 'OGL points'], ['fin', 'Final points'], ['', 'Ignore']]
+    : [['auto', 'Plots + roads (closed → plot, open → road)'], ['plots', 'Plots'], ['roads', 'Roads'], ['points', 'Points (placemarks)'], ['', 'Ignore']];
+}
+function dxfGuess(l, mode, ctx) {
+  const n = l.name, hasLine = l.lines.length, hasPoly = l.polys.length, hasZ = l.zpts.length;
+  if (DXF_IGN.test(n) && !hasZ) return '';
+  if (mode === 'road') { if (DXF_CL.test(n) && hasLine) return 'cl'; if (hasZ && (DXF_PT.test(n) || !hasLine || l.zpts.length > 10)) return 'ground'; return ''; }
+  if (mode === 'cf') { if (hasPoly && DXF_PLOT.test(n) && !ctx.limit) { ctx.limit = 1; return 'limit'; } if (hasZ >= 3) return DXF_FIN.test(n) ? 'fin' : 'ogl'; return ''; }
+  if (DXF_PT.test(n) && /cont/i.test(n)) return '';
+  if (ROAD_RX.test(n) || DXF_CL.test(n)) return 'roads'; if (hasPoly && DXF_PLOT.test(n)) return 'plots'; if (hasPoly || hasLine) return hasPoly && !hasLine ? 'plots' : 'auto';
+  if ((l.flat.length || hasZ) && l.flat.length + hasZ < 3000) return 'points'; return '';
+}
+function dxfDialog(layers, fname) {
+  return new Promise(resolve => {
+    const mode = S.mode === 'geo' ? 'vec' : S.mode, roles = dxfRoles(mode), ctx = {};
+    let guesses = layers.map(l => dxfGuess(l, mode, ctx));
+    if (mode === 'road' && !guesses.includes('cl')) { let best = -1, bl = 0; layers.forEach((l, i) => { if (DXF_IGN.test(l.name)) return; l.lines.forEach(pl => { let s = 0; for (let j = 1; j < pl.pts.length; j++) s += Math.hypot(pl.pts[j][0] - pl.pts[j - 1][0], pl.pts[j][1] - pl.pts[j - 1][1]); if (s > bl) { bl = s; best = i; } }); }); if (best >= 0) guesses[best] = 'cl'; }
+    if (mode === 'cf' && !guesses.includes('limit')) { let best = -1, ba = 0; layers.forEach((l, i) => { if (DXF_IGN.test(l.name) || guesses[i]) return; l.polys.forEach(pl => { const a = G.area(pl.pts); if (a > ba) { ba = a; best = i; } }); }); if (best >= 0) guesses[best] = 'limit'; }
+    const d = document.createElement('div'); d.id = 'dxfDlg';
+    const s0 = layers.flatMap(l => l.polys.concat(l.lines).flatMap(pl => pl.pts).concat(l.zpts.map(p => [p.x, p.y])))[0];
+    const ll0 = s0 ? fromProj(s0[0], s0[1]) : null, okXY = ll0 && isFinite(ll0[0]) && Math.abs(ll0[0]) < 85 && isFinite(ll0[1]);
+    d.innerHTML = `<div class="dxbox"><div class="dxhead">📐 DXF layers – ${esc(fname)}</div><div class="dxbody">
+      <p>Choose what each layer is used for in <b>${{ road: 'Road study', cf: 'Cut & fill', vec: 'Vector map' }[mode]}</b>. Roles were guessed from the layer names – change any that are wrong.</p>
+      <div class="note${okXY ? '' : ' bad'}">Coordinates are read as <b>${esc(crsLabel())}</b>${s0 ? ` – first point E ${s0[0].toFixed(2)}, N ${s0[1].toFixed(2)}` : ''}. ${okXY ? 'If the drawing uses another system (e.g. Dubai Local TM / DLTM), cancel, set it in Geo data → Coordinate system and load the file again.' : '⚠ These coordinates do not fit this system – set the right one in Geo data → Coordinate system (or the UTM zone) first. Drawings in local coordinates cannot be placed on the map.'}</div>
+      <div class="dxtbl"><table><tr><th>Layer</th><th title="closed polylines">Closed</th><th title="open lines / polylines">Lines</th><th title="points with a level">Points with Z</th><th>Use as</th></tr>
+      ${layers.map((l, i) => `<tr><td>${esc(l.name)}</td><td>${l.polys.length || ''}</td><td>${l.lines.length || ''}</td><td>${l.zpts.length || (l.flat.length ? `<span title="points without level">${l.flat.length} (no Z)</span>` : '')}</td><td><select data-i="${i}">${roles.map(r => `<option value="${r[0]}"${r[0] === guesses[i] ? ' selected' : ''}>${r[1]}</option>`).join('')}</select></td></tr>`).join('')}</table></div>
+      <div class="pfbtns"><button class="btn amber" id="dxGo"${okXY ? '' : ' disabled'}>Import</button><button class="btn alt" id="dxNo">Cancel</button></div></div></div>`;
+    document.body.appendChild(d);
+    const close = v => { d.remove(); resolve(v); };
+    d.querySelector('#dxNo').onclick = () => close(null);
+    d.querySelector('#dxGo').onclick = () => close(layers.map((l, i) => ({ l, role: d.querySelector(`select[data-i="${i}"]`).value })).filter(x => x.role));
+    d.addEventListener('click', e => { if (e.target === d) close(null); });
+  });
+}
+async function loadDXF(f) {
+  let layers; try { layers = parseDXF(await f.text()); } catch (e) { return status('Could not read DXF: ' + e.message, 'err'); }
+  if (!layers.length) return status('No lines, polylines or points found in this DXF (model space).', 'warn');
+  const base = f.name.replace(/\.dxf$/i, ''), pick = await dxfDialog(layers, f.name); if (!pick || !pick.length) return status('DXF import cancelled.');
+  const LL = q => fromProj(q[0], q[1]), ptOut = (p, k, ly) => { const [lat, lon] = fromProj(p.x, p.y); const o = { id: p.id || `${ly}-${k + 1}`, lat, lon, z: p.z, d: p.d || ly }; [o.E, o.N] = toU(lat, lon); return o; };
+  const first = pick.map(x => x.l.polys[0] || x.l.lines[0]).find(Boolean); const f0 = first ? LL(first.pts[0]) : (pick[0].l.zpts[0] ? fromProj(pick[0].l.zpts[0].x, pick[0].l.zpts[0].y) : null);
+  if (f0 && S.mode !== 'cf') ensureZone(f0[0], f0[1]);
+  if (!$('mProject').value) $('mProject').value = base;
+  const msg = [];
+  if (S.mode === 'road') {
+    const cls = pick.filter(x => x.role === 'cl').flatMap(x => x.l.lines.map(pl => ({ pl, ly: x.l.name })));
+    const g = pick.filter(x => x.role === 'ground').flatMap(x => x.l.zpts.map((p, k) => ptOut(p, k, x.l.name)));
+    if (g.length >= 3) { S.survey = g; reproject(); $('rSrc').value = 'auto'; RD.surfKey = ''; msg.push(`${g.length} ground points`); }
+    if (cls.length) { const len = a => a.reduce((s, q, j) => j ? s + Math.hypot(q[0] - a[j - 1][0], q[1] - a[j - 1][1]) : 0, 0); cls.sort((a, b) => len(b.pl.pts) - len(a.pl.pts)); setCentreline(cls[0].pl.pts.map(LL), `${base} ${cls[0].ly}`); msg.unshift(`centreline from layer "${cls[0].ly}" (${fmt(len(cls[0].pl.pts), 1)} m)`); if (cls.length > 1) msg.push(`${cls.length - 1} other line(s) on the centreline layer(s) not used`); }
+    else if (g.length < 3) return status('Nothing imported – choose a Centreline layer or a Ground points layer.', 'warn');
+    if (!cls.length) drawAll();
+  } else if (S.mode === 'cf') {
+    const lim = pick.filter(x => x.role === 'limit').flatMap(x => x.l.polys.map(pl => ({ pl, ly: x.l.name }))).sort((a, b) => G.area(b.pl.pts) - G.area(a.pl.pts))[0];
+    const og = pick.filter(x => x.role === 'ogl').flatMap(x => x.l.zpts.map((p, k) => ptOut(p, k, x.l.name)));
+    const fi = pick.filter(x => x.role === 'fin').flatMap(x => x.l.zpts.map((p, k) => ptOut(p, k, x.l.name)));
+    if (og.length >= 3) { CF.ogl = og; msg.push(`${og.length} OGL points`); } if (fi.length >= 3) { CF.fin = fi; $('cfMode').value = 'pts'; msg.push(`${fi.length} final points`); }
+    CF.res = null; if (lim) { cfSetLimit(lim.pl.pts.map(LL), `${base} ${lim.ly}`); msg.unshift(`plot limit from layer "${lim.ly}"`); } else { cfInfo(); cfRender(); drawAll(); cfFit(); }
+    if (!msg.length) return status('Nothing imported – choose a Plot limit or OGL / Final points layer.', 'warn');
+  } else {
+    const w = +$('roadW').value || 12; let nP = 0, nR = 0, nPt = 0;
+    pick.forEach(({ l, role }) => {
+      if (role === 'auto' || role === 'plots') l.polys.forEach((pl, k) => { S.vec.plots.push({ name: `${l.name} ${k + 1}`, ll: cleanRing(pl.pts.map(LL)) }); nP++; });
+      if (role === 'roads') l.polys.forEach((pl, k) => { S.vec.roadAreas.push({ name: `${l.name} ${k + 1}`, ll: cleanRing(pl.pts.map(LL)) }); nR++; });
+      if (role === 'auto' || role === 'roads') l.lines.forEach((pl, k) => { S.vec.roads.push({ name: `${l.name} ${k + 1}`, ll: pl.pts.map(LL), w }); nR++; });
+      if (role === 'points') l.zpts.concat(l.flat).forEach((p, k) => { const [lat, lon] = fromProj(p.x, p.y); S.vec.points.push({ name: p.id || `${l.name}-${k + 1}`, ll: [lat, lon], note: isFinite(p.z) && p.z ? `Z ${(+p.z).toFixed(3)}` : '' }); nPt++; });
+    });
+    if (!nP && !nR && !nPt) return status('Nothing imported – choose Plots, Roads or Points for at least one layer.', 'warn');
+    fillPolySelect(); renderVec(); drawAll(); fitVec(); msg.push(`${nP} plot(s), ${nR} road(s)${nPt ? `, ${nPt} point(s)` : ''}`);
+  }
+  status(`DXF imported: ${msg.join(' · ')}. Coordinates read as ${crsShort()}.`, 'ok');
+}
+
 function setMode(m) {
   if (drawMode) endDraw();
   S.mode = m;
@@ -4890,7 +5206,7 @@ function setMode(m) {
   if (m !== 'snap' && S.ovlLayer && map.removeLayer) { map.removeLayer(S.ovlLayer); S.ovlLayer = null; } else if (m === 'snap') setTimeout(updateOverlay, 0);
   $('mapwrap').classList.toggle('road', m === 'road'); $('drawer').style.display = m === 'road' ? 'flex' : 'none';
   setTimeout(() => { if (map.invalidateSize) map.invalidateSize(); drawRoadCanvases(); }, 60);
-  $('dropHint').textContent = m === 'cf' ? 'OGL / final points (CSV · TXT · Excel) · KML/KMZ plot limit' : m === 'geo' ? 'GeoTIFF DEM (.tif) · KML/KMZ · or Ctrl+V a place copied in Google Earth' : m === 'snap' ? 'KML/KMZ plot boundary or CSV survey levels → contours & report' : m === 'vec' ? 'KML/KMZ with plots and roads → vector map & plan' : 'KML/KMZ road centreline · Excel / CSV ground levels (chainage, offset, level)';
+  $('dropHint').textContent = m === 'cf' ? 'OGL / final points (CSV · TXT · Excel) · KML/KMZ or DXF plot limit & points' : m === 'geo' ? 'GeoTIFF DEM (.tif) · KML/KMZ · or Ctrl+V a place copied in Google Earth' : m === 'snap' ? 'KML/KMZ plot boundary or CSV survey levels → contours & report' : m === 'vec' ? 'KML/KMZ or DXF with plots and roads → vector map & plan' : 'KML/KMZ or DXF road centreline · Excel / CSV ground levels (chainage, offset, level)';
   fillPolySelect(); drawAll();
   if (m === 'cf') { cfInfo(); cfFit(); status(CF.res ? 'Cut & fill ready.' : 'Cut & fill – set the plot limit, load the OGL points, then the final survey or a formation level.'); return; }
   if (m === 'geo') { status(`Geo data – coordinate system: ${crsLabel()} · imagery: ${IMG.name}${IMG.date ? ' ' + IMG.date : ''}${S.dem ? ' · DEM: ' + S.dem.name : ''}.`); return; }
@@ -4953,11 +5269,11 @@ updateZoneUI(); renderResults(); enableOut();
 @media print{body>*:not(#help){display:none!important}#help{position:static;display:block!important;background:none;padding:0}#help .hbox{height:auto;box-shadow:none;width:auto}#help nav,#help .hhead input,#help .hhead button,#help .hfoot{display:none!important}#help .hcont{overflow:visible;padding:0 10px}#help section{break-inside:auto}#help h3{break-after:avoid}}
 </style>
 
-<div id="help" role="dialog" aria-modal="true" aria-label="Hashim Survey help">
+<div id="help" role="dialog" aria-modal="true" aria-label="X-SEC PRO help">
 <div class="hbox">
 <div class="hhead">
   <svg width="26" height="26" viewBox="0 0 120 120" aria-hidden="true"><path d="M16 112 C 34 84, 62 62, 80 30" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M66 112 C 72 86, 86 62, 92 30" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M41 112 C 53 85, 74 62, 86 30" fill="none" stroke="#f2a516" stroke-width="6" stroke-linecap="round" stroke-dasharray="8 7"/><path d="M87.5 8 L 106 16 L 87.5 24 Z" fill="#f2a516"/></svg>
-  <h2>HASHIM SURVEY <span>· User guide</span></h2>
+  <h2>X-SEC PRO <span>· User guide</span></h2>
   <input id="hSearch" type="search" placeholder="Search help…" aria-label="Search help">
   <select id="hTopic" aria-label="Go to topic"></select>
   <button id="hPrint" title="Print or save the guide as PDF">⎙ Print / PDF</button>
@@ -4968,8 +5284,8 @@ updateZoneUI(); renderResults(); enableOut();
 <div class="hcont" id="hCont">
 
 <section id="h-welcome" data-t="Welcome">
-<h3>Welcome to Hashim Survey</h3>
-<p>Hashim Survey is a road study toolkit for land surveyors. It runs entirely in your web browser – nothing to install, no Civil 3D needed. With it you can:</p>
+<h3>Welcome to X-SEC PRO</h3>
+<p><b>X-SEC PRO</b> by Hashim Survey is a road study toolkit for land surveyors and engineers. It runs entirely in your web browser – nothing to install, no Civil 3D needed. With it you can:</p>
 <ul>
 <li>Set out a road alignment from PI coordinates or by drawing on satellite imagery, with circular curves at every bend.</li>
 <li>Enter or import your field levels (chainage · offset · level) and get the long section, cross sections, cut &amp; fill volumes and mass haul.</li>
@@ -5018,11 +5334,12 @@ updateZoneUI(); renderResults(); enableOut();
 <tr><td>KML / KMZ</td><td>Road centreline (a Google Earth path)</td><td>Polygons → plots, lines → roads, pins → placemarks</td><td>Shown on the map</td></tr>
 <tr><td>CSV / TXT / XYZ / PTS</td><td>Survey points used as ground levels</td><td>–</td><td>–</td></tr>
 <tr><td>XLSX / CSV with chainage &amp; level</td><td colspan="3">Use <span class="ui">📥 Import levels from Excel / CSV</span> – see <a href="#h-import">Importing levels</a></td></tr>
+<tr><td>DXF (AutoCAD / Civil 3D)</td><td colspan="3">Lines, polylines (incl. arcs), points, blocks with level attributes, 3D faces and numeric level text. A <b>DXF layers</b> window lets you choose what each layer is: centreline / ground points (Road study), plots / roads / points (Vector map), plot limit / OGL / final points (Cut &amp; fill). DWG must be saved as DXF first. Set the coordinate system in Geo data before loading.</td></tr>
 <tr><td>GeoTIFF (.tif)</td><td colspan="3">Elevation model (drone, LiDAR, SRTM…) – see <a href="#h-dem">Terrain</a></td></tr>
 <tr><td>Project (.json)</td><td colspan="3">Use <span class="ui">📂 Open project</span> in Road study card 6</td></tr>
 </table>
 <h4>Copy &amp; paste from Google Earth</h4>
-<p>In Google Earth Pro select a placemark, path or polygon, press <kbd>Ctrl</kbd>+<kbd>C</kbd>, come back to Hashim Survey and press <kbd>Ctrl</kbd>+<kbd>V</kbd> anywhere (not inside a text box). It is imported directly.</p>
+<p>In Google Earth Pro select a placemark, path or polygon, press <kbd>Ctrl</kbd>+<kbd>C</kbd>, come back to X-SEC PRO and press <kbd>Ctrl</kbd>+<kbd>V</kbd> anywhere (not inside a text box). It is imported directly.</p>
 <h4>Survey point files</h4>
 <p>Point files can be <code>Point, E, N, Z, Desc</code>, <code>Point, N, E, Z</code>, <code>E, N, Z</code> or latitude/longitude. The order is detected automatically. Easting/Northing are read in the project coordinate system (<a href="#h-crs">Geo data → Coordinate system</a>) or, if none is set, in the UTM zone shown in the coordinate grid.</p>
 </section>
@@ -5094,7 +5411,7 @@ updateZoneUI(); renderResults(); enableOut();
 <tr><td>Add to existing levels</td><td>Tick to append instead of replacing the table.</td></tr>
 </table>
 <p>A preview shows the first rows as they will be read. Press <span class="ui">Import</span>.</p>
-<div class="tip">Files exported by Hashim Survey itself (the Excel report) can be imported again.</div>
+<div class="tip">Files exported by X-SEC PRO itself (the Excel report) can be imported again.</div>
 </section>
 
 <section id="h-brief" data-t="Describe your road (assistant)" data-sub="1">
@@ -5211,6 +5528,9 @@ updateZoneUI(); renderResults(); enableOut();
 <li><span class="ui">Clear vector map</span> deletes all plots and roads.</li>
 </ul>
 <div class="tip">Roads in the Vector map can be used as a centreline in Road study, and urban roads are checked to fit between these plots.</div>
+<h4>Grid maker</h4>
+<p>In the <b>⌗ Grid maker</b> card: <span class="ui">✎ Draw polygon</span> (or pick a plot), set the <b>grid spacing</b> (X and Y), the <b>direction</b> (grid north with round coordinates, parallel to the longest side, or rotated by an angle) and how often to put <b>border points</b>. Press <span class="ui">▶ Create grid points</span>: blue = inside grid, orange = border, red = corners. Inside points closer than the set distance to the border are skipped so they don't crowd the border points.</p>
+<p><span class="ui">⬇ Excel</span> gives every point with Easting/Northing in the project coordinate system, type, latitude/longitude and an empty yellow <b>Level</b> column to fill in the field, plus a summary with point counts (formulas). Also CSV, DXF and KML.</p>
 </section>
 
 <section id="h-cf" data-t="Cut &amp; fill / soil stock">
@@ -5287,7 +5607,7 @@ updateZoneUI(); renderResults(); enableOut();
 <tr><td>CSV / TXT</td><td>✓</td><td>✓</td><td>Points, levels, setting-out, volumes</td></tr>
 <tr><td>XLSX / XLS</td><td>✓</td><td>✓</td><td>Levels (import), report and stake-out with formulas</td></tr>
 <tr><td>PDF</td><td></td><td>✓</td><td>Road report, level book, stake-out, layout plan, timeline</td></tr>
-<tr><td>DXF</td><td></td><td>✓</td><td>AutoCAD plan, profile, sections, stake-out points</td></tr>
+<tr><td>DXF</td><td>✓</td><td>✓</td><td>AutoCAD plan, profile, sections, stake-out points</td></tr>
 <tr><td>LandXML</td><td></td><td>✓</td><td>Civil 3D / 12d alignment, profiles, surface</td></tr>
 <tr><td>GeoJSON</td><td></td><td>✓</td><td>QGIS / ArcGIS</td></tr>
 <tr><td>GeoTIFF</td><td>✓</td><td></td><td>Terrain model</td></tr>
@@ -5338,7 +5658,7 @@ updateZoneUI(); renderResults(); enableOut();
 <div class="nores" id="hNo">No help topics match your search.</div>
 </div>
 </div>
-<div class="hfoot"><label><input type="checkbox" id="hAuto"> Show this guide when the program opens</label><span style="margin-left:auto">Hashim Survey · Road study toolkit</span></div>
+<div class="hfoot"><label><input type="checkbox" id="hAuto"> Show this guide when the program opens</label><span style="margin-left:auto">X-SEC PRO v1.0 · by Hashim Survey</span></div>
 </div>
 </div>
 
