@@ -238,6 +238,38 @@
   #dxfDlg td{padding:5px 8px;border-top:1px solid var(--line)}
   #dxfDlg td select{font:inherit;font-size:12.5px;padding:3px 4px;max-width:260px}
   #dxfDlg .pfbtns{display:flex;gap:8px;margin-top:12px}#dxfDlg .pfbtns .btn{flex:1}
+
+  #lbDlg{position:fixed;inset:0;z-index:4600;background:rgba(9,22,33,.55);display:none;align-items:center;justify-content:center;padding:14px}
+  #lbDlg.on{display:flex}
+  #lbDlg .lbbox{background:#fff;width:min(1180px,100%);height:min(92vh,900px);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  #lbDlg .lbhead{background:#0F2A3F;color:#fff;padding:11px 16px;display:flex;align-items:center;gap:12px;border-bottom:3px solid #F2A516}
+  #lbDlg .lbhead b{font:700 16px 'Space Grotesk',Inter,sans-serif}#lbDlg .lbhead span{font-size:12px;color:#a9bccb}
+  #lbDlg .lbhead button{margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:5px 10px;cursor:pointer}
+  #lbDlg .lbtools{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:9px 14px;border-bottom:1px solid var(--line);background:#f7f9fb}
+  #lbDlg .lbtools button{font:inherit;font-size:12.5px;font-weight:600;border:1px solid #c9d4dd;background:#fff;border-radius:7px;padding:5px 10px;cursor:pointer}
+  #lbDlg .lbtools button.go{background:#F2A516;border-color:#F2A516;color:#0F2A3F}
+  #lbDlg .lbtools button:disabled{opacity:.45;cursor:default}
+  #lbDlg .lbtools .chk{font-size:12.5px;display:flex;gap:5px;align-items:center;margin-left:8px}
+  #lbDlg .lbchk{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:9px 14px 4px}
+  #lbDlg .lbchk div{background:#f1f5f8;border-radius:8px;padding:5px 9px}#lbDlg .lbchk small{display:block;font-size:10.5px;color:#5b6b78;font-weight:600}
+  #lbDlg .lbchk b{font-size:14px;color:#0F2A3F}#lbDlg .lbchk i{font-style:normal;font-size:10.5px;color:#5b6b78;margin-left:5px;font-weight:500}
+  #lbDlg .ok{color:#2e7d32}#lbDlg .bad{color:#b3261e}#lbDlg .na{font-size:11px;font-weight:500;color:#5b6b78}
+  #lbDlg .lberr{color:#b3261e;font-size:12px;padding:0 14px;min-height:16px}
+  #lbDlg .lbtbl{flex:1;overflow:auto;padding:0 14px}
+  #lbDlg table.lb{width:100%;border-collapse:collapse;font-size:12.5px}
+  #lbDlg table.lb th{position:sticky;top:0;background:#0F2A3F;color:#fff;padding:6px 5px;font-weight:600;z-index:1}
+  #lbDlg table.lb td{border-bottom:1px solid var(--line);padding:1px 2px}
+  #lbDlg table.lb td.n{color:#8a99a6;text-align:right;padding-right:6px;width:28px}
+  #lbDlg table.lb input,#lbDlg table.lb select{width:100%;border:1px solid transparent;background:transparent;font:inherit;font-size:12.5px;padding:4px 5px;border-radius:5px}
+  #lbDlg table.lb input:focus,#lbDlg table.lb select:focus{border-color:#F2A516;background:#fffaf0;outline:none}
+  #lbDlg table.lb td.c{text-align:right;padding-right:8px;color:#334452;font-variant-numeric:tabular-nums;width:80px}#lbDlg table.lb td.b{font-weight:700;color:#0F2A3F}
+  #lbDlg table.lb tr.tp{background:#fff8e6}
+  #lbDlg table.lb td.x{white-space:nowrap;width:52px}#lbDlg table.lb td.x button{border:0;background:none;color:#8a99a6;cursor:pointer;padding:2px 4px}
+  #lbDlg .lbfoot{font-size:11.5px;color:#5b6b78;padding:8px 14px;border-top:1px solid var(--line);background:#f7f9fb}
+  @media (max-width:760px){#lbDlg .lbchk{grid-template-columns:repeat(2,1fr)}}
+
+  #lbDlg .lbgen{background:#fff8e6;font-size:12.5px}#lbDlg .lbgen input{width:90px;font:inherit;font-size:12.5px;padding:4px 6px;border:1px solid #c9d4dd;border-radius:6px}
+  #lbDlg .lbgen .go2{background:#0F2A3F!important;color:#fff!important;border-color:#0F2A3F!important}#lbDlg .lbgen .hint{font-size:11.5px;color:#5b6b78;margin-left:6px}
 </style>
 </head>
 <body>
@@ -411,6 +443,7 @@
         <div class="step"><span>C</span> Type the levels of the points, then design the road on them</div>
         <div class="btns" style="margin-top:0"><button class="btn alt" id="impBtn2">📥 Import levels from Excel / CSV</button></div>
         <div class="grid2" style="margin-top:6px"><button class="btn alt" id="bkOpen2">📝 Open levels table</button><button class="btn amber" id="bkRun" disabled>▶ Road from levels</button></div>
+        <div class="btns" style="margin-top:6px"><button class="btn alt" id="lbOpen" title="Staff readings BS / IS / FS → reduced levels (HI method)">📒 Levelling book (BS · IS · FS)</button></div>
         <div class="hint">Profile = CL levels · cross sections = L2-L1-CL-R1-R2 levels at every station. Set widths, slopes and the grade line in the cards below; everything (sections, volumes, PDF, DXF, LandXML) then uses your field levels.</div>
       </div>
       <div class="card">
@@ -546,6 +579,16 @@
         <div class="btns"><button class="btn alt" id="k3Go">⬇ 3D KML for Google Earth</button></div>
       </div>
     </div>
+    <div id="lbDlg" role="dialog" aria-modal="true" aria-label="Levelling book">
+      <div class="lbbox">
+        <div class="lbhead"><b>📒 Levelling field book</b><span>Height of instrument method · RL = HI − IS / FS · HI = RL + BS</span><button id="lbClose" title="Close">✕</button></div>
+        <div class="lbtools lbgen"><b>Chainages:</b> road length <input id="lbLen" type="number" min="0" step="0.01" placeholder="m"> m · every <input id="lbInt" type="number" min="1" step="1" placeholder="20"> m <button id="lbBuild" class="go2">⚙ Build chainage rows</button><span class="hint">Each chainage gets L2 · L1 · C · R1 · R2 (offsets from the stake-out settings) – start and closing BM rows are added.</span></div>
+        <div class="lbtools"><button id="lbEx">Load example</button><button id="lbAdd">＋ Row</button><button id="lbClr">Clear</button><label class="chk"><input type="checkbox" id="lbAdjChk"> Distribute misclosure over set-ups</label><button id="lbAdj" disabled>Adjust</button><span style="flex:1"></span><button id="lbXLSX">⬇ Excel (formulas)</button><button id="lbSend" class="go">→ Send levels to the levels table</button></div>
+        <div class="lbchk" id="lbChk"></div><div class="lberr" id="lbErr"></div>
+        <div class="lbtbl"><table class="lb"><thead><tr><th>#</th><th>Chainage</th><th>Point</th><th>Offset</th><th>BS</th><th>IS</th><th>FS</th><th>Known RL</th><th>HI</th><th>RL</th><th>Remarks</th><th></th></tr></thead><tbody id="lbBody"></tbody></table></div>
+        <div class="lbfoot">First row: the BM with its <b>known RL</b> and the <b>BS</b>. Section points: chainage, point (L2 · L1 · C · R1 · R2) and <b>IS</b> – offsets come from the stake-out offsets (Field workflow B) unless you type one. Instrument move: a <b>TP</b> row with <b>FS</b> and <b>BS</b>. Close on a BM: <b>FS</b> + its known RL. Enter / ↓ = next row · paste a block from Excel (Chainage, Point, Offset, BS, IS, FS, Known RL, Remarks).</div>
+      </div>
+    </div>
     <div id="brief" role="dialog" aria-modal="true" aria-label="Describe your road">
       <div class="brbox">
         <div class="brhead"><h3>💬 Describe your road</h3><span>Road assistant · typical values – check against your design standard</span><button id="brClose" title="Close (Esc)">✕</button></div>
@@ -626,7 +669,7 @@
     <div id="bookPanel" style="display:none">
       <div class="bkhead">
         <b>📏 Ground levels</b>
-        <button id="impBtn">📥 Import Excel / CSV</button><input type="file" id="impFileIn" accept=".xlsx,.xlsm,.xls,.csv,.txt" hidden><button id="bkEx">Load example</button><button id="bkAdd">＋ Row</button><button id="bkClr">Clear</button><button id="bkPDF2">⬇ PDF</button><button id="bkClose" class="x">✕ Close</button>
+        <button id="impBtn">📥 Import Excel / CSV</button><input type="file" id="impFileIn" accept=".xlsx,.xlsm,.xls,.csv,.txt" hidden><button id="lbOpen2" title="Compute levels from staff readings">📒 From levelling book</button><button id="bkEx">Load example</button><button id="bkAdd">＋ Row</button><button id="bkClr">Clear</button><button id="bkPDF2">⬇ PDF</button><button id="bkClose" class="x">✕ Close</button>
       </div>
       <div class="bkbody">
         <div class="bktbl">
@@ -5194,6 +5237,138 @@ async function loadDXF(f) {
   status(`DXF imported: ${msg.join(' · ')}. Coordinates read as ${crsShort()}.`, 'ok');
 }
 
+// ================= LEVELLING FIELD BOOK (HI method: BS · IS · FS → RL) =================
+const LB = { rows: [], adjust: false };
+const LB_PTS = ['BM', 'TP', 'L2', 'L1', 'C', 'R1', 'R2', 'Other'];
+try { const s = JSON.parse(localStorage.getItem('xsec_lvbook') || 'null'); if (s && s.rows) { LB.rows = s.rows; LB.adjust = !!s.adjust; } } catch (e) { }
+const lbSave = () => { try { localStorage.setItem('xsec_lvbook', JSON.stringify({ rows: LB.rows, adjust: LB.adjust })); } catch (e) { } };
+const lbN = v => { if (v == null || String(v).trim() === '') return null; const n = bnum(v); return isFinite(n) ? n : null; };
+function lbOffFor(pt) {
+  const o = id => Math.abs(+$(id).value || 0);
+  return { L2: 'L' + o('soL2'), L1: 'L' + o('soL1'), C: 'CL', R1: 'R' + o('soR1'), R2: 'R' + o('soR2') }[pt] || '';
+}
+function lbCompute() {
+  let hi = null, sBS = 0, sFS = 0, first = null, last = null, setup = 0, err = [];
+  const out = LB.rows.map((r, i) => {
+    const bs = lbN(r.bs), is = lbN(r.is), fs = lbN(r.fs), known = lbN(r.known), o = { i, rl: null, hi: null, setup };
+    if (bs != null) sBS += bs; if (fs != null) sFS += fs;
+    if (fs != null) { if (hi == null) err.push(`row ${i + 1}: FS without an instrument height above`); else o.rl = hi - fs; }
+    else if (is != null) { if (hi == null) err.push(`row ${i + 1}: IS without an instrument height above`); else o.rl = hi - is; }
+    else if (known != null) o.rl = known;
+    if (o.rl == null && known != null && bs != null) o.rl = known;
+    if (known != null && fs != null && o.rl != null) o.closeKnown = known;   // closing on a known BM
+    if (bs != null) { if (o.rl == null) { if (known == null) err.push(`row ${i + 1}: BS on a point with no level – give the BM its known RL`); } else { hi = o.rl + bs; o.hi = hi; setup++; } }
+    if (o.rl != null) { if (first == null) first = o.rl; last = o.rl; }
+    o.useHi = hi; return o;
+  });
+  // closing misclosure (last BM with known RL that was reached with an FS)
+  const cl = [...out].reverse().find(o => o.closeKnown != null), mis = cl ? cl.rl - cl.closeKnown : null;
+  const chs = LB.rows.map(r => bnum(r.ch)).filter(isFinite), K = chs.length ? (Math.max(...chs) - Math.min(...chs)) / 1000 : 0, allow = Math.max(0.003, 0.012 * Math.sqrt(Math.max(K * 2, 0.001)));
+  const nSet = Math.max(1, setup);
+  out.forEach(o => { o.adj = o.rl != null && mis != null && LB.adjust ? o.rl - mis * Math.min(o.setup, cl.setup) / Math.max(1, cl.setup) : o.rl; });
+  return { out, sBS, sFS, first, last, arith: first != null && last != null ? Math.abs((sBS - sFS) - (last - first)) < 0.0005 : null, mis, allow, err, nSet };
+}
+function lbRender() {
+  const tb = $('lbBody'); if (!tb) return;
+  if (!LB.rows.length) LB.rows.push({ pt: 'BM' });
+  tb.innerHTML = LB.rows.map((r, i) => `<tr data-r="${i}"><td class="n">${i + 1}</td>
+    <td><input data-k="ch" value="${esc(r.ch || '')}" placeholder="0+000"></td>
+    <td><select data-k="pt">${LB_PTS.map(p => `<option${(r.pt || '') === p ? ' selected' : ''}>${p}</option>`).join('')}</select></td>
+    <td><input data-k="off" value="${esc(r.off || '')}" placeholder="${esc(lbOffFor(r.pt) || '')}"></td>
+    <td><input data-k="bs" value="${esc(r.bs || '')}" inputmode="decimal"></td><td><input data-k="is" value="${esc(r.is || '')}" inputmode="decimal"></td><td><input data-k="fs" value="${esc(r.fs || '')}" inputmode="decimal"></td>
+    <td><input data-k="known" value="${esc(r.known || '')}" inputmode="decimal" placeholder="${r.pt === 'BM' ? 'RL' : ''}"></td>
+    <td class="c" data-c="hi"></td><td class="c b" data-c="rl"></td><td><input data-k="rem" value="${esc(r.rem || '')}"></td>
+    <td class="x"><button data-ins="${i}" title="Insert row below">＋</button><button data-del="${i}" title="Delete row">✕</button></td></tr>`).join('');
+  tb.querySelectorAll('input,select').forEach(el => {
+    const ev = el.tagName === 'SELECT' ? 'onchange' : 'oninput';
+    el[ev] = () => { const r = LB.rows[+el.closest('tr').dataset.r]; r[el.dataset.k] = el.value; if (el.dataset.k === 'pt') { const off = el.closest('tr').querySelector('[data-k=off]'); off.placeholder = lbOffFor(el.value); } lbRefresh(); };
+    if (el.tagName === 'INPUT') el.onkeydown = e => { if (e.key === 'Enter' || e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); const r0 = +el.closest('tr').dataset.r + (e.key === 'ArrowUp' ? -1 : 1); if (r0 < 0) return; if (r0 >= LB.rows.length) { LB.rows.push({ ch: LB.rows[LB.rows.length - 1].ch || '', pt: 'C' }); lbRender(); } const x = tb.querySelector(`tr[data-r="${r0}"] [data-k="${el.dataset.k}"]`); if (x) x.focus(); } };
+    if (el.tagName === 'INPUT') el.onpaste = e => {   // paste a block from Excel: Chainage, Point, Offset, BS, IS, FS, Known RL, Remarks
+      const t = (e.clipboardData || window.clipboardData).getData('text'); if (!/[\t\n]/.test(t)) return; e.preventDefault();
+      const order = ['ch', 'pt', 'off', 'bs', 'is', 'fs', 'known', 'rem'], c0 = order.indexOf(el.dataset.k), r0 = +el.closest('tr').dataset.r;
+      t.replace(/\r/g, '').split('\n').filter(l => l.trim() !== '').forEach((line, j) => { const row = LB.rows[r0 + j] || (LB.rows[r0 + j] = {}); line.split('\t').forEach((v, c) => { const k = order[c0 + c]; if (!k) return; v = v.trim(); if (k === 'pt') { const m = LB_PTS.find(p => p.toLowerCase() === v.toLowerCase() || (p === 'C' && /^c\.?l$/i.test(v))); row.pt = m || 'Other'; if (!m && v && !row.off) row.off = v; } else row[k] = v; }); });
+      lbRender();
+    };
+  });
+  tb.querySelectorAll('[data-ins]').forEach(b => b.onclick = () => { const i = +b.dataset.ins, p = LB.rows[i]; LB.rows.splice(i + 1, 0, { ch: p.ch || '', pt: 'C' }); lbRender(); });
+  tb.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { LB.rows.splice(+b.dataset.del, 1); lbRender(); });
+  lbRefresh();
+}
+function lbRefresh() {
+  const R = lbCompute(), tb = $('lbBody');
+  R.out.forEach(o => { const tr = tb.querySelector(`tr[data-r="${o.i}"]`); if (!tr) return; tr.querySelector('[data-c=hi]').textContent = o.hi != null ? o.hi.toFixed(3) : ''; const v = LB.adjust && o.adj != null ? o.adj : o.rl; tr.querySelector('[data-c=rl]').textContent = v != null ? v.toFixed(3) : ''; tr.classList.toggle('tp', ['BM', 'TP'].includes(LB.rows[o.i].pt)); });
+  const ok = (b, t) => `<span class="${b ? 'ok' : 'bad'}">${t}</span>`;
+  $('lbChk').innerHTML = `<div><small>ΣBS</small><b>${R.sBS.toFixed(3)}</b></div><div><small>ΣFS</small><b>${R.sFS.toFixed(3)}</b></div><div><small>ΣBS − ΣFS</small><b>${(R.sBS - R.sFS).toFixed(3)}</b></div><div><small>Last RL − First RL</small><b>${R.first != null ? (R.last - R.first).toFixed(3) : '–'}</b></div>
+    <div><small>Arithmetic check</small><b>${R.arith == null ? '–' : ok(R.arith, R.arith ? 'OK' : 'Error – recheck')}</b></div>
+    <div><small>Closure on BM</small><b>${R.mis == null ? '<span class="na">close on a BM with known RL</span>' : ok(Math.abs(R.mis) <= R.allow, `${(R.mis * 1000).toFixed(0)} mm ${Math.abs(R.mis) <= R.allow ? '✓' : '✗'}`) + `<i> allow ±${(R.allow * 1000).toFixed(0)} mm</i>`}</b></div>`;
+  $('lbErr').textContent = R.err.slice(0, 3).join(' · ');
+  $('lbAdj').disabled = R.mis == null; lbSave(); return R;
+}
+function lbSections() {   // { ch → { L2: rl, … } } from the computed book
+  const R = lbCompute(), sec = new Map();
+  R.out.forEach(o => { const r = LB.rows[o.i], v = LB.adjust && o.adj != null ? o.adj : o.rl; if (v == null || ['BM', 'TP'].includes(r.pt)) return; const ch = bnum(r.ch); if (!isFinite(ch)) return; const k = ch.toFixed(3); if (!sec.has(k)) sec.set(k, { ch, pts: [] }); sec.get(k).pts.push({ pt: r.pt, off: (r.off || lbOffFor(r.pt) || '').trim(), rl: v, rem: r.rem || '' }); });
+  return { R, list: [...sec.values()].sort((a, b) => a.ch - b.ch) };
+}
+function lbSend() {
+  const { R, list } = lbSections(); if (!list.length) return status('No section readings with a level yet – enter chainage, point and IS.', 'warn');
+  if (R.arith === false && !confirm('The arithmetic check shows an error. Send the levels anyway?')) return;
+  const rows = []; let n = 1; list.forEach(s => s.pts.forEach(p => rows.push({ pt: String(n++), ch: fmtCh(s.ch).replace(/\.00$/, ''), off: p.off || 'CL', rl0: p.rl.toFixed(3), rem: p.rem })));
+  if (BK.rows.some(r => r.rl0 !== undefined && String(r.rl0).trim() !== '') && !confirm(`Replace the ${BK.rows.length} rows in the levels table with ${rows.length} levels from the levelling book?`)) return;
+  BK.rows = rows; bookRender(); bookSave(); $('lbDlg').classList.remove('on'); $('bookPanel').style.display = ''; if (typeof bookRefresh === 'function') bookRefresh();
+  status(`${rows.length} levels at ${list.length} chainages sent to the levels table${LB.adjust ? ' (adjusted for misclosure)' : ''} – press ▶ Road from levels.`, 'ok');
+}
+function lbExample() {
+  const ex = [['', 'BM', '', '1.520', '', '', '100.000', 'BM-1 known RL'], ['0+000', 'L2', '', '', '1.850'], ['0+000', 'L1', '', '', '1.700'], ['0+000', 'C', '', '', '1.610'], ['0+000', 'R1', '', '', '1.690'], ['0+000', 'R2', '', '', '1.880'],
+    ['0+020', 'L2', '', '', '1.790'], ['0+020', 'L1', '', '', '1.640'], ['0+020', 'C', '', '', '1.550'], ['0+020', 'R1', '', '', '1.630'], ['0+020', 'R2', '', '', '1.820'],
+    ['0+040', 'TP', '', '1.415', '', '1.320', '', 'TP-1'], ['0+040', 'L2', '', '', '1.660'], ['0+040', 'L1', '', '', '1.510'], ['0+040', 'C', '', '', '1.420'], ['0+040', 'R1', '', '', '1.500'], ['0+040', 'R2', '', '', '1.690'],
+    ['0+060', 'L2', '', '', '1.600'], ['0+060', 'L1', '', '', '1.450'], ['0+060', 'C', '', '', '1.360'], ['0+060', 'R1', '', '', '1.440'], ['0+060', 'R2', '', '', '1.630'], ['', 'BM', '', '', '', '1.615', '100.000', 'close on BM-1']];
+  LB.rows = ex.map(a => ({ ch: a[0], pt: a[1], off: a[2], bs: a[3], is: a[4], fs: a[5], known: a[6] || '', rem: a[7] || '' })); lbRender();
+}
+async function lbXLSX() {
+  if (!window.JSZip) return status('The zip library did not load – check the internet connection.', 'err');
+  const R = lbCompute(), H = t => ({ v: t, s: 1 }), N = v => { const n = lbN(v); return n == null ? '' : { v: n, s: 2 }; }, F = (f, v, s = 2) => ({ f, v, s }), D0 = 6, NR = Math.max(300, LB.rows.length + 20), DL = D0 + NR - 1;
+  const rows = [[{ v: 'LEVELLING FIELD BOOK – HEIGHT OF INSTRUMENT METHOD', s: 7 }],
+    ['ΣBS', F(`SUM(D${D0}:D${DL})`, R.sBS), '', 'ΣBS − ΣFS', F('B2-B3', R.sBS - R.sFS), '', 'Arithmetic check', F(`IF(COUNT(I${D0}:I${DL})<2,"",IF(ABS(E2-E3)<0.0005,"OK","Error – recheck"))`, '', 6)],
+    ['ΣFS', F(`SUM(F${D0}:F${DL})`, R.sFS), '', 'Last RL − First RL', F(`IF(COUNT(I${D0}:I${DL})<2,"",LOOKUP(2,1/(I${D0}:I${DL}<>""),I${D0}:I${DL})-INDEX(I${D0}:I${DL},MATCH(TRUE,INDEX(I${D0}:I${DL}<>"",0),0)))`, R.first != null ? R.last - R.first : ''), '', 'Closure on BM (m)', F(`IFERROR(LOOKUP(2,1/((G${D0}:G${DL}<>"")*(F${D0}:F${DL}<>"")),I${D0}:I${DL}-G${D0}:G${DL}),"")`, R.mis != null ? R.mis : '', 2)],
+    ['How to use: give the first BM its known RL (column G) and BS · section points: chainage, point, IS · turning points: FS and BS on one row · close on a BM with FS and its known RL in column G.'],
+    [H('Chainage'), H('Point'), H('Offset'), H('BS'), H('IS'), H('FS'), H('Known RL (BM)'), H('HI'), H('RL'), H('Remarks')]];
+  for (let k = 0; k < NR; k++) {
+    const r = D0 + k, src = LB.rows[k] || {}, o = R.out[k] || {}, prev = r === D0 ? '""' : `IFERROR(LOOKUP(2,1/(H$${D0}:H${r - 1}<>""),H$${D0}:H${r - 1}),"")`;
+    const rl = `IF(F${r}<>"",IF(${prev}="","",${prev}-F${r}),IF(E${r}<>"",IF(${prev}="","",${prev}-E${r}),IF(G${r}<>"",G${r},"")))`;
+    rows.push([src.ch || '', src.pt || '', src.off || (src.pt ? lbOffFor(src.pt) : ''), N(src.bs), N(src.is), N(src.fs), N(src.known), F(`IF(OR(D${r}="",I${r}=""),"",I${r}+D${r})`, o.hi != null ? o.hi : ''), F(rl, o.rl != null ? o.rl : ''), src.rem || '']);
+  }
+  const { list } = lbSections(), xs = [[{ v: 'CROSS SECTIONS – REDUCED LEVELS', s: 7 }], [H('Chainage'), H('L2'), H('L1'), H('C'), H('R1'), H('R2')]];
+  const chText = [...new Set(LB.rows.filter(r => r.ch && !['BM', 'TP'].includes(r.pt)).map(r => String(r.ch).trim()))].sort((a, b) => bnum(a) - bnum(b));
+  chText.forEach((c, j) => { const r = j + 3, sec = list.find(s => Math.abs(s.ch - bnum(c)) < 1e-6) || { pts: [] }; xs.push([c].concat(['L2', 'L1', 'C', 'R1', 'R2'].map((p, pi) => { const col = 'BCDEF'[pi], hit = sec.pts.find(q => q.pt === p); return F(`IFERROR(AVERAGEIFS('Level Book'!$I$${D0}:$I$${DL},'Level Book'!$A$${D0}:$A$${DL},$A${r},'Level Book'!$B$${D0}:$B$${DL},${col}$2),"")`, hit ? hit.rl : ''); }))); });
+  download(await XL.build([{ name: 'Level Book', rows, cols: [11, 8, 9, 9, 9, 9, 13, 10, 10, 22], freeze: 5, hdrRow: 5, merges: ['A1:J1', 'A4:J4'] }, { name: 'Cross Sections', rows: xs, cols: [11, 10, 10, 10, 10, 10], freeze: 2 }]), (($('mProject').value || 'levelling').trim().replace(/[^\w\-]+/g, '_') || 'levelling') + '_level_book.xlsx');
+  status('Levelling book Excel downloaded – HI and RL are live formulas for 300+ readings, with the arithmetic check and cross-section table.', 'ok');
+}
+function lbBuild() {
+  const Lr = bnum($('lbLen').value), step = bnum($('lbInt').value);
+  if (!(Lr > 0)) return status('Type the road length (m) – or set the alignment first and it is filled in for you.', 'warn');
+  if (!(step > 0)) return status('Type the chainage interval (m).', 'warn');
+  if (Lr / step > 5000) return status('That makes more than 5,000 sections – use a bigger interval.', 'warn');
+  const hasReadings = LB.rows.some(r => ['bs', 'is', 'fs'].some(k => String(r[k] || '').trim() !== ''));
+  if (hasReadings && !confirm('The levelling book already has readings. Replace it with the new chainage list?')) return;
+  const pts = ['L2', 'L1', 'C', 'R1', 'R2'].filter(p => p === 'C' || Math.abs(+$('so' + p).value || 0) > 0), chs = [];
+  for (let c = 0; c < Lr - 1e-6; c += step) chs.push(Math.round(c * 1000) / 1000);
+  chs.push(Math.round(Lr * 1000) / 1000);
+  const fc = c => fmtCh(c).replace(/\.00$/, '');
+  LB.rows = [{ pt: 'BM', rem: 'start BM – known RL + BS' }];
+  chs.forEach(c => pts.forEach(p => LB.rows.push({ ch: fc(c), pt: p })));
+  LB.rows.push({ pt: 'BM', rem: 'closing BM – FS + known RL' });
+  lbRender();
+  status(`Levelling book ready: ${chs.length} chainages (0+000 → ${fc(Lr)} every ${step} m) × ${pts.length} points = ${chs.length * pts.length} readings. Add TP rows where you move the instrument.`, 'ok');
+}
+function lbOpen() { $('lbDlg').classList.add('on'); const Lr = (() => { try { return RD.ali ? RD.ali.L : RD.ll ? G.buildAli(RD.ll.map(p => toU(p[0], p[1])), RD.radii, readCrit().Rdef).L : null; } catch (e) { return null; } })(); if (Lr && (!$('lbLen').value || $('lbLen').dataset.auto === $('lbLen').value)) { $('lbLen').value = Lr.toFixed(2); $('lbLen').dataset.auto = $('lbLen').value; } if (!$('lbInt').value) $('lbInt').value = $('soStep').value || 20; $('lbAdjChk').checked = LB.adjust; lbRender(); }
+$('lbOpen').onclick = lbOpen; $('lbOpen2').onclick = lbOpen;
+$('lbClose').onclick = () => $('lbDlg').classList.remove('on');
+$('lbEx').onclick = lbExample; $('lbAdd').onclick = () => { const p = LB.rows[LB.rows.length - 1] || {}; LB.rows.push({ ch: p.ch || '', pt: 'C' }); lbRender(); };
+$('lbClr').onclick = () => { if (!LB.rows.length || confirm('Clear the whole levelling book?')) { LB.rows = [{ pt: 'BM' }]; lbRender(); } };
+$('lbAdjChk').onchange = () => { LB.adjust = $('lbAdjChk').checked; lbRefresh(); };
+$('lbAdj').onclick = () => { $('lbAdjChk').checked = true; LB.adjust = true; lbRefresh(); };
+$('lbSend').onclick = lbSend; $('lbBuild').onclick = lbBuild; $('lbXLSX').onclick = lbXLSX;
+
 function setMode(m) {
   if (drawMode) endDraw();
   S.mode = m;
@@ -5395,6 +5570,17 @@ updateZoneUI(); renderResults(); enableOut();
 <li><b>Design level at start</b> + <b>Design gradient %</b> give a simple straight grade line; <span class="ui">Best-fit grade line</span> calculates one that follows the ground.</li>
 </ul>
 <p>CL rows build the long section; L/R rows build the cross sections. When ready, press <span class="ui">▶ Road from levels</span>.</p>
+<h4>📒 Levelling field book (BS · IS · FS)</h4>
+<p>If you have staff readings instead of levels, press <span class="ui">📒 Levelling book (BS · IS · FS)</span> (Field workflow C, or <span class="ui">📒 From levelling book</span> in the levels table). It uses the <b>height of instrument</b> method: HI = RL + BS, RL = HI − IS (or − FS).</p>
+<ul>
+<li><b>Build the rows automatically:</b> type the <b>road length</b> (filled in from the alignment when there is one) and the <b>interval</b>, press <span class="ui">⚙ Build chainage rows</span> – every chainage (0+000, 0+020 … end) gets L2 · L1 · C · R1 · R2 plus start and closing BM rows. Then just type the readings.</li>
+<li>First row: the <b>BM</b> with its <b>known RL</b> and the <b>BS</b>.</li>
+<li>Section points: chainage, point <b>L2 · L1 · C · R1 · R2</b> and the <b>IS</b>. Offsets come from the stake-out offsets unless you type one (choose <i>Other</i> for any extra point).</li>
+<li>Moving the instrument: a <b>TP</b> row with <b>FS</b> and the new <b>BS</b> – the new HI is carried forward.</li>
+<li>Closing: a <b>BM</b> row with <b>FS</b> and its known RL. The <b>closure</b> is shown with the allowance (12√K mm); tick <i>Distribute misclosure over set-ups</i> to adjust the levels.</li>
+<li>The <b>arithmetic check</b> (ΣBS − ΣFS = Last RL − First RL) shows OK or Error.</li>
+</ul>
+<p><span class="ui">→ Send levels to the levels table</span> puts every section level into the levels table, ready for <span class="ui">▶ Road from levels</span>. <span class="ui">⬇ Excel (formulas)</span> gives the level book with live HI / RL formulas for 300+ readings, the checks, and a Cross Sections sheet (L2 | L1 | C | R1 | R2 per chainage).</p>
 </section>
 
 <section id="h-import" data-t="Importing levels from Excel / CSV" data-sub="1">
